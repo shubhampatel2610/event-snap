@@ -1,8 +1,7 @@
 const AppLogo = () => {
   return (
-    <>
+    <div className="w-[60px] sm:w-[220px] overflow-hidden">
       <svg
-        width="220"
         height="60"
         viewBox="0 0 420 120"
         xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +48,7 @@ const AppLogo = () => {
           font-size="48"
           font-weight="600"
           fill="#E5E7EB"
+          className="hidden sm:block"
         >
           Event
         </text>
@@ -60,11 +60,12 @@ const AppLogo = () => {
           font-size="48"
           font-weight="700"
           fill="url(#snapGradient)"
+          className="hidden sm:block"
         >
           Snap
         </text>
       </svg>
-    </>
+    </div>
   );
 };
 
