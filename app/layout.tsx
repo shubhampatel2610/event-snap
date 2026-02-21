@@ -8,6 +8,7 @@ import Header from "./components/HeaderComponent/Header";
 import { ConvexClientProvider } from "./utils/ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import GlobalLoaderProvider from "./utils/GlobalLoaderProvider/GlobalLoaderProvider";
 
 export default function RootLayout({
   children,
@@ -23,11 +24,13 @@ export default function RootLayout({
           }}
         >
           <ConvexClientProvider>
-            <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
-              <Header />
-              <Provider store={store}>{children}</Provider>
-              <Footer />
-            </main>
+            <GlobalLoaderProvider>
+              <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
+                <Header />
+                <Provider store={store}>{children}</Provider>
+                <Footer />
+              </main>
+            </GlobalLoaderProvider>
           </ConvexClientProvider>
         </ClerkProvider>
       </body>
