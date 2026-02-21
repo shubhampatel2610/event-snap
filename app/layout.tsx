@@ -24,13 +24,15 @@ export default function RootLayout({
           }}
         >
           <ConvexClientProvider>
-            <GlobalLoaderProvider>
-              <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
-                <Header />
-                <Provider store={store}>{children}</Provider>
-                <Footer />
-              </main>
-            </GlobalLoaderProvider>
+            <Provider store={store}>
+              <GlobalLoaderProvider>
+                <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
+                  <Header />
+                  <Provider store={store}>{children}</Provider>
+                  <Footer />
+                </main>
+              </GlobalLoaderProvider>
+            </Provider>
           </ConvexClientProvider>
         </ClerkProvider>
       </body>
