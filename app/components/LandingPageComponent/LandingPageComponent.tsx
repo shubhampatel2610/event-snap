@@ -31,10 +31,10 @@ const LandingPageComponent = () => {
                         </span>
                         <div>
                             <InputButton
-                                label="Get Started"
+                                label={AppConstants.GET_STARTED_BTN_LABEL}
                                 size="lg"
                                 className={"rounded-full"}
-                                navigateTo={"/events"}
+                                navigateTo={AppConstants.EVENTS_ROUTE}
                                 variant={"secondary"}
                             />
                         </div>
