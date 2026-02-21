@@ -7,7 +7,7 @@ const LandingPageComponent = () => {
 
     return (
         <div className="grid grid-cols-12 min-h-screen">
-            <div className="col-span-12 md:col-span-6 px-15 py-5">
+            <div className="col-span-12 md:col-span-6 px-15 py-10">
                 <div className="flex flex-col gap-10">
                     <div>
                         <h1 className="text-4xl sm:text-5xl md:text-5xl font-bold">
