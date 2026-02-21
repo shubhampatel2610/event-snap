@@ -1,6 +1,6 @@
 const AppLogo = () => {
   return (
-    <div className="w-[60px] sm:w-[220px] overflow-hidden">
+    <div className="w-15 sm:w-55 overflow-hidden">
       <svg
         height="60"
         viewBox="0 0 420 120"
