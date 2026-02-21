@@ -20,7 +20,7 @@ const InputButton = (props: ButtonProps) => {
             <Button
                 onClick={onClick}
                 disabled={disabled}
-                className={className + "cursor-pointer"}
+                className={className + " cursor-pointer"}
                 size={size}
                 variant={variant}
                 asChild={asChild}

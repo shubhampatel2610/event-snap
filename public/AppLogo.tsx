@@ -1,3 +1,5 @@
+import { AppConstants } from "@/app/constants/AppConstants";
+
 const AppLogo = () => {
   return (
     <div className="w-15 sm:w-55 overflow-hidden">
@@ -50,7 +52,7 @@ const AppLogo = () => {
           fill="#E5E7EB"
           className="hidden sm:block"
         >
-          Event
+          {AppConstants.EVENT_WORD}
         </text>
 
         <text
@@ -62,7 +64,7 @@ const AppLogo = () => {
           fill="url(#snapGradient)"
           className="hidden sm:block"
         >
-          Snap
+          {AppConstants.SNAP_WORD}
         </text>
       </svg>
     </div>
