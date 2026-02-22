@@ -17,3 +17,11 @@ export const getCategoryIcon = (id: any) => {
     const category = getCategoryById(id);
     return category ? category.icon : "📅";
 };
+
+// Crete a slug for location-based routing
+export const createLocationSlug = (city: string, state: string) => {
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+    const stateSlug = state.toLowerCase().replace(/\s+/g, '-');
+
+    return `${citySlug}-${stateSlug}`;
+}

@@ -5,8 +5,9 @@ import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { fetchEventsByLocation, fetchFeaturedEvents } from "@/app/store/eventSlice";
 import { fetchCurrentUser } from "@/app/store/userSlice";
 import { AppConstants } from "@/app/constants/AppConstants";
-import CarouselComponent from "../FormComponents/CarouselComponent/CarouselComponent";
+import CarouselComponent from "../CommonComponents/CarouselComponent/CarouselComponent";
 import EventCarouselItemTemplate from "./EventCarouselItemTemplate";
+import EventByLocationComponent from "./EventByLocationComponent";
 
 const ExplorePageComponent = () => {
     const dispatch = useAppDispatch();
@@ -42,11 +43,20 @@ const ExplorePageComponent = () => {
 
             {featuredEvents && featuredEvents.length > 0 && (
                 <div>
-                    <CarouselComponent 
+                    <CarouselComponent
                         carouselItems={featuredEvents}
                         itemTemplate={EventCarouselItemTemplate}
                     />
                 </div>
+            )}
+
+            {eventsByLocation && eventsByLocation.length > 0 && (
+                <>
+                    <EventByLocationComponent
+                        eventList={eventsByLocation}
+                        userData={currentUserData}
+                    />
+                </>
             )}
         </div>
 

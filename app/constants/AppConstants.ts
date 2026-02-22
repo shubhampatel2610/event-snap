@@ -9,6 +9,7 @@ export class AppConstants {
     static CREATE_EVENT_ROUTE = "/create-event"
     static EXPLORE_ROUTE = "/explore";
     static MY_BOOKINGS_ROUTE = "/my-bookings";
+    static LOCATION_ROUTE = "/location";
 
     // Landing Page Constants
     static LANDING_PAGE_HEADER = "Welcome to EventSnap!";
@@ -31,6 +32,8 @@ export class AppConstants {
     static SIGN_IN_BTN_LABEL = "Sign In";
     static MY_BOOKINGS_LABEL = "My Bookings";
     static EVENTS_LABEL = "Events";
+    static VIEW_ALL_LABEL = "View All";
+    static VIEW_LABEL = "View";
 
     // Categories
     static CATEGORIES = [
@@ -111,4 +114,13 @@ export class AppConstants {
     // Explore Page Constants
     static EXPLORE_PAGE_HEADER = "Explore Events";
     static EXPLORE_PAGE_SUBHEADER = "Explore featured events, find what's happening in your city!, or browse across the world!";
+    static EVENT_BY_LOCATION_HEADER = "Events Nearby...";
+    static EVENT_BY_LOCATION_SUBHEADER_PREFIX = "Find events happening in";
+    static EVENT_BY_LOCATION_SUBHEADER_POSTFIX = "your city...";
+    static ONLINE_EVENT_KEY = "online";
+    static ONLINE_EVENT_LABEL = "Online Event";
+    static ATTENDEES_LABEL_POSTFIX = "Attending";
+    static REGISTERED_LABEL_POSTFIX = "Registered";
+    static FREE_LABEL = "Free";
+    static PAID_LABEL = "Paid";
 }
