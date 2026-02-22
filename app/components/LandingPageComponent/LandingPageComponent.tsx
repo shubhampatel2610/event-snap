@@ -1,7 +1,7 @@
 "use client";
 
 import { AppConstants } from '@/app/constants/AppConstants'
-import InputButton from '../FormComponents/ButtonComponent/InputButton'
+import InputButton from '../CommonComponents/ButtonComponent/InputButton'
 
 const LandingPageComponent = () => {
 

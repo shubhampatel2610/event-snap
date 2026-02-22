@@ -1,6 +1,6 @@
 "use client";
 
-import InputButton from "@/app/components/FormComponents/ButtonComponent/InputButton";
+import InputButton from "@/app/components/CommonComponents/ButtonComponent/InputButton";
 import { AppConstants } from "@/app/constants/AppConstants";
 import { ArrowLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
