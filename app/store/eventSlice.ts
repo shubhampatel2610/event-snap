@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { queryWithDashboard } from "../convexClient";
+import { useCustomConvexQuery } from "../convexClient";
 import { api } from "@/convex/_generated/api";
 
 interface EventState {
@@ -16,7 +16,7 @@ const initialState: EventState = {
 export const fetchFeaturedEvents = createAsyncThunk(
   "explore/fetchFeaturedEvents",
   async (limit: number) => {
-    const result = await queryWithDashboard(
+    const result = await useCustomConvexQuery(
       api.eventService.getFeaturingEvents,
       { limit }
     );
@@ -27,7 +27,7 @@ export const fetchFeaturedEvents = createAsyncThunk(
 export const fetchEventsByLocation = createAsyncThunk(
   "explore/fetchEventsByLocation",
   async (location: any) => {
-    const result = await queryWithDashboard(
+    const result = await useCustomConvexQuery(
       api.eventService.getEventsByLocation,
       {
         city: location?.city,

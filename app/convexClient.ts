@@ -7,7 +7,7 @@ import { setLoading, setData, setError } from "./store/dashboardSlice";
 export const convexClient = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 // helper that wraps a query and mirrors result into dashboard slice
-export async function queryWithDashboard(query: any, args?: any): Promise<any> {
+export async function useCustomConvexQuery(query: any, args?: any): Promise<any> {
   // start loading state
   store.dispatch(setLoading(true));
   try {
@@ -26,7 +26,7 @@ export async function queryWithDashboard(query: any, args?: any): Promise<any> {
 }
 
 // helper that wraps a mutation and mirrors result into dashboard slice
-export async function mutationWithDashboard(mutation: any, arg?: any): Promise<any> {
+export async function useCustomConvexMutation(mutation: any, arg?: any): Promise<any> {
   store.dispatch(setLoading(true));
   store.dispatch(setError(null));
   try {

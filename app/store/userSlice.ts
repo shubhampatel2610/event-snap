@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { queryWithDashboard } from "../convexClient";
+import { useCustomConvexQuery } from "../convexClient";
 import { api } from "@/convex/_generated/api";
 
 interface UserState {
@@ -15,7 +15,7 @@ const initialState: UserState = {
 export const fetchCurrentUser = createAsyncThunk(
   "user/fetchCurrentUser",
   async () => {
-    const result = await queryWithDashboard(api.users.getCurrentUserData);
+    const result = await useCustomConvexQuery(api.users.getCurrentUserData);
     return result;
   }
 );
