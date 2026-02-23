@@ -34,7 +34,7 @@ const EventByCategoryComponent = () => {
                                 {category.label}
                             </h3>
                             <span className="text-sm text-muted-foreground">
-                                {`${category.count} ${category.count <= 1 ? "Event" : "Events"}`}
+                                {`${category.count} ${category.count <= 1 ? AppConstants.EVENT_SINGULAR_LABEL : AppConstants.EVENT_PLURAL_LABEL}`}
                             </span>
                         </div>
                     </CardContent>
@@ -45,7 +45,7 @@ const EventByCategoryComponent = () => {
 
     return (
         <div className="flex flex-col gap-3 mt-5">
-            <h2 className="text-2xl font-bold">Events by Categories...</h2>
+            <h2 className="text-2xl font-bold">{AppConstants.EVENTS_BY_CATEGORY_HEADER}</h2>
 
             <div className="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-3 gap-4">
                 {categoryEventCountData?.length > 0 &&

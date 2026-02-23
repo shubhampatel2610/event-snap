@@ -123,4 +123,10 @@ export class AppConstants {
     static REGISTERED_LABEL_POSTFIX = "Registered";
     static FREE_LABEL = "Free";
     static PAID_LABEL = "Paid";
+    static EVENTS_BY_CATEGORY_HEADER = "Events by Categories...";
+    static EVENT_SINGULAR_LABEL = "Event";
+    static EVENT_PLURAL_LABEL = "Events";
+    static POPULAR_EVENTS_HEADER = "Popular events around you";
+    static NO_EVENT_FOUND_LABEL = "No Event Found";
+    static BE_FIRST_TO_CREATE_LABEL = "Be the first to create one...";
 }

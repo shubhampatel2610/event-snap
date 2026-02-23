@@ -21,9 +21,9 @@ const NoEventComponent = () => {
                         <Card className="p-10 text-center bg-transparent">
                             <div className="max-2-md mx-auto text-white flex flex-col gap-2.5 justify-center items-center">
                                 <PartyPopper className="h-6 w-6" />
-                                <h2 className="text-2xl font-bold">No Events Found</h2>
+                                <h2 className="text-2xl font-bold">{AppConstants.NO_EVENT_FOUND_LABEL}</h2>
                                 <span className="text-muted-foreground">
-                                    Be the first to create one...
+                                    {AppConstants.BE_FIRST_TO_CREATE_LABEL}
                                 </span>
                                 <InputButton
                                     label={AppConstants.CREATE_EVENT_BTN_LABEL}
