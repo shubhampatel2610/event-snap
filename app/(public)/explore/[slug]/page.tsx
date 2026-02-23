@@ -1,11 +1,7 @@
-import React from 'react'
+import DynamicExplorePageComponent from '@/app/components/DynamicExplorePageComponent/DynamicExplorePageComponent';
 
 const DynamicExplorePage = () => {
-    return (
-        <div>
-            Dynamic Explore
-        </div>
-    )
+    return <DynamicExplorePageComponent />;
 }
 
 export default DynamicExplorePage;

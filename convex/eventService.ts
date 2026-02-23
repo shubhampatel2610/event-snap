@@ -46,7 +46,7 @@ export const getEventsByLocation = query({
             const matchesCity = args.city ? event.city.toLowerCase() === args.city.toLowerCase() : true;
             const matchesState = args.state ? event.state.toLowerCase() === args.state.toLowerCase() : true;
             const matchesCountry = args.country ? event.country.toLowerCase() === args.country.toLowerCase() : true;
-            return matchesCity || matchesState || matchesCountry;
+            return matchesCity && matchesState && matchesCountry;
         });
 
         // Sort filtered events by registration count (popularity)

@@ -129,4 +129,8 @@ export class AppConstants {
     static POPULAR_EVENTS_HEADER = "Popular events around you";
     static NO_EVENT_FOUND_LABEL = "No Event Found";
     static BE_FIRST_TO_CREATE_LABEL = "Be the first to create one...";
+    static FOUND_LABEL = "Found";
+    static NO_EVENT_FOR_CATEGORY_LABEL = "No Events Found for this Category.";
+    static CATEGORY_SLUG_KEY = "category";
+    static LOCATION_SLUG_KEY = "location";
 }

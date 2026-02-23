@@ -8,13 +8,15 @@ interface EventState {
   eventsByLocation: any[];
   eventsCountByCategory: any;
   popularEvents: any[];
+  eventsByCategory: any[];
 }
 
 const initialState: EventState = {
   featuredEvents: [],
   eventsByLocation: [],
   eventsCountByCategory: {},
-  popularEvents: []
+  popularEvents: [],
+  eventsByCategory: []
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -37,7 +39,7 @@ export const fetchEventsByLocation = createAsyncThunk(
         city: location?.city,
         state: location?.state,
         country: location?.country,
-        limit: 5
+        limit: location?.limit ?? 5
       }
     );
     return result;
@@ -64,6 +66,17 @@ export const fetchPopularEvents = createAsyncThunk(
   }
 );
 
+export const fetchEventsByCategory = createAsyncThunk(
+  "explore/fetchEventsByCategory",
+  async ({ category, limit }: { category: string; limit: number }) => {
+    const result = await useCustomConvexQuery(
+      api.eventService.getEventsByCategory,
+      { category, limit }
+    );
+    return result;
+  }
+);
+
 const eventSlice = createSlice({
   name: "event",
   initialState,
@@ -79,6 +92,9 @@ const eventSlice = createSlice({
     },
     setPopularEvents(state, action: PayloadAction<any>) {
       state.popularEvents = action.payload;
+    },
+    setEventsByCategory(state, action: PayloadAction<any>) {
+      state.eventsByCategory = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -95,6 +111,9 @@ const eventSlice = createSlice({
       .addCase(fetchPopularEvents.fulfilled, (state, action) => {
         state.popularEvents = action.payload as any;
       })
+      .addCase(fetchEventsByCategory.fulfilled, (state, action) => {
+        state.eventsByCategory = action.payload as any;
+      })
   },
 });
 
@@ -102,7 +121,8 @@ export const {
   setFeaturedEvents,
   setEventsByLocation,
   setEventsCountByCategory,
-  setPopularEvents
+  setPopularEvents,
+  setEventsByCategory
 } = eventSlice.actions;
 
 export default eventSlice.reducer;

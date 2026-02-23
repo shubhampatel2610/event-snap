@@ -3,7 +3,8 @@ import InputButton from "../CommonComponents/ButtonComponent/InputButton";
 import { createLocationSlug } from "@/app/utils/helperFunctions";
 import EventCardComponent from "../CommonComponents/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
-import { useAppSelector } from "@/app/store/store";
+import { useAppDispatch, useAppSelector } from "@/app/store/store";
+import { setEventsByLocation } from "@/app/store/eventSlice";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface EventByLocationComponentProps {
@@ -12,6 +13,7 @@ interface EventByLocationComponentProps {
 }
 
 const EventByLocationComponent = (props: EventByLocationComponentProps) => {
+    const dispatch = useAppDispatch();
     const { eventList, handleEventClick } = props;
     const userData = useAppSelector((state) => state.user.currentUserData);
 
@@ -55,6 +57,7 @@ const EventByLocationComponent = (props: EventByLocationComponentProps) => {
                         asChild
                         size={"sm"}
                         navigateTo={createViewAllLink(userData)}
+                        onClick={() => dispatch(setEventsByLocation([]))}
                     />
                 </div>
             </div>

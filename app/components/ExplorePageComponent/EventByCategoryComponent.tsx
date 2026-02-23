@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppConstants } from "@/app/constants/AppConstants";
-import { useAppSelector } from "@/app/store/store";
+import { setEventsByCategory } from "@/app/store/eventSlice";
+import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
 const EventByCategoryComponent = () => {
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const eventsCountByCategory = useAppSelector((state) => state.event.eventsCountByCategory);
 
     const categoryEventCountData = AppConstants.CATEGORIES.map((category: any) => {
@@ -16,7 +18,8 @@ const EventByCategoryComponent = () => {
     });
 
     const handleCategoryClick = (categoryId: string) => {
-        router.push(`${AppConstants.EVENTS_ROUTE}/${categoryId}`);
+        dispatch(setEventsByCategory([]));
+        router.push(`${AppConstants.EXPLORE_ROUTE}/${categoryId}`);
     }
 
     const eventCountByCategoryRenderer = (category: any) => {
