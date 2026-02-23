@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Trash, Trash2, Users } from "lucide-react";
+import { Calendar, MapPin, Trash, Users } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import { EventCardComponentProps } from "./EventCardComponent";
@@ -52,7 +52,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={onClick}>
+            <Card key={key} className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={onClick}>
                 <div className="relative h-40 overflow-hidden">
                     {event.bannerImageUrl ?
                         <Image
