@@ -6,11 +6,15 @@ import { api } from "@/convex/_generated/api";
 interface EventState {
   featuredEvents: any[];
   eventsByLocation: any[];
+  eventsCountByCategory: any;
+  popularEvents: any[];
 }
 
 const initialState: EventState = {
   featuredEvents: [],
   eventsByLocation: [],
+  eventsCountByCategory: {},
+  popularEvents: []
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -40,6 +44,26 @@ export const fetchEventsByLocation = createAsyncThunk(
   }
 );
 
+export const fetchEventByCategoryCount = createAsyncThunk(
+  "explore/fetchEventByCategoryCount",
+  async () => {
+    const result = await useCustomConvexQuery(
+      api.eventService.getEventCountsByCategory
+    );
+    return result;
+  }
+);
+
+export const fetchPopularEvents = createAsyncThunk(
+  "explore/fetchPopularEvents",
+  async () => {
+    const result = await useCustomConvexQuery(
+      api.eventService.getPopularEvents
+    );
+    return result;
+  }
+);
+
 const eventSlice = createSlice({
   name: "event",
   initialState,
@@ -49,6 +73,12 @@ const eventSlice = createSlice({
     },
     setEventsByLocation(state, action: PayloadAction<any[]>) {
       state.eventsByLocation = action.payload;
+    },
+    setEventsCountByCategory(state, action: PayloadAction<any>) {
+      state.eventsCountByCategory = action.payload;
+    },
+    setPopularEvents(state, action: PayloadAction<any>) {
+      state.popularEvents = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -59,9 +89,20 @@ const eventSlice = createSlice({
       .addCase(fetchEventsByLocation.fulfilled, (state, action) => {
         state.eventsByLocation = action.payload as any[];
       })
+      .addCase(fetchEventByCategoryCount.fulfilled, (state, action) => {
+        state.eventsCountByCategory = action.payload as any;
+      })
+      .addCase(fetchPopularEvents.fulfilled, (state, action) => {
+        state.popularEvents = action.payload as any;
+      })
   },
 });
 
-export const { setFeaturedEvents, setEventsByLocation } = eventSlice.actions;
+export const {
+  setFeaturedEvents,
+  setEventsByLocation,
+  setEventsCountByCategory,
+  setPopularEvents
+} = eventSlice.actions;
 
 export default eventSlice.reducer;

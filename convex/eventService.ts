@@ -76,7 +76,7 @@ export const getPopularEvents = query({
         const sortedEvents = events.sort((a, b) => b.registrationCount - a.registrationCount);
 
         // Return only the requested number of events
-        return sortedEvents.slice(0, args.limit ?? 5);
+        return sortedEvents.slice(0, args.limit ?? 6);
     }
 });
 

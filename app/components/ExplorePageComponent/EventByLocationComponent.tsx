@@ -1,19 +1,19 @@
 import { ArrowRight } from "lucide-react";
 import InputButton from "../CommonComponents/ButtonComponent/InputButton";
 import { createLocationSlug } from "@/app/utils/helperFunctions";
-import { useRouter } from "next/navigation";
 import EventCardComponent from "../CommonComponents/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
+import { useAppSelector } from "@/app/store/store";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface EventByLocationComponentProps {
     eventList: any[];
-    userData: any;
+    handleEventClick: (slug: string) => void;
 }
 
 const EventByLocationComponent = (props: EventByLocationComponentProps) => {
-    const router = useRouter();
-    const { eventList, userData } = props;
+    const { eventList, handleEventClick } = props;
+    const userData = useAppSelector((state) => state.user.currentUserData);
 
     const createViewAllLink = (userData: any) => {
         const city = userData?.location?.city || "Ahmedabad";
@@ -21,11 +21,7 @@ const EventByLocationComponent = (props: EventByLocationComponentProps) => {
 
         const slug = createLocationSlug(city, state);
 
-        return `${AppConstants.EXPLORE_ROUTE}${AppConstants.LOCATION_ROUTE}/${slug}`;
-    }
-
-    const handleEventClick = (eventSlug: string) => {
-        router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
+        return `${AppConstants.EXPLORE_ROUTE}/${slug}`;
     }
 
     const eventCardRenderer = (event: any) => {

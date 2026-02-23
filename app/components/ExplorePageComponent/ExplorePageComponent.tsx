@@ -2,23 +2,33 @@
 
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { fetchEventsByLocation, fetchFeaturedEvents } from "@/app/store/eventSlice";
+import { fetchEventByCategoryCount, fetchEventsByLocation, fetchFeaturedEvents, fetchPopularEvents } from "@/app/store/eventSlice";
 import { fetchCurrentUser } from "@/app/store/userSlice";
 import { AppConstants } from "@/app/constants/AppConstants";
 import CarouselComponent from "../CommonComponents/CarouselComponent/CarouselComponent";
 import EventCarouselItemTemplate from "./EventCarouselItemTemplate";
 import EventByLocationComponent from "./EventByLocationComponent";
+import EventByCategoryComponent from "./EventByCategoryComponent";
+import _ from "lodash";
+import PopularEventsComponent from "./PopularEventsComponent";
+import { useRouter } from "next/navigation";
+import NoEventComponent from "./NoEventComponent";
 
 const ExplorePageComponent = () => {
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const currentUserData = useAppSelector((state) => state.user.currentUserData);
     const featuredEvents = useAppSelector((state) => state.event.featuredEvents);
     const eventsByLocation = useAppSelector((state) => state.event.eventsByLocation);
+    const eventsCountByCategory = useAppSelector((state) => state.event.eventsCountByCategory);
+    const popularEvents = useAppSelector((state) => state.event.popularEvents);
 
     useEffect(() => {
         dispatch(fetchCurrentUser());
         dispatch(fetchFeaturedEvents(3));
+        dispatch(fetchEventByCategoryCount());
+        dispatch(fetchPopularEvents());
     }, [dispatch]);
 
     useEffect(() => {
@@ -30,8 +40,12 @@ const ExplorePageComponent = () => {
         }));
     }, [currentUserData, dispatch]);
 
+    const handleEventClick = (eventSlug: string) => {
+        router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
+    }
+
     return (
-        <div className="text-center py-5 flex flex-col gap-2.5">
+        <div className="text-center py-5 flex flex-col gap-5">
             <div className="w-full flex flex-col gap-2.5">
                 <h1 className="text-4xl sm:text-5xl md:text-5xl font-bold">
                     {AppConstants.EXPLORE_PAGE_HEADER}
@@ -54,10 +68,26 @@ const ExplorePageComponent = () => {
                 <>
                     <EventByLocationComponent
                         eventList={eventsByLocation}
-                        userData={currentUserData}
+                        handleEventClick={handleEventClick}
                     />
                 </>
             )}
+
+            {eventsCountByCategory && !_.isEmpty(eventsCountByCategory) && (
+                <>
+                    <EventByCategoryComponent />
+                </>
+            )}
+
+            {popularEvents && popularEvents.length > 0 && (
+                <>
+                    <PopularEventsComponent
+                        handleEventClick={handleEventClick}
+                    />
+                </>
+            )}
+
+            <NoEventComponent />
         </div>
 
     );
