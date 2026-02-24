@@ -1,29 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 
 interface DashboardState {
-  value: number;
   isLoading: boolean;
+  data: any[];
+  error: string | null;
 }
 
 const initialState: DashboardState = {
-  value: 0,
   isLoading: false,
+  data: [],
+  error: null,
 };
 
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
-
-    decrement: (state) => {
-      state.value -= 1;
+    setData: (state, action) => {
+      state.data = action.payload;
+      state.isLoading = false;
+      state.error = null;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
     },
   },
 });
 
-export const { increment, decrement } = dashboardSlice.actions;
+export const { setLoading, setData, setError } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

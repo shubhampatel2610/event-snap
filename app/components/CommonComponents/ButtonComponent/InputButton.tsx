@@ -3,7 +3,7 @@ import Link from "next/link";
 
 interface ButtonProps {
     label: string;
-    onClick?: () => void;
+    onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
     disabled?: boolean;
     className?: string;
     size?: "sm" | "default" | "xs" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | null | undefined;
@@ -25,13 +25,17 @@ const InputButton = (props: ButtonProps) => {
                 variant={variant}
                 asChild={asChild}
             >
-                {navigateTo ?
-                    <Link href={navigateTo}>
+                {navigateTo ? (
+                    <Link href={navigateTo} className="flex items-center gap-2">
                         {icon && <span className="w-4 h-4">{icon}</span>}
-                        <span className={icon ? "hidden sm:inline" : ""}>{label}</span>
-                    </Link> :
-                    label
-                }
+                        {label && <span>{label}</span>}
+                    </Link>
+                ) : (
+                    <span className="flex items-center gap-2">
+                        {icon && <span className="w-4 h-4">{icon}</span>}
+                        {label && <span>{label}</span>}
+                    </span>
+                )}
             </Button>
         </>
     )

@@ -9,6 +9,7 @@ import { ConvexClientProvider } from "./utils/ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import GlobalLoaderProvider from "./utils/GlobalLoaderProvider/GlobalLoaderProvider";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
             <Provider store={store}>
               <GlobalLoaderProvider>
                 <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
+                  <Toaster position="top-right" richColors />
                   <Header />
                   <Provider store={store}>{children}</Provider>
                   <Footer />
