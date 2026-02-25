@@ -33,9 +33,9 @@ const ExplorePageComponent = () => {
 
     useEffect(() => {
         dispatch(fetchEventsByLocation({
-            city: currentUserData?.city || "Ahmedabad",
-            state: currentUserData?.state || "Gujarat",
-            country: currentUserData?.country || "India",
+            city: currentUserData?.location?.city || "Ahmedabad",
+            state: currentUserData?.location?.state || "Gujarat",
+            country: currentUserData?.location?.country || "India",
             limit: 5
         }));
     }, [currentUserData, dispatch]);
