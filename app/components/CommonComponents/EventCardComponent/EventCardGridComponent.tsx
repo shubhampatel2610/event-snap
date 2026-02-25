@@ -11,7 +11,6 @@ import { AppConstants } from "@/app/constants/AppConstants";
 
 const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">) => {
     const {
-        key,
         className,
         event,
         onClick,
@@ -52,7 +51,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card key={key} className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={onClick}>
+            <Card className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={onClick}>
                 <div className="relative h-40 overflow-hidden">
                     {event.bannerImageUrl ?
                         <Image
