@@ -9,9 +9,16 @@ import { BarLoader } from "react-spinners";
 import { useStoreUser } from "@/hooks/use-store-user";
 import { Building, Plus, Ticket } from "lucide-react";
 import { AppConstants } from "@/app/constants/AppConstants";
+import InterestsDialogComponent from "../InterestsDialogComponent/InterestsDialogComponent";
+import useInterests from "@/hooks/use-interests";
 
 const Header = () => {
   const { isLoading } = useStoreUser();
+  const {
+    showInterests,
+    handleDialogStepsComplete,
+    handleDialogStepSkip
+  } = useInterests();
 
   return (
     <>
@@ -80,6 +87,12 @@ const Header = () => {
           </div>}
         </div>
       </nav>
+
+      <InterestsDialogComponent
+        isOpen={showInterests}
+        onClose={handleDialogStepSkip}
+        onComplete={handleDialogStepsComplete}
+      />
     </>
   );
 };

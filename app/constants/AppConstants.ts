@@ -133,4 +133,10 @@ export class AppConstants {
     static NO_EVENT_FOR_CATEGORY_LABEL = "No Events Found for this Category.";
     static CATEGORY_SLUG_KEY = "category";
     static LOCATION_SLUG_KEY = "location";
+
+    // Interests Onboarding Constants
+    static STEP_1_HEADER = "What Are Your Interests?";
+    static STEP_2_HEADER = "Whats Your Location?";
+    static STEP_1_SUBHEADER = "Select atleast 3 categories of your interest";
+    static STEP_2_SUBHEADER = "Personalize your experience by location";
 }
