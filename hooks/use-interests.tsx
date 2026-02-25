@@ -39,7 +39,6 @@ const useInterests = () => {
         }
 
     }, [currentUserData, path])
-    console.log("USER DATA", currentUserData);
 
     const handleDialogStepsComplete = () => {
         setShowInterests(false);
