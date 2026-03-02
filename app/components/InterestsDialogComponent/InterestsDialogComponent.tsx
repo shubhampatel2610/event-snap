@@ -2,10 +2,8 @@
 import { AppConstants } from "@/app/constants/AppConstants";
 import { removeSelectedInterests, setSelectedInterests, setSelectedLocation } from "@/app/store/eventSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { Button } from "@/components/ui/button"
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
