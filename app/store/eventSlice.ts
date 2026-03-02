@@ -9,6 +9,8 @@ interface EventState {
   eventsCountByCategory: any;
   popularEvents: any[];
   eventsByCategory: any[];
+  selectedInterests: any[];
+  selectedLocation: any
 }
 
 const initialState: EventState = {
@@ -16,7 +18,13 @@ const initialState: EventState = {
   eventsByLocation: [],
   eventsCountByCategory: {},
   popularEvents: [],
-  eventsByCategory: []
+  eventsByCategory: [],
+  selectedInterests: [],
+  selectedLocation: {
+    city: "",
+    state: "",
+    country: ""
+  }
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -95,7 +103,16 @@ const eventSlice = createSlice({
     },
     setEventsByCategory(state, action: PayloadAction<any>) {
       state.eventsByCategory = action.payload;
-    }
+    },
+    setSelectedInterests(state, action: PayloadAction<any>) {
+      state.selectedInterests = [...state.selectedInterests, action.payload];
+    },
+    removeSelectedInterests(state, action: PayloadAction<any>) {
+      state.selectedInterests = state.selectedInterests.filter((item: any) => item !== action.payload);
+    },
+    setSelectedLocation(state, action: PayloadAction<any>) {
+      state.selectedLocation = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -122,7 +139,10 @@ export const {
   setEventsByLocation,
   setEventsCountByCategory,
   setPopularEvents,
-  setEventsByCategory
+  setEventsByCategory,
+  setSelectedInterests,
+  removeSelectedInterests,
+  setSelectedLocation
 } = eventSlice.actions;
 
 export default eventSlice.reducer;

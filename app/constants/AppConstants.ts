@@ -34,6 +34,9 @@ export class AppConstants {
     static EVENTS_LABEL = "Events";
     static VIEW_ALL_LABEL = "View All";
     static VIEW_LABEL = "View";
+    static BACK_LABEL = "Back";
+    static CONTINUE_LABEL = "Continue";
+    static SAVE_LABEL = "Save";
 
     // Categories
     static CATEGORIES = [
@@ -139,4 +142,9 @@ export class AppConstants {
     static STEP_2_HEADER = "Whats Your Location?";
     static STEP_1_SUBHEADER = "Select atleast 3 categories of your interest";
     static STEP_2_SUBHEADER = "Personalize your experience by location";
+    static SELECTED_POSTFIX = "Selected";
+    static READY_TO_CONTINUE_TEXT = "Ready To Continue...";
+    static STATE_LABEL = "State";
+    static CITY_LABEL = "City";
+    static SELECT_PREFIX = "Select";
 }
