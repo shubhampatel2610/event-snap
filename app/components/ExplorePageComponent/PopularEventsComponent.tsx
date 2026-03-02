@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppSelector } from "@/app/store/store";
-import EventCardComponent from "../CommonComponents/EventCardComponent/EventCardComponent";
+import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
 
 interface PopularEventsProps {

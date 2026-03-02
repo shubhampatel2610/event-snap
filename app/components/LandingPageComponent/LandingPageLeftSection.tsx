@@ -1,7 +1,7 @@
 "use client";
 
 import { AppConstants } from "@/app/constants/AppConstants";
-import InputButton from "../CommonComponents/ButtonComponent/InputButton";
+import InputButton from "../common/ButtonComponent/InputButton";
 
 const LandingPageLeftSection = () => {
     return (

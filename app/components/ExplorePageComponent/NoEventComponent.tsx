@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/app/store/store";
 import { Card } from "@/components/ui/card";
 import { PartyPopper } from "lucide-react";
-import InputButton from "../CommonComponents/ButtonComponent/InputButton";
+import InputButton from "../common/ButtonComponent/InputButton";
 import { AppConstants } from "@/app/constants/AppConstants";
 
 const NoEventComponent = () => {

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { fetchEventByCategoryCount, fetchEventsByLocation, fetchFeaturedEvents, fetchPopularEvents } from "@/app/store/eventSlice";
 import { fetchCurrentUser } from "@/app/store/userSlice";
 import { AppConstants } from "@/app/constants/AppConstants";
-import CarouselComponent from "../CommonComponents/CarouselComponent/CarouselComponent";
+import CarouselComponent from "../common/CarouselComponent/CarouselComponent";
 import EventCarouselItemTemplate from "./EventCarouselItemTemplate";
 import EventByLocationComponent from "./EventByLocationComponent";
 import EventByCategoryComponent from "./EventByCategoryComponent";

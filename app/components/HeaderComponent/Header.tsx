@@ -3,7 +3,7 @@
 import AppLogo from "@/public/AppLogo";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import InputButton from "../CommonComponents/ButtonComponent/InputButton";
+import InputButton from "../common/ButtonComponent/InputButton";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from "react-spinners";
 import { useStoreUser } from "@/hooks/use-store-user";

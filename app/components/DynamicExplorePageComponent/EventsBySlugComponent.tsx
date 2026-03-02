@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppConstants } from "@/app/constants/AppConstants";
-import EventCardComponent from "../CommonComponents/EventCardComponent/EventCardComponent";
+import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/app/store/store";
 import { MapPin } from "lucide-react";

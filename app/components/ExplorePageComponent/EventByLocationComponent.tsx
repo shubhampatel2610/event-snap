@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
-import InputButton from "../CommonComponents/ButtonComponent/InputButton";
+import InputButton from "../common/ButtonComponent/InputButton";
 import { createLocationSlug } from "@/app/utils/helperFunctions";
-import EventCardComponent from "../CommonComponents/EventCardComponent/EventCardComponent";
+import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { setEventsByLocation } from "@/app/store/eventSlice";

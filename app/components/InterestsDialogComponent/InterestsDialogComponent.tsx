@@ -13,12 +13,12 @@ import {
 import { ArrowLeft, Heart, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useMemo, useState } from "react";
-import InputButton from "../CommonComponents/ButtonComponent/InputButton";
+import InputButton from "../common/ButtonComponent/InputButton";
 import { useConvexMutations } from "@/hooks/use-convex-query";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { City, State } from "country-state-city";
-import SelectComponent from "../CommonComponents/SelectComponent/SelectComponent";
+import SelectComponent from "../common/SelectComponent/SelectComponent";
 
 interface DialogProps {
     isOpen: boolean,
