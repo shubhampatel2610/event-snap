@@ -3,7 +3,6 @@ import EventCardListComponent from "./EventCardListComponent";
 import EventCardGridComponent from "./EventCardGridComponent";
 
 export interface EventCardComponentProps {
-  key: string;
   className?: string;
   event: any;
   variant: "grid" | "list";
@@ -14,7 +13,6 @@ export interface EventCardComponentProps {
 
 const EventCardComponent = (props: EventCardComponentProps) => {
   const {
-    key,
     className,
     event,
     variant = "grid",
@@ -25,7 +23,6 @@ const EventCardComponent = (props: EventCardComponentProps) => {
 
   return (variant === "list") ?
     <EventCardListComponent
-      key={key}
       className={className}
       event={event}
       onClick={onClick}
@@ -33,7 +30,6 @@ const EventCardComponent = (props: EventCardComponentProps) => {
       showActions={showActions}
     /> :
     <EventCardGridComponent
-      key={key}
       className={className}
       event={event}
       onClick={onClick}

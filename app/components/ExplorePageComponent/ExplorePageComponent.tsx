@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { fetchEventByCategoryCount, fetchEventsByLocation, fetchFeaturedEvents, fetchPopularEvents } from "@/app/store/eventSlice";
 import { fetchCurrentUser } from "@/app/store/userSlice";
 import { AppConstants } from "@/app/constants/AppConstants";
-import CarouselComponent from "../CommonComponents/CarouselComponent/CarouselComponent";
+import CarouselComponent from "../common/CarouselComponent/CarouselComponent";
 import EventCarouselItemTemplate from "./EventCarouselItemTemplate";
 import EventByLocationComponent from "./EventByLocationComponent";
 import EventByCategoryComponent from "./EventByCategoryComponent";
@@ -33,9 +33,9 @@ const ExplorePageComponent = () => {
 
     useEffect(() => {
         dispatch(fetchEventsByLocation({
-            city: currentUserData?.city || "Ahmedabad",
-            state: currentUserData?.state || "Gujarat",
-            country: currentUserData?.country || "India",
+            city: currentUserData?.location?.city || "Ahmedabad",
+            state: currentUserData?.location?.state || "Gujarat",
+            country: currentUserData?.location?.country || "India",
             limit: 5
         }));
     }, [currentUserData, dispatch]);

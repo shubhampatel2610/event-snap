@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 export const store = mutation({
     args: {},
@@ -55,5 +58,28 @@ export const getCurrentUserData = query({
             throw new Error("User not found");
         }
         return user;
+    }
+})
+
+export const userOnBoarding = mutation({
+    args: {
+        location: v.object({
+            city: v.string(),
+            state: v.string(),
+            country: v.string()
+        }),
+        interests: v.array(v.string())
+    },
+    handler: async (ctx, args) => {
+        const userData: any = await ctx.runQuery(internal.users.getCurrentUserData);
+
+        await ctx.db.patch(userData.id, {
+            location: args.location,
+            interests: args.interests,
+            hasOnboardingDone: true,
+            updatedAt: Date.now()
+        })
+
+        return userData.id;
     }
 })

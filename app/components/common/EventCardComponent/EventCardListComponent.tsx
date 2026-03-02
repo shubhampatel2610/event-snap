@@ -8,7 +8,6 @@ import { AppConstants } from "@/app/constants/AppConstants";
 
 const EventCardListComponent = (props: Omit<EventCardComponentProps, "variant">) => {
     const {
-        key,
         className,
         event,
         onClick,
@@ -18,7 +17,7 @@ const EventCardListComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card key={key} className={`py-0 group cursor-pointer hover:shadow-accent transition-all hover:border-[#06B6D4] bg-transparent ${className}`} onClick={onClick}>
+            <Card className={`py-0 group cursor-pointer hover:shadow-accent transition-all hover:border-[#06B6D4] bg-transparent ${className}`} onClick={onClick}>
                 <CardContent className="p-3 flex gap-2.5">
                     <div className="w-24 h-24 relative rounded-md overflow-hidden shrink-0">
                         {event.bannerImageUrl ?
