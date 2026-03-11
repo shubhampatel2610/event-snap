@@ -43,7 +43,6 @@ const SearchBarComponent = () => {
     }
 
     const handleEventClick = (eventSlug: string) => {
-        console.log("redirct to", eventSlug)
         dispatch(setShowSearchedResults(false));
         dispatch(setSearchQuery(""));
         router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
@@ -60,8 +59,6 @@ const SearchBarComponent = () => {
 
         return () => document.removeEventListener("click", handleOutsideClick);
     }, [])
-
-    console.log(searchedResults)
 
     return (
         <div className="flex items-center relative">
