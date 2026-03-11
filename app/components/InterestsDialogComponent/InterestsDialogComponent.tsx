@@ -102,10 +102,10 @@ const InterestsDialogComponent = (props: DialogProps) => {
                 interests: selectedInterests
             });
 
-            toast.success("Welcome To EventSnap :)");
+            toast.success(AppConstants.ONBOARDING_SUCCESS);
             onComplete();
         } catch (error) {
-            toast.error("Failed To Complete Onboarding :(");
+            toast.error(AppConstants.ONBOARDING_ERROR);
             console.log(error);
         }
     }

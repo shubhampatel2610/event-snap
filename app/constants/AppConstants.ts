@@ -147,4 +147,6 @@ export class AppConstants {
     static STATE_LABEL = "State";
     static CITY_LABEL = "City";
     static SELECT_PREFIX = "Select";
+    static ONBOARDING_SUCCESS = "Welcome To EventSnap :)";
+    static ONBOARDING_ERROR = "Failed To Complete Onboarding :(";
 }
