@@ -11,8 +11,8 @@ const AppLogo = () => {
       >
         <defs>
           <linearGradient id="snapGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#8B5CF6" />
-            <stop offset="100%" stop-color="#06B6D4" />
+            <stop offset="0%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#06B6D4" />
           </linearGradient>
 
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -46,9 +46,9 @@ const AppLogo = () => {
         <text
           x="115"
           y="72"
-          font-family="Poppins, Arial, sans-serif"
-          font-size="48"
-          font-weight="600"
+          fontFamily="Poppins, Arial, sans-serif"
+          fontSize="48"
+          fontWeight="600"
           fill="#E5E7EB"
           className="hidden sm:block"
         >
@@ -58,9 +58,9 @@ const AppLogo = () => {
         <text
           x="245"
           y="72"
-          font-family="Poppins, Arial, sans-serif"
-          font-size="48"
-          font-weight="700"
+          fontFamily="Poppins, Arial, sans-serif"
+          fontSize="48"
+          fontWeight="700"
           fill="url(#snapGradient)"
           className="hidden sm:block"
         >

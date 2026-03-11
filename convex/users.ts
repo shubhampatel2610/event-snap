@@ -72,14 +72,13 @@ export const userOnBoarding = mutation({
     },
     handler: async (ctx, args) => {
         const userData: any = await ctx.runQuery(internal.users.getCurrentUserData);
-
-        await ctx.db.patch(userData.id, {
+        await ctx.db.patch(userData._id, {
             location: args.location,
             interests: args.interests,
             hasOnboardingDone: true,
             updatedAt: Date.now()
         })
 
-        return userData.id;
+        return userData._id;
     }
 })

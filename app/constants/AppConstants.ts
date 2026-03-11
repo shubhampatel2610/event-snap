@@ -147,4 +147,10 @@ export class AppConstants {
     static STATE_LABEL = "State";
     static CITY_LABEL = "City";
     static SELECT_PREFIX = "Select";
+    static ONBOARDING_SUCCESS = "Welcome To EventSnap :)";
+    static ONBOARDING_ERROR = "Failed To Complete Onboarding :(";
+
+    // Global Search Constants
+    static GLOBAL_SEARCH_PLACEHOLDER = "Search By Title";
+    static SEARCH_RESULT_TITLE = "Search Results";
 }

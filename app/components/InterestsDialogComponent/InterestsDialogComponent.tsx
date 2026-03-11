@@ -91,8 +91,23 @@ const InterestsDialogComponent = (props: DialogProps) => {
         }
     }
 
-    const handleSaveInterests = () => {
+    const handleSaveInterests = async () => {
+        try {
+            await userOnboardingData({
+                location: {
+                    city: selectedLocation.city,
+                    state: selectedLocation.state,
+                    country: selectedLocation.country
+                },
+                interests: selectedInterests
+            });
 
+            toast.success(AppConstants.ONBOARDING_SUCCESS);
+            onComplete();
+        } catch (error) {
+            toast.error(AppConstants.ONBOARDING_ERROR);
+            console.log(error);
+        }
     }
 
     return (

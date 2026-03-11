@@ -7,6 +7,12 @@ import { toast } from "sonner";
 
 export const useConvexQuery = (query: any, ...args: any) => {
     const dispatch = useAppDispatch();
+
+    if (args[0] === "skip") {
+        dispatch(setLoading(false));
+        dispatch(setError(""));
+    }
+
     const response = useQuery(query, ...args);
 
     const isLoading = useAppSelector((state) => state.dashboard.isLoading);
