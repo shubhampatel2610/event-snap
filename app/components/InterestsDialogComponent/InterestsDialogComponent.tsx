@@ -91,8 +91,23 @@ const InterestsDialogComponent = (props: DialogProps) => {
         }
     }
 
-    const handleSaveInterests = () => {
+    const handleSaveInterests = async () => {
+        try {
+            await userOnboardingData({
+                location: {
+                    city: selectedLocation.city,
+                    state: selectedLocation.state,
+                    country: selectedLocation.country
+                },
+                interests: selectedInterests
+            });
 
+            toast.success("Welcome To EventSnap :)");
+            onComplete();
+        } catch (error) {
+            toast.error("Failed To Complete Onboarding :(");
+            console.log(error);
+        }
     }
 
     return (
