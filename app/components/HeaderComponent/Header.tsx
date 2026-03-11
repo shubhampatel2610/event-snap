@@ -11,6 +11,7 @@ import { Building, Plus, Ticket } from "lucide-react";
 import { AppConstants } from "@/app/constants/AppConstants";
 import InterestsDialogComponent from "../InterestsDialogComponent/InterestsDialogComponent";
 import useInterests from "@/hooks/use-interests";
+import SearchBarComponent from "./SearchBarComponent";
 
 const Header = () => {
   const { isLoading } = useStoreUser();
@@ -29,6 +30,10 @@ const Header = () => {
               <AppLogo />
             </div>
           </Link>
+
+          <div className="hidden md:flex flex-1 justify-center">
+            <SearchBarComponent />
+          </div>
 
           <div className="flex items-center gap-2 sm:gap-1">
             <InputButton
@@ -52,6 +57,7 @@ const Header = () => {
                 navigateTo={AppConstants.CREATE_EVENT_ROUTE}
                 asChild
                 icon={<Plus />}
+                iconClassName={"hidden sm:inline"}
               />
               <UserButton>
                 <UserButton.MenuItems>
@@ -85,6 +91,10 @@ const Header = () => {
               color={"#8B5CF6"}
             />
           </div>}
+        </div>
+
+        <div className="md:hidden border-t p-2">
+          <SearchBarComponent />
         </div>
       </nav>
 

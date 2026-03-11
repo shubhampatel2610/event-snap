@@ -5,12 +5,16 @@ interface DashboardState {
   isLoading: boolean;
   data: any[];
   error: string | null;
+  searchQuery: string;
+  showSearchedResults: boolean;
 }
 
 const initialState: DashboardState = {
   isLoading: false,
   data: [],
   error: null,
+  searchQuery: "",
+  showSearchedResults: false
 };
 
 const dashboardSlice = createSlice({
@@ -29,9 +33,15 @@ const dashboardSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload
+    },
+    setShowSearchedResults: (state, action) => {
+      state.showSearchedResults = action.payload
+    }
   },
 });
 
-export const { setLoading, setData, setError } = dashboardSlice.actions;
+export const { setLoading, setData, setError, setSearchQuery, setShowSearchedResults } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

@@ -1,0 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+interface InputComponentProps {
+    label?: string,
+    value?: string,
+    placeholder?: string,
+    onChange: (e?: any) => void,
+    className?: string,
+    icon?: React.ReactNode;
+    onFocus?: () => void,
+}
+
+const InputComponent = (props: InputComponentProps) => {
+    const {
+        label,
+        value,
+        placeholder,
+        onChange,
+        className,
+        icon,
+        onFocus
+    } = props;
+
+
+    return (
+        <div className="flex-1 relative">
+            {label && <Label htmlFor={label.toLowerCase()} className="mb-1">{label}</Label>}
+            {icon &&
+                <span className="absolute left-4 top-1/2 transform -translate-1/2 w-4 h-4 text-muted-foreground">{icon}</span>
+            }
+            <Input
+                className="pl-7 w-full h-9 rounded-1"
+                onFocus={onFocus}
+                onChange={onChange}
+                placeholder={placeholder}
+            />
+        </div>
+    )
+}
+
+export default InputComponent;

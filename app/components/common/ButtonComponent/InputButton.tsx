@@ -11,9 +11,10 @@ interface ButtonProps {
     navigateTo?: string;
     asChild?: boolean;
     icon?: React.ReactNode;
+    iconClassName?: string
 }
 const InputButton = (props: ButtonProps) => {
-    const { label, onClick, disabled, className, size, variant, navigateTo, asChild, icon } = props;
+    const { label, onClick, disabled, className, size, variant, navigateTo, asChild, icon, iconClassName } = props;
 
     return (
         <>
@@ -28,12 +29,12 @@ const InputButton = (props: ButtonProps) => {
                 {navigateTo ? (
                     <Link href={navigateTo} className="flex items-center gap-2">
                         {icon && <span className="w-4 h-4">{icon}</span>}
-                        {label && <span>{label}</span>}
+                        {label && <span className={iconClassName}>{label}</span>}
                     </Link>
                 ) : (
                     <span className="flex items-center gap-2">
                         {icon && <span className="w-4 h-4">{icon}</span>}
-                        {label && <span>{label}</span>}
+                        {label && <span className={iconClassName}>{label}</span>}
                     </span>
                 )}
             </Button>
