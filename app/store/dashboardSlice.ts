@@ -7,6 +7,7 @@ interface DashboardState {
   error: string | null;
   searchQuery: string;
   showSearchedResults: boolean;
+  showPricingPlans: boolean;
 }
 
 const initialState: DashboardState = {
@@ -14,7 +15,8 @@ const initialState: DashboardState = {
   data: [],
   error: null,
   searchQuery: "",
-  showSearchedResults: false
+  showSearchedResults: false,
+  showPricingPlans: false
 };
 
 const dashboardSlice = createSlice({
@@ -38,10 +40,13 @@ const dashboardSlice = createSlice({
     },
     setShowSearchedResults: (state, action) => {
       state.showSearchedResults = action.payload
+    },
+    setShowPricingPlans: (state, action) => {
+      state.showPricingPlans = action.payload
     }
   },
 });
 
-export const { setLoading, setData, setError, setSearchQuery, setShowSearchedResults } = dashboardSlice.actions;
+export const { setLoading, setData, setError, setSearchQuery, setShowSearchedResults, setShowPricingPlans } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

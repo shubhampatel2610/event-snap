@@ -1,17 +1,21 @@
 "use client";
 
 import AppLogo from "@/public/AppLogo";
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import { SignInButton, useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from "react-spinners";
 import { useStoreUser } from "@/hooks/use-store-user";
-import { Building, Plus, Ticket } from "lucide-react";
+import { Building, Crown, Plus, Ticket } from "lucide-react";
 import { AppConstants } from "@/app/constants/AppConstants";
 import InterestsDialogComponent from "../InterestsDialogComponent/InterestsDialogComponent";
 import useInterests from "@/hooks/use-interests";
 import SearchBarComponent from "./SearchBarComponent";
+import { Badge } from "@/components/ui/badge";
+import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPlanDialogComponent";
+import { setShowPricingPlans } from "@/app/store/dashboardSlice";
+import { useAppDispatch } from "@/app/store/store";
 
 const Header = () => {
   const { isLoading } = useStoreUser();
@@ -20,27 +24,35 @@ const Header = () => {
     handleDialogStepsComplete,
     handleDialogStepSkip
   } = useInterests();
+  const { has } = useAuth();
+  const dispatch = useAppDispatch();
+
+  const proPlan = has?.({ plan: AppConstants.PRO_PLAN_KEY });
 
   return (
     <>
       <nav className="w-full fixed top-0 left-0 bg-background/10 backdrop-blur-xl z-20 border-b">
         <div className="mx-w-7xl mx-auto px-5 py-2.5 flex items-center justify-between">
           <Link href={AppConstants.HOME_ROUTE} className="text-2xl font-bold">
-            <div>
-              <AppLogo />
-            </div>
+            <AppLogo />
           </Link>
+          {proPlan &&
+            <Badge className="ml-3 bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500  gap-1 text-black">
+              <Crown className="w-3 h-3" />
+              {AppConstants.PRO_PLAN_TEXT}
+            </Badge>}
 
           <div className="hidden md:flex flex-1 justify-center">
             <SearchBarComponent />
           </div>
 
           <div className="flex items-center gap-2 sm:gap-1">
-            <InputButton
+            {!proPlan && <InputButton
               label={AppConstants.PRICING_BTN_LABEL}
               size={"sm"}
               variant={"ghost"}
-            />
+              onClick={() => dispatch(setShowPricingPlans(true))}
+            />}
             <InputButton
               className={"mr-2"}
               label={AppConstants.EXPLORE_BTN_LABEL}
@@ -103,6 +115,8 @@ const Header = () => {
         onClose={handleDialogStepSkip}
         onComplete={handleDialogStepsComplete}
       />
+
+      <PricingPlanDialogComponent triggerPath={AppConstants.HEADER_TRIGGER_PATH} />
     </>
   );
 };

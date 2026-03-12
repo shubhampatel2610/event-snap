@@ -37,6 +37,7 @@ export class AppConstants {
     static BACK_LABEL = "Back";
     static CONTINUE_LABEL = "Continue";
     static SAVE_LABEL = "Save";
+    static MAYBE_LATER_LABEL = "Maybe Later";
 
     // Categories
     static CATEGORIES = [
@@ -153,4 +154,12 @@ export class AppConstants {
     // Global Search Constants
     static GLOBAL_SEARCH_PLACEHOLDER = "Search By Title";
     static SEARCH_RESULT_TITLE = "Search Results";
+
+    // Pricing Constants
+    static PRO_PLAN_KEY = "pro_plan";
+    static PRO_PLAN_TEXT = "PRO";
+    static HEADER_TRIGGER_PATH = "header";
+    static FREE_TRIGGER_PATH = "free";
+    static CUSTOM_TRIGGER_PATH = "custom";
+    static UPGRADE_PLAN_HEADER = "Upgrade Your Plan...";
 }
