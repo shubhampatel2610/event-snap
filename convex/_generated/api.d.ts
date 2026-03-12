@@ -10,6 +10,7 @@
 
 import type * as eventService from "../eventService.js";
 import type * as globalSearchService from "../globalSearchService.js";
+import type * as seed from "../seed.js";
 import type * as users from "../users.js";
 
 import type {
@@ -21,6 +22,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   eventService: typeof eventService;
   globalSearchService: typeof globalSearchService;
+  seed: typeof seed;
   users: typeof users;
 }>;
 

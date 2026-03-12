@@ -18,6 +18,7 @@ const LandingPageRightSection = () => {
                     alt="event crowd"
                     fill
                     className="object-cover rounded-xl shadow-xl"
+                    priority
                 />
             </div>
         </>
