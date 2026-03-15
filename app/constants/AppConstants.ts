@@ -162,4 +162,10 @@ export class AppConstants {
     static FREE_TRIGGER_PATH = "free";
     static CUSTOM_TRIGGER_PATH = "custom";
     static UPGRADE_PLAN_HEADER = "Upgrade Your Plan...";
+
+    // Create Event Constants
+    static MAX_EVENT_COUNT_ERROR = "You Have Reached Maximum Numbers Of Free Events. Upgrade To PRO For More!";
+    static CREATE_EVENT_ERROR = "Failed To Create Event";
+    static EVENT_NOT_FOUND = "Event Not Found!";
+    static DELETE_EVENT_AUTH_ERROR = "You Are Not Authorized To Delete This Event!";
 }
