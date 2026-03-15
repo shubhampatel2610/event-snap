@@ -71,3 +71,6 @@ export const generateSlugByTitle = (title: string) => {
 
     return `${baseSlug}-${uniqueId}`;
 }
+
+// HH:MM format regex
+export const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;

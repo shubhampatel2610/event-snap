@@ -168,4 +168,14 @@ export class AppConstants {
     static CREATE_EVENT_ERROR = "Failed To Create Event";
     static EVENT_NOT_FOUND = "Event Not Found!";
     static DELETE_EVENT_AUTH_ERROR = "You Are Not Authorized To Delete This Event!";
+    static DEFAULT_COLOR = "#141E3A";
+    static PRO_COLOR_OPTIONS = ["#4C1D95", "#065F46", "#92400E", "#7F1D1D", "#831843"];
+    static TITLE_REQ_ERROR = "Title must be atleast 5 characters long";
+    static DESCRIPTION_REQ_ERROR = "Description must be atleast 20 characters long";
+    static SELECT_CATEGORY_ERROR = "Please select a category";
+    static START_DATE_REQ_ERROR = "Start Date is required";
+    static END_DATE_REQ_ERROR = "End Date is required";
+    static TIME_FORMAT_ERROR = "Time must be in HH:MM format";
+    static VALID_URL_ERROR = "Please enter valid url";
+    static CITY_REQ_ERROR = "City is required";
 }
