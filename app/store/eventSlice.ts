@@ -10,7 +10,10 @@ interface EventState {
   popularEvents: any[];
   eventsByCategory: any[];
   selectedInterests: any[];
-  selectedLocation: any
+  selectedLocation: any,
+  showImagePicker: boolean,
+  showUpgradePlanPopup: boolean,
+  upgradePlanReason: "limit" | "color"
 }
 
 const initialState: EventState = {
@@ -24,7 +27,10 @@ const initialState: EventState = {
     city: "",
     state: "",
     country: ""
-  }
+  },
+  showImagePicker: false,
+  showUpgradePlanPopup: false,
+  upgradePlanReason: "limit"
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -113,6 +119,15 @@ const eventSlice = createSlice({
     setSelectedLocation(state, action: PayloadAction<any>) {
       state.selectedLocation = action.payload;
     },
+    setShowImagePicker(state, action: PayloadAction<any>) {
+      state.showImagePicker = action.payload;
+    },
+    setShowUpgradePlanPopup(state, action: PayloadAction<any>) {
+      state.showUpgradePlanPopup = action.payload;
+    },
+    setUpgradePlanReason(state, action: PayloadAction<"limit" | "color">) {
+      state.upgradePlanReason = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -142,7 +157,10 @@ export const {
   setEventsByCategory,
   setSelectedInterests,
   removeSelectedInterests,
-  setSelectedLocation
+  setSelectedLocation,
+  setShowImagePicker,
+  setShowUpgradePlanPopup,
+  setUpgradePlanReason
 } = eventSlice.actions;
 
 export default eventSlice.reducer;

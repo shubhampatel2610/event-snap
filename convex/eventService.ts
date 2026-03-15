@@ -1,5 +1,8 @@
-import { query } from "@/convex/_generated/server";
+import { mutation, query } from "@/convex/_generated/server";
 import { v } from "convex/values";
+import { internal } from "./_generated/api";
+import { generateSlugByTitle } from '@/app/utils/helperFunctions';
+import { AppConstants } from '@/app/constants/AppConstants';
 
 // Get featuring events (upcoming events sorted by start date)
 export const getFeaturingEvents = query({
@@ -122,3 +125,125 @@ export const getEventCountsByCategory = query({
         return categoryCounts;
     }
 });
+
+// create new event
+export const createNewEvent = mutation({
+    args: {
+        title: v.string(),
+        description: v.string(),
+        category: v.string(),
+        tags: v.array(v.string()),
+        startDate: v.number(),
+        endDate: v.number(),
+        timeZone: v.string(),
+        locationType: v.union(v.literal("online"), v.literal("in-person")),
+        venueName: v.optional(v.string()),
+        address: v.string(),
+        city: v.string(),
+        state: v.string(),
+        country: v.string(),
+        capacity: v.number(),
+        isFree: v.boolean(),
+        ticketPrice: v.optional(v.number()),
+        bannerImageUrl: v.optional(v.string()),
+        themeColor: v.optional(v.string()),
+        hasPro: v.optional(v.boolean()),
+    },
+    handler: async (ctx, args): Promise<any> => {
+        try {
+            const user = await ctx.runQuery(internal.users.getCurrentUserData);
+
+            if (!args.hasPro && user.freeEventsCount > 1) {
+                throw new Error(AppConstants.MAX_EVENT_COUNT_ERROR);
+            }
+
+            const slug = generateSlugByTitle(args.title);
+
+            const eventId = await ctx.db.insert("eventsData", {
+                ...args,
+                slug,
+                organizerId: user._id,
+                organizerName: user.name,
+                attendeesCount: 0,
+                registrationCount: 0,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            });
+
+            // update users created event count
+            await ctx.db.patch(user._id, {
+                freeEventsCount: user.freeEventsCount + 1
+            });
+
+            return eventId;
+        } catch (error: any) {
+            throw new Error(`${AppConstants.CREATE_EVENT_ERROR}: ${error.message}`)
+        }
+    }
+});
+
+// get events by slug
+export const getEventBySlug = query({
+    args: { slug: v.string() },
+    handler: async (ctx, args) => {
+        const eventData = await ctx.db
+            .query("eventsData")
+            .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+            .unique();
+
+        return eventData;
+    }
+});
+
+// get events by organizer details
+export const getEventByOrganizerDetails = query({
+    args: { organizerId: v.id("users") },
+    handler: async (ctx, args) => {
+        const eventData = await ctx.db
+            .query("eventsData")
+            .withIndex("by_organizerId", (q) => q.eq("organizerId", args.organizerId))
+            .order("desc")
+            .collect();
+
+        return eventData;
+    }
+});
+
+// delete event
+export const deleteEvent = mutation({
+    args: { eventId: v.id("eventsData") },
+    handler: async (ctx, args) => {
+        const user = await ctx.runQuery(internal.users.getCurrentUserData);
+
+        const eventFound = await ctx.db.get(args.eventId);
+        if (!eventFound) {
+            throw new Error(AppConstants.EVENT_NOT_FOUND);
+        }
+
+        if (eventFound.organizerId !== user._id) {
+            throw new Error(AppConstants.DELETE_EVENT_AUTH_ERROR);
+        }
+
+        const eventRegistrations = await ctx.db
+            .query("registrationData")
+            .withIndex("by_eventId", (q) => q.eq("eventId", args.eventId))
+            .collect();
+
+        // delete all registrations
+        for (const registration of eventRegistrations) {
+            await ctx.db.delete(registration._id);
+        }
+
+        // delete event
+        await ctx.db.delete(args.eventId);
+
+        // decrease event count of user
+        if (user.freeEventsCount > 0) {
+            await ctx.db.patch(user._id, {
+                freeEventsCount: user.freeEventsCount - 1
+            });
+        }
+
+        return { success: true };
+    }
+})

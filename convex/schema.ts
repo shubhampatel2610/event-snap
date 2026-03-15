@@ -44,7 +44,7 @@ export default defineSchema({
         timeZone: v.string(),
 
         // ----- location details -----
-        locationType: v.union(v.literal("online"), v.literal("in-person"), v.literal("hybrid")),
+        locationType: v.union(v.literal("online"), v.literal("in-person")),
         venueName: v.optional(v.string()),
         address: v.string(),
         city: v.string(),

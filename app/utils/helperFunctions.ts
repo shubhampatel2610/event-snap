@@ -58,3 +58,19 @@ export const getLocationDataFromSlug = (slug: string | null) => {
 
     return { city: cityName, state: stateName, validSlug: true };
 }
+
+// generate slug by title
+export const generateSlugByTitle = (title: string) => {
+    const baseSlug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-");
+
+    const uniqueId = Date.now().toString().slice(-6);
+
+    return `${baseSlug}-${uniqueId}`;
+}
+
+// HH:MM format regex
+export const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
