@@ -11,10 +11,11 @@ interface ButtonProps {
     navigateTo?: string;
     asChild?: boolean;
     icon?: React.ReactNode;
-    iconClassName?: string
+    iconClassName?: string;
+    type?: "button" | "submit" | "reset";
 }
 const InputButton = (props: ButtonProps) => {
-    const { label, onClick, disabled, className, size, variant, navigateTo, asChild, icon, iconClassName } = props;
+    const { label, onClick, disabled, className, size, variant, navigateTo, asChild, icon, iconClassName, type } = props;
 
     return (
         <>
@@ -25,6 +26,7 @@ const InputButton = (props: ButtonProps) => {
                 size={size}
                 variant={variant}
                 asChild={asChild}
+                type={type}
             >
                 {navigateTo ? (
                     <Link href={navigateTo} className="flex items-center gap-2">

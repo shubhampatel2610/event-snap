@@ -12,6 +12,10 @@ import { eventPayload } from "@/app/utils/validations/validationSchema";
 import { defaultEventData } from "@/app/utils/validations/defaultSchema";
 import { City, State } from "country-state-city";
 import { useMemo } from "react";
+import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPlanDialogComponent";
+import { setShowImagePicker } from "@/app/store/eventSlice";
+import Image from "next/image";
+import ImagePickerDialogComponent from "../ImagePickerDialogComponent/ImagePickerDialogComponent";
 
 const CreateEventComponent = () => {
     const router = useRouter();
@@ -61,9 +65,56 @@ const CreateEventComponent = () => {
         ...(proPlan ? AppConstants.PRO_COLOR_OPTIONS : [])
     ];
 
+    const onImagePickerClick = () => {
+        dispatch(setShowImagePicker(true));
+    }
+
+    const onImageSelect = (url: string) => {
+        setValue("coverImage", url);
+        dispatch(setShowImagePicker(false));
+    }
+
     return (
-        <div>
-            Create Evenet
+        <div className="min-h-screen transition-colors duration-300 px-10 py-8 -mt-6 md:-mt-5 lg:rounded-md" style={{ backgroundColor: themeColor }}>
+            <div>
+                <div className="max-w-6xl mx-auto flex flex-col gap-1 md:flex-row justify-between mb-5">
+                    <h1 className="text-3xl font-bold">{AppConstants.CREATE_EVENT_HEADER}</h1>
+                    {proPlan &&
+                        <p className="text-sm text-muted-foreground mt-1">
+                            {1 - currentUserData?.freeEventsCount} {AppConstants.FREE_REMAINING_EVENT_TEXT}
+                        </p>}
+                </div>
+
+                <div>
+                    {/* AI Event Creator */}
+                </div>
+
+                <div className="max-w-6xl mx-auto grid md:grid-cols-[320px_1fr] gap-10">
+                    <div className="space-y-6">
+                        <div className="aspect-square w-full rounded-xl overflow-hidden flex items-center justify-center cursor-pointer border" onClick={onImagePickerClick}>
+                            {coverImage ?
+                                <Image
+                                    className="w-full h-full object-cover"
+                                    src={coverImage}
+                                    width={500}
+                                    height={500}
+                                    alt="cover-image"
+                                    priority
+                                /> :
+                                <span className="opacity-50 text-sm">
+                                    {AppConstants.COVER_IMG_PLACEHOLDER}
+                                </span>}
+                        </div>
+                    </div>
+                    <div>
+                        Right
+                    </div>
+                </div>
+
+                <ImagePickerDialogComponent onImageSelect={onImageSelect} />
+
+                <PricingPlanDialogComponent triggerPath={AppConstants.CUSTOM_TRIGGER_PATH} />
+            </div>
         </div>
     )
 }

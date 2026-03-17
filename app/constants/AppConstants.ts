@@ -38,6 +38,7 @@ export class AppConstants {
     static CONTINUE_LABEL = "Continue";
     static SAVE_LABEL = "Save";
     static MAYBE_LATER_LABEL = "Maybe Later";
+    static SUBMIT_LABEL = "Submit";
 
     // Categories
     static CATEGORIES = [
@@ -182,4 +183,10 @@ export class AppConstants {
     static TIME_FORMAT_ERROR = "Time must be in HH:MM format";
     static VALID_URL_ERROR = "Please enter valid url";
     static CITY_REQ_ERROR = "City is required";
+    static CREATE_EVENT_HEADER = "Create New Event";
+    static FREE_REMAINING_EVENT_TEXT = "free event remaining";
+    static COVER_IMG_PLACEHOLDER = "Click to add cover image";
+    static FETCH_IMAGE_ERROR = "Error While Fetching Images: ";
+    static IMG_PICKER_HEADER = "Event Cover Image";
+    static IMG_PICKER_PLACEHOLDER = "Seach For Images";
 }
