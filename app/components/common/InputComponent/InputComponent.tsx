@@ -31,10 +31,11 @@ const InputComponent = (props: InputComponentProps) => {
                 <span className="absolute left-4 top-1/2 transform -translate-1/2 w-4 h-4 text-muted-foreground">{icon}</span>
             }
             <Input
-                className="pl-7 w-full h-9 rounded-1"
+                className={`${icon && "pl-7"} w-full h-9 rounded-1 ${className}`}
                 onFocus={onFocus}
                 onChange={onChange}
                 placeholder={placeholder}
+                value={value}
             />
         </div>
     )
