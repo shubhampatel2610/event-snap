@@ -158,9 +158,13 @@ export class AppConstants {
     // Pricing Constants
     static PRO_PLAN_KEY = "pro_plan";
     static PRO_PLAN_TEXT = "PRO";
+    static DEFAULT_HEADER_MESSAGE = "Go Beyond Limitations & Unlock Premium Features";
     static HEADER_TRIGGER_PATH = "header";
+    static HEADER_HEADER_MESSAGE = "Create Unlimited Access With PRO!";
     static FREE_TRIGGER_PATH = "free";
+    static FREE_HEADER_MESSAGE = "You Have Reached Your Limit. Upgrade To PRO.";
     static CUSTOM_TRIGGER_PATH = "custom";
+    static CUSTOM_HEADER_MESSAGE = "Achieve Customization With PRO!";
     static UPGRADE_PLAN_HEADER = "Upgrade Your Plan...";
 
     // Create Event Constants
