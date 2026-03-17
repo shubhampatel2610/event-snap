@@ -76,7 +76,7 @@ const SearchBarComponent = () => {
                 />
 
                 {showSearchedResults && (
-                    <div className="absolute mt-10 w-50 bg-background border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto">
+                    <div className="absolute mt-10 w-50 bg-background border rounded-lg shadow-lg z-50 max-h-100 overflow-y-auto">
                         {searchLoading ?
                             <div className="p-4 flex items-center justify-center">
                                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -87,7 +87,7 @@ const SearchBarComponent = () => {
                                         <p className="px-4 py-2 text-xs font-semibold text-muted-foreground">
                                             {AppConstants.SEARCH_RESULT_TITLE}
                                         </p>
-                                        {searchedResults.map((event) => (
+                                        {searchedResults.map((event: any) => (
                                             <button
                                                 key={event._id}
                                                 className="w-full px-4 py-2 hover:bg-muted/50 text-left transition-colors bg-transparent"
