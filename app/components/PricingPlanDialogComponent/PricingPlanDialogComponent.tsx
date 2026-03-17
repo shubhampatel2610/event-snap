@@ -24,13 +24,13 @@ const PricingPlanDialogComponent = (props: PricingProps) => {
     const renderSubHeaderText = (path?: string) => {
         switch (path) {
             case AppConstants.HEADER_TRIGGER_PATH:
-                return "Create Unlimited Access With PRO!";
+                return AppConstants.HEADER_HEADER_MESSAGE;
             case AppConstants.FREE_TRIGGER_PATH:
-                return "You Have Reached Your Limit. Upgrade To PRO.";
+                return AppConstants.FREE_HEADER_MESSAGE;
             case AppConstants.CUSTOM_TRIGGER_PATH:
-                return "Achieve Customization With PRO!";
+                return AppConstants.CUSTOM_HEADER_MESSAGE;
             default:
-                return "Go Beyond Limitations & Unlock Premium Features";
+                return AppConstants.DEFAULT_HEADER_MESSAGE;
         }
     }
 

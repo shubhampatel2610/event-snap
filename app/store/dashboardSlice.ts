@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface DashboardState {
   isLoading: boolean;
-  data: any[];
+  data: any;
   error: string | null;
   searchQuery: string;
   showSearchedResults: boolean;
