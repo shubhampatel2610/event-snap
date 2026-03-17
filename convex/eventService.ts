@@ -1,6 +1,6 @@
 import { mutation, query } from "@/convex/_generated/server";
 import { v } from "convex/values";
-import { internal } from "./_generated/api";
+import { api, internal } from "./_generated/api";
 import { generateSlugByTitle } from '@/app/utils/helperFunctions';
 import { AppConstants } from '@/app/constants/AppConstants';
 
@@ -151,7 +151,7 @@ export const createNewEvent = mutation({
     },
     handler: async (ctx, args): Promise<any> => {
         try {
-            const user = await ctx.runQuery(internal.users.getCurrentUserData);
+            const user: any = await ctx.runQuery(api.users.getCurrentUserData);
 
             if (!args.hasPro && user.freeEventsCount > 1) {
                 throw new Error(AppConstants.MAX_EVENT_COUNT_ERROR);
@@ -213,7 +213,7 @@ export const getEventByOrganizerDetails = query({
 export const deleteEvent = mutation({
     args: { eventId: v.id("eventsData") },
     handler: async (ctx, args) => {
-        const user = await ctx.runQuery(internal.users.getCurrentUserData);
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
 
         const eventFound = await ctx.db.get(args.eventId);
         if (!eventFound) {

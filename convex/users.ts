@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { internal } from "./_generated/api";
+import { api, internal } from "./_generated/api";
 
 export const store = mutation({
     args: {},
@@ -71,7 +71,7 @@ export const userOnBoarding = mutation({
         interests: v.array(v.string())
     },
     handler: async (ctx, args) => {
-        const userData: any = await ctx.runQuery(internal.users.getCurrentUserData);
+        const userData: any = await ctx.runQuery(api.users.getCurrentUserData);
         await ctx.db.patch(userData._id, {
             location: args.location,
             interests: args.interests,
