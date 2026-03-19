@@ -16,6 +16,10 @@ import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPla
 import { setShowImagePicker } from "@/app/store/eventSlice";
 import Image from "next/image";
 import ImagePickerDialogComponent from "../ImagePickerDialogComponent/ImagePickerDialogComponent";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Sparkles } from "lucide-react";
+import { setShowPricingPlans } from "@/app/store/dashboardSlice";
 
 const CreateEventComponent = () => {
     const router = useRouter();
@@ -74,6 +78,18 @@ const CreateEventComponent = () => {
         dispatch(setShowImagePicker(false));
     }
 
+    const handleThemeColorClick = (color: string) => {
+        if (!proPlan && color !== AppConstants.DEFAULT_COLOR) {
+            dispatch(setShowPricingPlans(true));
+            return;
+        }
+        setValue("themeColor", color);
+    }
+
+    const handleProClick = () => {
+        dispatch(setShowPricingPlans(true));
+    }
+
     return (
         <div className="min-h-screen transition-colors duration-300 px-10 py-8 -mt-6 md:-mt-5 lg:rounded-md" style={{ backgroundColor: themeColor }}>
             <div>
@@ -105,6 +121,49 @@ const CreateEventComponent = () => {
                                     {AppConstants.COVER_IMG_PLACEHOLDER}
                                 </span>}
                         </div>
+
+                        <div className="space-y-1">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-sm">Theme Color</Label>
+                                {!proPlan &&
+                                    <Badge variant={"secondary"} className="text-xs gap-1">
+                                        <Sparkles className="w-3 h-3" />
+                                        {AppConstants.PRO_PLAN_TEXT}
+                                    </Badge>}
+                            </div>
+                            <div className="flex gap-1 flex-wrap">
+                                {themeColorOptions.map((color) => (
+                                    <button
+                                        className={`w-8 h-8 rounded-md border transition-all 
+                                        ${(!proPlan && color !== AppConstants.DEFAULT_COLOR) ?
+                                                "opacity-50 cursor-not-allowed" :
+                                                "hover:scale-105"}`}
+                                        style={{
+                                            backgroundColor: color,
+                                            borderColor: themeColor === color ? "#FFFFFF" : "transparent"
+                                        }}
+                                        title={
+                                            (!proPlan && color !== AppConstants.DEFAULT_COLOR) ?
+                                                "Upgrade to PRO for customization" :
+                                                ""
+                                        }
+                                        type="button"
+                                        onClick={() => handleThemeColorClick(color)}
+                                    />
+                                ))}
+                                {!proPlan &&
+                                    <button
+                                        className={"w-8 h-8 rounded-md border transition-all  flex items-center justify-center border-dashed border-[#06B6D4] hover:border-[#8B5CF6] text-[#06B6D4] hover:text-[#8B5CF6]"}
+                                        title={"Unlock more themes with PRO"}
+                                        type="button"
+                                        onClick={handleProClick}
+                                    >
+                                        <Sparkles className="w-4 h-4" />
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
                     </div>
                     <div>
                         Right
