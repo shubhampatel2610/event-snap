@@ -20,8 +20,8 @@ export const defaultEventData: EventFormValues = {
     address: "",
     state: "",
     city: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     startTime: "",
     endTime: ""
 }

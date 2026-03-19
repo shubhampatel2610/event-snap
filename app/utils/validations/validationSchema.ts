@@ -15,10 +15,11 @@ export const eventPayload = z.object({
     startDate: z
         .coerce.date({
             message: AppConstants.START_DATE_REQ_ERROR,
-        }),
-    endDate: z.coerce.date({
-        message: AppConstants.END_DATE_REQ_ERROR,
-    }),
+        }).nullable(),
+    endDate: z
+        .coerce.date({
+            message: AppConstants.END_DATE_REQ_ERROR,
+        }).nullable(),
     startTime: z
         .string()
         .regex(timeRegex, AppConstants.TIME_FORMAT_ERROR),
