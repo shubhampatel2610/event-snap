@@ -152,15 +152,16 @@ export const createNewEvent = mutation({
     handler: async (ctx, args): Promise<any> => {
         try {
             const user: any = await ctx.runQuery(api.users.getCurrentUserData);
-
-            if (!args.hasPro && user.freeEventsCount > 1) {
+            const { hasPro, ...eventData } = args;
+            
+            if (!hasPro && user.freeEventsCount > 1) {
                 throw new Error(AppConstants.MAX_EVENT_COUNT_ERROR);
             }
 
-            const slug = generateSlugByTitle(args.title);
+            const slug = generateSlugByTitle(eventData.title);
 
             const eventId = await ctx.db.insert("eventsData", {
-                ...args,
+                ...eventData,
                 slug,
                 organizerId: user._id,
                 organizerName: user.name,
