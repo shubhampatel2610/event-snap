@@ -148,6 +148,7 @@ export class AppConstants {
     static READY_TO_CONTINUE_TEXT = "Ready To Continue...";
     static STATE_LABEL = "State";
     static CITY_LABEL = "City";
+    static FIRST_POSTFIX = "First";
     static SELECT_PREFIX = "Select";
     static ONBOARDING_SUCCESS = "Welcome To EventSnap :)";
     static ONBOARDING_ERROR = "Failed To Complete Onboarding :(";
@@ -183,10 +184,33 @@ export class AppConstants {
     static TIME_FORMAT_ERROR = "Time must be in HH:MM format";
     static VALID_URL_ERROR = "Please enter valid url";
     static CITY_REQ_ERROR = "City is required";
+    static STATE_REQ_ERROR = "State is required";
+    static PRICE_REQ_ERROR = "Price is required";
     static CREATE_EVENT_HEADER = "Create New Event";
     static FREE_REMAINING_EVENT_TEXT = "free event remaining";
     static COVER_IMG_PLACEHOLDER = "Click to add cover image";
     static FETCH_IMAGE_ERROR = "Error While Fetching Images: ";
     static IMG_PICKER_HEADER = "Event Cover Image";
     static IMG_PICKER_PLACEHOLDER = "Seach For Images";
+    static CATEGORY_LABEL = "Category";
+    static LOCATION_LABEL = "Location";
+    static VENUE_LABEL = "Venue";
+    static EVENT_TYPE_LABEL = "Event Type";
+    static CUSTOMIZE_COLOR_PRO_TEXT = "Upgrade to PRO for customization";
+    static PRO_COLOR_BTN_TITLE = "Unlock more themes with PRO";
+    static EVENT_NAME_PLACEHOLDER = "Event Name";
+    static START_DATE_LABEL = "Start Date";
+    static END_DATE_LABEL = "End Date";
+    static VENUE_PLACEHOLDER = "Venue location link (Google Maps)";
+    static ADDRESS_PLACEHOLDER = "Building no. / street / city / full address";
+    static EVENT_TYPE_OPTIONS = [
+        { label: "Free", value: true },
+        { label: "Paid", value: false },
+    ];
+    static TICKET_PRICE_PLACEHOLDER = "Ticket Price";
+    static CAPACITY_PLACEHOLDER = "Attendee Capacity";
+    static SELECT_DATE_TIME_ERROR = "Please Select Date and Time.";
+    static FREE_EVENT_COUNT_ERROR = "You Have Reached Maximum Limit. Please Upgrade to PRO!";
+    static CUSTOM_THEME_COLOR_ERROR = "Please Upgrade to PRO for Theme Color Customization!";
+    static CREATE_EVENT_SUCCESS = "Event Created Successfully.";
 }
