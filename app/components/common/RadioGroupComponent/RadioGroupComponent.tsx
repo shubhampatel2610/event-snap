@@ -5,7 +5,7 @@ import { Controller } from "react-hook-form";
 interface FormRadioGroupProps {
     controlledName?: any;
     control?: any;
-    radioOptions?: { label: string; value: string }[];
+    radioOptions?: { label: string; value: string | boolean }[];
     error?: any;
     className?: string;
 }
