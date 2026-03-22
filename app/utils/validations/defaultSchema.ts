@@ -6,11 +6,12 @@ export type EventFormValues = z.infer<typeof eventPayload> & {
     isFree?: boolean;
     capacity?: number;
     themeColor?: string;
+    coverImage?: string;
 };
 
 export const defaultEventData: EventFormValues = {
     title: "",
-    description: "",
+    // description: "",
     locationType: "in-person",
     isFree: true,
     capacity: 50,
@@ -20,8 +21,9 @@ export const defaultEventData: EventFormValues = {
     address: "",
     state: "",
     city: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     startTime: "",
-    endTime: ""
+    endTime: "",
+    ticketPrice: null
 }

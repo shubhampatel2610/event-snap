@@ -40,7 +40,6 @@ const ImagePickerDialogComponent = (props: DialogProps) => {
     const onSearchImage = async (searchQuery: string) => {
         if (!searchQuery.trim()) return;
 
-        console.log("search Query", searchQuery)
         setLoading(true);
         try {
             const response = await fetch(`https://api.unsplash.com/search/photos?query=${searchQuery}&per_page=10&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`);

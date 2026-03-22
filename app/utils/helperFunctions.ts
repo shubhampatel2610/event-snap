@@ -74,3 +74,42 @@ export const generateSlugByTitle = (title: string) => {
 
 // HH:MM format regex
 export const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+export const combineDateTime = (date: any, time: string) => {
+    if (!date || !time) {
+        return null;
+    }
+
+    const [hour, minutes] = time.split(":");
+
+    const dateVal = new Date(date);
+
+    dateVal.setHours(Number(hour), Number(minutes), 0, 0);
+
+    return dateVal;
+}
+
+export const createEventPayload = (data: any, proPlan: any, date: any) => {
+    console.log("date >>> ", date)
+    return {
+        title: data.title,
+        description: data.description || "",
+        category: data.category,
+        tags: [data.category],
+        startDate: date.startDate ? new Date(date.startDate).getTime() : undefined,
+        endDate: date.endDate ? new Date(date.endDate).getTime() : undefined,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        locationType: data.locationType,
+        venueName: data.venue || "",
+        address: data.address || "",
+        state: data.state,
+        city: data.city,
+        country: "India",
+        capacity: data.capacity,
+        isFree: data.isFree,
+        ticketPrice: data.ticketPrice ?? 0,
+        bannerImageUrl: data.coverImage || "",
+        themeColor: data.themeColor,
+        hasPro: proPlan
+    }
+}
