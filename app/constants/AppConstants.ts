@@ -39,7 +39,9 @@ export class AppConstants {
     static SAVE_LABEL = "Save";
     static MAYBE_LATER_LABEL = "Maybe Later";
     static SUBMIT_LABEL = "Submit";
-
+    static GENERATE_LABEL = "Generate";
+    static CANCEL_LABEL = "Cancel";
+    static GENERATE_WITH_AI_LABEL = "Generate with AI";
     // Categories
     static CATEGORIES = [
         {
@@ -213,4 +215,13 @@ export class AppConstants {
     static FREE_EVENT_COUNT_ERROR = "You Have Reached Maximum Limit. Please Upgrade to PRO!";
     static CUSTOM_THEME_COLOR_ERROR = "Please Upgrade to PRO for Theme Color Customization!";
     static CREATE_EVENT_SUCCESS = "Event Created Successfully.";
+
+    // Generate With AI Constants
+    static GEMINI_AI_MODEL = "gemini-2.0-flash";
+    static PROMPT_REQUIRED_ERROR = "Prompt is Required.";
+    static GENERATE_EVENT_ERROR = "Error Generating Event";
+    static GENERATE_EVENT_SUCCESS = "Event's data generated. You can customize it.";
+    static GENERATE_EVENT_TITLE = "Generate With AI";
+    static GENERATE_EVENT_SUBTITLE = "Explain your idea and let AI handles further";
+    static GENERATE_EVENT_TEXTAREA_PLACEHOLDER = "Explain your idea in detail... Eg, A tech event for developers in Pune with goal of leveraging AI tools for high productivity and faster shipping...";
 }

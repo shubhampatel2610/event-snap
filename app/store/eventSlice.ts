@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { useCustomConvexQuery } from "../convexClient";
 import { api } from "@/convex/_generated/api";
+import { AppConstants } from "../constants/AppConstants";
 
 interface EventState {
   featuredEvents: any[];
@@ -11,7 +12,8 @@ interface EventState {
   eventsByCategory: any[];
   selectedInterests: any[];
   selectedLocation: any,
-  showImagePicker: boolean
+  showImagePicker: boolean,
+  showAIEventCreator: boolean
 }
 
 const initialState: EventState = {
@@ -26,7 +28,8 @@ const initialState: EventState = {
     state: "",
     country: ""
   },
-  showImagePicker: false
+  showImagePicker: false,
+  showAIEventCreator: false
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -87,6 +90,27 @@ export const fetchEventsByCategory = createAsyncThunk(
   }
 );
 
+export const generateDataWithAI = createAsyncThunk(
+  "explore/generateDataWithAI",
+  async (prompt: string, { rejectWithValue }) => {
+    try {
+      const result = await fetch("/api/generate-event", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      if (!result.ok) {
+        const errorData = await result.json();
+        return rejectWithValue(`${AppConstants.GENERATE_EVENT_ERROR}: ${errorData.message}`);
+      }
+      const response = await result.json();
+      return response;
+    } catch (error: any) {
+      console.error(`${AppConstants.GENERATE_EVENT_ERROR}: `, error.message);
+    }
+  }
+);
+
 const eventSlice = createSlice({
   name: "event",
   initialState,
@@ -118,6 +142,9 @@ const eventSlice = createSlice({
     setShowImagePicker(state, action: PayloadAction<any>) {
       state.showImagePicker = action.payload;
     },
+    setShowAIEventCreator(state, action: PayloadAction<any>) {
+      state.showAIEventCreator = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -148,7 +175,8 @@ export const {
   setSelectedInterests,
   removeSelectedInterests,
   setSelectedLocation,
-  setShowImagePicker
+  setShowImagePicker,
+  setShowAIEventCreator
 } = eventSlice.actions;
 
 export default eventSlice.reducer;
