@@ -13,7 +13,7 @@ import { defaultEventData } from "@/app/utils/validations/defaultSchema";
 import { City, State } from "country-state-city";
 import { useMemo } from "react";
 import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPlanDialogComponent";
-import { setShowImagePicker } from "@/app/store/eventSlice";
+import { setShowAIEventCreator, setShowImagePicker } from "@/app/store/eventSlice";
 import Image from "next/image";
 import ImagePickerDialogComponent from "../ImagePickerDialogComponent/ImagePickerDialogComponent";
 import { Label } from "@/components/ui/label";
@@ -27,6 +27,7 @@ import RadioGroupComponent from "../common/RadioGroupComponent/RadioGroupCompone
 import { combineDateTime, createEventPayload } from "@/app/utils/helperFunctions";
 import { toast } from "sonner";
 import CalendarComponent from "../common/CalendarComponent/CalendarComponent";
+import AIEventDataGeneratorComponent from "../AIEventDataGeneratorComponent/AIEventDataGeneratorComponent";
 
 const CreateEventComponent = () => {
     const router = useRouter();
@@ -132,6 +133,14 @@ const CreateEventComponent = () => {
         }
     }
 
+    const setAIGeneratedData = (response: any) => {
+        setValue("title", response.title);
+        setValue("description", response.description);
+        setValue("category", response.category);
+        setValue("capacity", response.capacity);
+        setValue("isFree", response.isFree);
+    }
+
     return (
         <div className="min-h-screen transition-colors duration-300 px-10 py-8 -mt-6 md:-mt-5 lg:rounded-md" style={{ backgroundColor: themeColor }}>
             <div>
@@ -143,8 +152,13 @@ const CreateEventComponent = () => {
                         </p>}
                 </div>
 
-                <div>
-                    {/* AI Event Creator */}
+                <div className="max-w-6xl mx-auto mb-2 flex justify-end">
+                    <InputButton
+                        label={AppConstants.GENERATE_WITH_AI_LABEL}
+                        className="rounded-xl"
+                        icon={<Sparkles className="w-5 h-5" />}
+                        onClick={() => dispatch(setShowAIEventCreator(true))}
+                    />
                 </div>
 
                 <div className="max-w-6xl mx-auto grid md:grid-cols-[320px_1fr] gap-10">
@@ -336,6 +350,8 @@ const CreateEventComponent = () => {
                 <ImagePickerDialogComponent onImageSelect={onImageSelect} />
 
                 <PricingPlanDialogComponent triggerPath={AppConstants.CUSTOM_TRIGGER_PATH} />
+
+                <AIEventDataGeneratorComponent setAIGeneratedData={setAIGeneratedData} />
             </div>
         </div>
     )
