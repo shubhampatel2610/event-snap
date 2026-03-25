@@ -32,7 +32,11 @@ const AIEventDataGeneratorComponent = (props: DialogProps) => {
 
         dispatch(setLoading(true));
         try {
-            const response = await dispatch(generateDataWithAI(promptVal));
+            const response: any = await dispatch(generateDataWithAI(promptVal));
+            if (response.error) {
+                toast.error(`${AppConstants.GENERATE_EVENT_ERROR}: `, response.payload);
+                return;
+            }
             setAIGeneratedData(response);
             toast.success(AppConstants.GENERATE_EVENT_SUCCESS);
             onClose();

@@ -13,7 +13,8 @@ interface EventState {
   selectedInterests: any[];
   selectedLocation: any,
   showImagePicker: boolean,
-  showAIEventCreator: boolean
+  showAIEventCreator: boolean,
+  showRegistrationPopup: boolean
 }
 
 const initialState: EventState = {
@@ -29,7 +30,8 @@ const initialState: EventState = {
     country: ""
   },
   showImagePicker: false,
-  showAIEventCreator: false
+  showAIEventCreator: false,
+  showRegistrationPopup: false
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -145,6 +147,9 @@ const eventSlice = createSlice({
     setShowAIEventCreator(state, action: PayloadAction<any>) {
       state.showAIEventCreator = action.payload;
     },
+    setShowRegistrationPopup(state, action: PayloadAction<any>) {
+      state.showRegistrationPopup = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -176,7 +181,8 @@ export const {
   removeSelectedInterests,
   setSelectedLocation,
   setShowImagePicker,
-  setShowAIEventCreator
+  setShowAIEventCreator,
+  setShowRegistrationPopup
 } = eventSlice.actions;
 
 export default eventSlice.reducer;

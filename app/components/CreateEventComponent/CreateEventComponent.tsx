@@ -127,7 +127,7 @@ const CreateEventComponent = () => {
             await createEventData(payLoad);
 
             toast.success(AppConstants.CREATE_EVENT_SUCCESS);
-            // router.push(AppConstants.EVENTS_ROUTE);
+            router.push(AppConstants.EVENTS_ROUTE);
         } catch (error: any) {
             toast.error(error.message || AppConstants.CREATE_EVENT_ERROR);
         }
@@ -142,7 +142,7 @@ const CreateEventComponent = () => {
     }
 
     return (
-        <div className="min-h-screen transition-colors duration-300 px-10 py-8 -mt-6 md:-mt-5 lg:rounded-md" style={{ backgroundColor: themeColor }}>
+        <div className="min-h-screen transition-colors duration-300 px-10 py-8 -mt-6 md:-mt-2 lg:rounded-md" style={{ backgroundColor: themeColor }}>
             <div>
                 <div className="max-w-6xl mx-auto flex flex-col gap-1 md:flex-row justify-between mb-5">
                     <h1 className="text-3xl font-bold">{AppConstants.CREATE_EVENT_HEADER}</h1>
