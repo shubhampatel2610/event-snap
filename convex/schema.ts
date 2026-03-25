@@ -76,13 +76,14 @@ export default defineSchema({
     registrationData: defineTable({
         eventId: v.id("eventsData"),
         userId: v.id("users"),
+        uniqueId: v.string(),
 
         // ----- attendee details -----
         attendeeName: v.string(),
         attendeeEmail: v.string(),
 
         // ----- check in details -----
-        checkedIn: v.number(),
+        checkedIn: v.boolean(),
         checkedInAt: v.optional(v.number()),
         status: v.union(v.literal("confirmed"), v.literal("cancelled")),
         registeredAt: v.number(),
