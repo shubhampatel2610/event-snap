@@ -10,6 +10,7 @@ export class AppConstants {
     static EXPLORE_ROUTE = "/explore";
     static MY_BOOKINGS_ROUTE = "/my-bookings";
     static LOCATION_ROUTE = "/location";
+    static MANAGE_ROUTE = "/manage"
 
     // Landing Page Constants
     static LANDING_PAGE_HEADER = "Welcome to EventSnap!";
@@ -42,6 +43,14 @@ export class AppConstants {
     static GENERATE_LABEL = "Generate";
     static CANCEL_LABEL = "Cancel";
     static GENERATE_WITH_AI_LABEL = "Generate with AI";
+    static MAP_LABEL = "Map";
+    static MANAGE_EVENT_LABEL = "Manage Event";
+    static REGISTER_LABEL = "Register";
+    static SHARE_LABEL = "Share";
+    static VIEW_TICKET_LABEL = "View Ticket";
+    static NAME_LABEL = "Name";
+    static EMAIL_LABEL = "Email";
+
     // Categories
     static CATEGORIES = [
         {
@@ -224,4 +233,30 @@ export class AppConstants {
     static GENERATE_EVENT_TITLE = "Generate With AI";
     static GENERATE_EVENT_SUBTITLE = "Explain your idea and let AI handles further";
     static GENERATE_EVENT_TEXTAREA_PLACEHOLDER = "Explain your idea in detail... Eg, A tech event for developers in Pune with goal of leveraging AI tools for high productivity and faster shipping...";
+
+    // Registration Constants
+    static REGISTRATION_EXCEED_ERROR = "No More Seats Available!";
+    static REGISTRATION_LIMIT_ERROR = "You Are Already Registered!";
+    static ABOUT_EVENT_TITLE = "About Event";
+    static ORGANIZER_TITLE = "Organizer";
+    static PRICE_TITLE = "Price";
+    static ATTENDEES_TITLE = "Attendees";
+    static DATE_TITLE = "Date";
+    static TIME_TITLE = "Time";
+    static EVENT_ORGANIZER_TAG = "Event Organizer";
+    static SIGNIN_REQUEST = "Please Sign In Again!";
+    static CLIPBOARD_COPY_TEXT = "Copied to clipboard!";
+    static PAY_AT_VENUE_TEXT = "Pay at Venue";
+    static ALREADY_REGISTERED_TEXT = "You're registered!";
+    static EVENT_ENDED_TEXT = "Event is ended";
+    static EVENT_FULL_TEXT = "Event is full";
+    static FREE_EVENT_TEXT = "Free Event";
+    static ALL_FIELDS_REQUIRED = "Please fill in all fields";
+    static REGISTRATION_SUCCESS = "Registration successful.";
+    static REGISTRATION_ERROR = "Registration failed!";
+    static REGISTRATION_TITLE = "Registration";
+    static REGISTRATION_SUBTITLE = "Fill in your details to register for";
+    static REGISTRATION_SUCCESS_TITLE = "You're all set for this event.";
+    static REGISTRATION_SUCCESS_SUBTITLE = "Your registration is confirmed. Check your Tickets for event details and your code ticket.";
+    static TERMS_CO_TEXT = "By registering, you agree to receive event updates and reminders via email.";
 }

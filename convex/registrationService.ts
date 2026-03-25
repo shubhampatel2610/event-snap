@@ -19,7 +19,7 @@ export const registerForEvent = mutation({
         }
 
         if (eventData.registrationCount >= eventData.capacity) {
-            throw new Error("No More Seats Available!");
+            throw new Error(AppConstants.REGISTRATION_EXCEED_ERROR);
         }
 
         const userRegistered = await ctx.db
@@ -27,7 +27,7 @@ export const registerForEvent = mutation({
             .withIndex("by_eventId_userId", (q: any) => q.eq("eventId", args.eventId).eq("userId", user?._id)).unique();
 
         if (userRegistered) {
-            throw new Error("You Are Already Registered!");
+            throw new Error(AppConstants.REGISTRATION_LIMIT_ERROR);
         }
 
         const uniqueTicketId = generateEventId();

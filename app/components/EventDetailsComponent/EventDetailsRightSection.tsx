@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { Calendar, CheckCircle, Clock, Share2, Ticket, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import InputButton from "../common/ButtonComponent/InputButton";
 
 interface ComponentProps {
     eventData: any,
@@ -35,7 +36,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
 
     const handleRegister = () => {
         if (!userData) {
-            toast.error("Please sign in to register");
+            toast.error(AppConstants.SIGNIN_REQUEST);
             return;
         }
         dispatch(setShowRegistrationPopup(true));
@@ -54,7 +55,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
             }
         } else {
             navigator.clipboard.writeText(url);
-            toast.success("Link copied to clipboard!");
+            toast.success(AppConstants.CLIPBOARD_COPY_TEXT);
         }
     };
 
@@ -71,15 +72,15 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                 >
                     <CardContent className="p-6 space-y-4">
                         <div>
-                            <p className="text-sm text-white mb-1">Price</p>
+                            <p className="text-sm text-white mb-1">{AppConstants.PRICE_TITLE}</p>
                             <p className="text-[#c0c0c0] text-3xl font-bold">
                                 {eventData.isFree
-                                    ? "Free"
+                                    ? AppConstants.FREE_LABEL
                                     : `₹${eventData.ticketPrice}`}
                             </p>
                             {!eventData.isFree && (
                                 <p className="text-[#c0c0c0] text-xs mt-1">
-                                    Pay at venue
+                                    {AppConstants.PAY_AT_VENUE_TEXT}
                                 </p>
                             )}
                         </div>
@@ -90,7 +91,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-white">
                                     <Users className="w-4 h-4" />
-                                    <span className="text-sm">Attendees</span>
+                                    <span className="text-sm">{AppConstants.ATTENDEES_TITLE}</span>
                                 </div>
                                 <p className="font-semibold text-[#c0c0c0]">
                                     {eventData.registrationCount} / {eventData.capacity}
@@ -100,7 +101,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                             {eventData.startDate && <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-white">
                                     <Calendar className="w-4 h-4" />
-                                    <span className="text-sm">Date</span>
+                                    <span className="text-sm">{AppConstants.DATE_TITLE}</span>
                                 </div>
                                 <p className="font-semibold text-sm text-[#c0c0c0]">
                                     {format(new Date(eventData?.startDate), "MMM dd")}
@@ -110,7 +111,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                             {eventData.startDate && <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-white">
                                     <Clock className="w-4 h-4" />
-                                    <span className="text-sm">Time</span>
+                                    <span className="text-sm">{AppConstants.TIME_TITLE}</span>
                                 </div>
                                 <p className="font-semibold text-sm text-[#c0c0c0]">
                                     {format(new Date(eventData?.startDate), "h:mm a")}
@@ -125,47 +126,46 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                                 <div className="flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg">
                                     <CheckCircle className="w-5 h-5" />
                                     <span className="font-medium">
-                                        You&apos;re registered!
+                                        {AppConstants.ALREADY_REGISTERED_TEXT}
                                     </span>
                                 </div>
-                                <Button
+                                <InputButton
                                     className="w-full gap-2"
-                                    onClick={() => router.push("/my-tickets")}
-                                >
-                                    <Ticket className="w-4 h-4" />
-                                    View Ticket
-                                </Button>
+                                    onClick={() => router.push(AppConstants.MY_BOOKINGS_ROUTE)}
+                                    icon={<Ticket className="w-4 h-4" />}
+                                    label={AppConstants.VIEW_LABEL}
+                                />
                             </div>
                         ) : isEventEnded ? (
                             <Button className="w-full" disabled>
-                                Event Ended
+                                {AppConstants.EVENT_ENDED_TEXT}
                             </Button>
                         ) : isEventFull ? (
                             <Button className="w-full" disabled>
-                                Event Full
+                                {AppConstants.EVENT_FULL_TEXT}
                             </Button>
                         ) : isOrganizer ? (
-                            <Button
+                            <InputButton
                                 className="w-full"
-                                onClick={() => router.push(`/events/${eventData.slug}/manage`)}
-                            >
-                                Manage Event
-                            </Button>
+                                onClick={() => router.push(`${AppConstants.EVENTS_ROUTE}/${eventData.slug}${AppConstants.MANAGE_ROUTE}`)}
+                                label={AppConstants.MANAGE_EVENT_LABEL}
+                            />
                         ) : (
-                            <Button className="w-full gap-2" onClick={handleRegister}>
-                                <Ticket className="w-4 h-4" />
-                                Register
-                            </Button>
+                            <InputButton
+                                className="w-full gap-2"
+                                onClick={handleRegister}
+                                icon={<Ticket className="w-4 h-4" />}
+                                label={AppConstants.REGISTER_LABEL}
+                            />
                         )}
 
-                        <Button
+                        <InputButton
                             variant="outline"
                             className="w-full gap-2"
                             onClick={handleShare}
-                        >
-                            <Share2 className="w-4 h-4" />
-                            Share
-                        </Button>
+                            icon={<Share2 className="w-4 h-4" />}
+                            label={AppConstants.SHARE_LABEL}
+                        />
                     </CardContent>
                 </Card>
             </div>
