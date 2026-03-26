@@ -63,3 +63,58 @@ export const checkForUserRegistration = query({
         return registration;
     }
 });
+
+export const getUserRegistrations = query({
+    handler: async (ctx, args) => {
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+
+        const registrationData = await ctx.db.query("registrationData")
+            .withIndex("by_userId", (q: any) => q.eq("userId", user?._id))
+            .order("desc")
+            .collect();
+
+        const registeredEventsData = await Promise.all(
+            registrationData.map(async (eventRegData) => {
+                const eventData = await ctx.db.get(eventRegData.eventId);
+                return { ...eventRegData, eventData };
+            })
+        );
+
+        return registeredEventsData;
+    }
+});
+
+export const cancelUserRegistration = mutation({
+    args: {
+        registrationId: v.id("registrationData")
+    },
+    handler: async (ctx, args) => {
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+
+        const registrationData = await ctx.db.get(args.registrationId);
+        if (!registrationData) {
+            throw new Error(AppConstants.REGISTRATION_NOT_FOUND);
+        }
+
+        if (registrationData.userId !== user?._id) {
+            throw new Error(AppConstants.UNAUTHORIZED_ACCESS); // can delete only own
+        }
+
+        const eventData = await ctx.db.get(registrationData.eventId);
+        if (!eventData) {
+            throw new Error(AppConstants.EVENT_NOT_FOUND);
+        }
+
+        await ctx.db.patch(args.registrationId, {
+            status: "cancelled"
+        });
+
+        if (eventData.registrationCount > 0) {
+            await ctx.db.patch(registrationData.eventId, {
+                registrationCount: eventData.registrationCount - 1
+            });
+        }
+
+        return { success: true };
+    }
+})

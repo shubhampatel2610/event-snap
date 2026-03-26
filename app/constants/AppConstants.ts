@@ -50,6 +50,7 @@ export class AppConstants {
     static VIEW_TICKET_LABEL = "View Ticket";
     static NAME_LABEL = "Name";
     static EMAIL_LABEL = "Email";
+    static BROWSE_EVENTS_LABEL = "Browse Events";
 
     // Categories
     static CATEGORIES = [
@@ -259,4 +260,14 @@ export class AppConstants {
     static REGISTRATION_SUCCESS_TITLE = "You're all set for this event.";
     static REGISTRATION_SUCCESS_SUBTITLE = "Your registration is confirmed. Check your Tickets for event details and your code ticket.";
     static TERMS_CO_TEXT = "By registering, you agree to receive event updates and reminders via email.";
+
+    // My Bookings Constants
+    static REGISTRATION_NOT_FOUND = "Registration Not Found!";
+    static UNAUTHORIZED_ACCESS = "Unauthorized Access!";
+    static MY_BOOKINGS_HEADER = "My Bookings";
+    static MY_BOOKINGS_SUBHEADER = "View and Manage your bookings";
+    static UPCOMING_EVENTS_HEADER = "Upcoming Events";
+    static PAST_EVENTS_HEADER = "Past Events";
+    static CANCEL_REGISTRATION_SUCCESS = "Registration Cancelled Successfully.";
+    static CANCEL_REGISTRATION_ERROR = "Failed to Cancel Registration!";
 }
