@@ -30,7 +30,7 @@ const SearchBarComponent = () => {
     const { data: searchedResults, isLoading: searchLoading } = useConvexQuery(
         api.globalSearchService.searchEvents,
         searchQuery.trim().length > 2 ? { query: searchQuery, limit: 5 } : "skip"
-    );
+    ) as any;
 
     const debounceSearch = useRef(
         debounce((value) => dispatch(setSearchQuery(value), 300))

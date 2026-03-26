@@ -49,21 +49,21 @@ const RegistrationDialogComponent = (props: DialogProps) => {
         e.preventDefault();
 
         if (!name.trim() || !email.trim()) {
-            toast.error("Please fill in all fields");
+            toast.error(AppConstants.ALL_FIELDS_REQUIRED);
             return;
         }
 
         try {
             await registerForEvent({
                 eventId: eventData?._id,
-                attendeeName: name,
-                attendeeEmail: email,
+                name: name,
+                email: email,
             });
 
             setIsSuccess(true);
-            toast.success("Registration successful! 🎉");
+            toast.success(AppConstants.REGISTRATION_SUCCESS);
         } catch (error: any) {
-            toast.error(error.message || "Registration failed");
+            toast.error(error.message || AppConstants.REGISTRATION_ERROR);
         }
     };
 
@@ -76,31 +76,34 @@ const RegistrationDialogComponent = (props: DialogProps) => {
         onClose();
     };
 
-    // Success state
     if (isSuccess) {
         return (
             <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-                <DialogContent className="sm:max-w-md">
+                <DialogContent className="sm:max-w-md bg-[#020714]">
                     <div className="flex flex-col items-center text-center space-y-4 py-6">
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                             <CheckCircle className="w-8 h-8 text-green-600" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold mb-2">You&apos;re All Set!</h2>
+                            <h2 className="text-2xl font-bold mb-2">{AppConstants.REGISTRATION_SUCCESS_TITLE}</h2>
                             <p className="text-muted-foreground">
-                                Your registration is confirmed. Check your Tickets for event
-                                details and your QR code ticket.
+                                {AppConstants.REGISTRATION_SUCCESS_SUBTITLE}
                             </p>
                         </div>
                         <Separator />
                         <div className="w-full space-y-2">
-                            <Button className="w-full gap-2" onClick={handleViewTicket}>
-                                <Ticket className="w-4 h-4" />
-                                View My Ticket
-                            </Button>
-                            <Button variant="outline" className="w-full" onClick={onClose}>
-                                Close
-                            </Button>
+                            <InputButton
+                                className="w-full gap-2"
+                                onClick={handleViewTicket}
+                                icon={<Ticket className="w-4 h-4" />}
+                                label={AppConstants.VIEW_TICKET_LABEL}
+                            />
+                            <InputButton
+                                variant="secondary"
+                                className="w-full"
+                                onClick={onClose}
+                                label={AppConstants.CANCEL_LABEL}
+                            />
                         </div>
                     </div>
                 </DialogContent>
@@ -108,66 +111,59 @@ const RegistrationDialogComponent = (props: DialogProps) => {
         );
     }
 
-    // Registration form
     return (
         <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-[#020714]">
                 <DialogHeader>
-                    <DialogTitle>Register for Event</DialogTitle>
+                    <DialogTitle>{AppConstants.REGISTRATION_TITLE}</DialogTitle>
                     <DialogDescription>
-                        Fill in your details to register for {eventData?.title}
+                        {`${AppConstants.REGISTRATION_SUBTITLE} ${eventData?.title}`}
                     </DialogDescription>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Event Summary */}
-                    <div className="bg-muted p-4 rounded-lg space-y-2">
+                    <div className="bg-[#000c2c] p-4 rounded-lg space-y-2">
                         <p className="font-semibold">{eventData?.title}</p>
                         <p className="text-sm text-muted-foreground">
                             {eventData?.isFree ? (
-                                "Free Event"
+                                AppConstants.FREE_EVENT_TEXT
                             ) : (
                                 <span>
-                                    Price: ₹{eventData?.ticketPrice}{" "}
-                                    <span className="text-xs">(Pay at venue)</span>
+                                    {AppConstants.PRICE_TITLE}: ₹{eventData?.ticketPrice}{" "}
+                                    <span className="text-xs">{`(${AppConstants.PAY_AT_VENUE_TEXT})`}</span>
                                 </span>
                             )}
                         </p>
                     </div>
 
-                    {/* Name */}
                     <div className="space-y-2">
-                        <Label htmlFor="name">Full Name</Label>
                         <InputComponent
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="John Doe"
+                            placeholder={AppConstants.NAME_LABEL}
+                            label={AppConstants.NAME_LABEL}
                         />
                     </div>
 
-                    {/* Email */}
                     <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
                         <InputComponent
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="john@example.com"
+                            placeholder={AppConstants.EMAIL_LABEL}
+                            label={AppConstants.EMAIL_LABEL}
                         />
                     </div>
 
-                    {/* Terms */}
                     <p className="text-xs text-muted-foreground">
-                        By registering, you agree to receive event updates and reminders via
-                        email.
+                        {AppConstants.TERMS_CO_TEXT}
                     </p>
 
-                    {/* Actions */}
                     <div className="flex gap-2 pt-2">
                         <InputButton
                             type="button"
-                            variant="outline"
+                            variant="secondary"
                             onClick={onClose}
                             className="flex-1"
                             disabled={isLoading}

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Trash, Users } from "lucide-react";
+import { Calendar, Eye, MapPin, Ticket, Trash, Users } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import { EventCardComponentProps } from "./EventCardComponent";
@@ -15,7 +15,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
         event,
         onClick,
         onDelete,
-        showActions = false
+        showActions
     } = props;
 
     const renderActions = (event: any, onClick: any, onDelete?: any) => {
@@ -30,6 +30,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
                         onClick(e);
                     }}
                     label={AppConstants.VIEW_LABEL}
+                    icon={(showActions === "event") ? <Eye className="w-4 h-4" /> : <Ticket className="w-4 h-4" />}
                 />
 
                 {onDelete && (
@@ -39,7 +40,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
                         size="icon"
                         onClick={(e: any) => {
                             e.stopPropagation();
-                            onDelete(event._id);
+                            onDelete();
                         }}
                         label=""
                         icon={<Trash className="w-4 h-4 text-red-500" />}
@@ -76,7 +77,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
                 </div>
 
                 <CardContent className="px-2 flex gap-2.5">
-                    <div className="flex flex-col gap-1 min-w-0 text-start">
+                    <div className="flex flex-col gap-1 min-w-0 text-start w-full">
                         <Badge variant={"outline"} className="text-white">
                             {getCategoryIcon(event.category)} {getCategoryLabel(event.category)}
                         </Badge>

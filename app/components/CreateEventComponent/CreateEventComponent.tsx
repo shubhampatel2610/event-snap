@@ -36,7 +36,7 @@ const CreateEventComponent = () => {
     const { has } = useAuth();
     const proPlan = has?.({ plan: AppConstants.PRO_PLAN_KEY });
 
-    const { data: currentUserData } = useConvexQuery(api.users.getCurrentUserData);
+    const { data: currentUserData } = useConvexQuery(api.users.getCurrentUserData) as any;
     const { mutateData: createEventData, isLoading } = useConvexMutations(api.eventService.createNewEvent);
 
     // destructure of form

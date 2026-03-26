@@ -6,7 +6,6 @@ import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/convex/_generated/api";
 import { useConvexQuery } from "@/hooks/use-convex-query";
-import { useUser } from "@clerk/nextjs";
 import { format } from "date-fns";
 import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
@@ -19,19 +18,17 @@ const EventDetailsComponent = () => {
     const params = useParams();
     const router = useRouter();
 
-    const { user } = useUser();
-
     const { data: eventData, isLoading } = useConvexQuery(
         api.eventService.getEventBySlug,
         {
             slug: params.slug
         }
-    );
+    ) as any;
 
     return (
         <div
             style={{
-                backgroundColor: eventData.themeColor || AppConstants.DEFAULT_COLOR
+                backgroundColor: eventData?.themeColor || AppConstants.DEFAULT_COLOR
             }}
             className="min-h-screen px-10 py-8 -mt-6 md:-mt-2"
         >
@@ -73,7 +70,7 @@ const EventDetailsComponent = () => {
 
                 <div className="grid md:grid-cols-[1fr_350px] gap-5">
                     <EventDetailsLeftSection eventData={eventData} />
-                    <EventDetailsRightSection eventData={eventData} userData={user} />
+                    <EventDetailsRightSection eventData={eventData} />
                 </div>
             </div>
 
