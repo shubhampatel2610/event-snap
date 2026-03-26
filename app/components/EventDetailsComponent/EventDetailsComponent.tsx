@@ -23,7 +23,7 @@ const EventDetailsComponent = () => {
         {
             slug: params.slug
         }
-    );
+    ) as any;
 
     return (
         <div
