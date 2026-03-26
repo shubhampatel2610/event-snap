@@ -2,72 +2,65 @@
 import { setData, setError, setLoading } from "@/app/store/dashboardSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { useMutation, useQuery } from "convex/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export const useConvexQuery = (query: any, ...args: any) => {
-    const dispatch = useAppDispatch();
-
-    if (args[0] === "skip") {
-        dispatch(setLoading(false));
-        dispatch(setError(""));
-    }
-
-    const response = useQuery(query, ...args);
-
-    const isLoading = useAppSelector((state) => state.dashboard.isLoading);
-    const data = useAppSelector((state) => state.dashboard.data);
-    const error = useAppSelector((state) => state.dashboard.error);
+export const useConvexQuery = (query: any, args?: any) => {
+    const result = useQuery(query, args);
+    const [data, setData] = useState(undefined);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!response) {
-            dispatch(setLoading(true));
+        if (result === undefined) {
+            setIsLoading(true);
         } else {
             try {
-                dispatch(setData(response));
-            } catch (error: any) {
-                dispatch(setError(error.message));
-                toast.error(error.message);
+                setData(result);
+                setError(null);
+            } catch (err: any) {
+                setError(err);
+                toast.error(err.message);
             } finally {
-                dispatch(setLoading(false));
+                setIsLoading(false);
             }
         }
-    }, [response, dispatch]);
+    }, [result]);
 
     return {
-        isLoading,
         data,
-        error
-    }
-}
+        error,
+        isLoading,
+    };
+};
 
 export const useConvexMutations = (mutation: any) => {
-    const dispatch = useAppDispatch();
     const mutationFn = useMutation(mutation);
-
-    const isLoading = useAppSelector((state) => state.dashboard.isLoading);
-    const data = useAppSelector((state) => state.dashboard.data);
-    const error = useAppSelector((state) => state.dashboard.error);
+    const [data, setData] = useState(undefined);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const mutateData = async (...args: any) => {
-        dispatch(setLoading(true));
-        dispatch(setError(null));
+        setIsLoading(true);
+        setError(null);
 
         try {
             const response = await mutationFn(...args);
-            dispatch(setData(response));
-        } catch (error: any) {
-            dispatch(setError(error.message));
-            toast.error(error.message);
+            setData(response);
+            return response;
+        } catch (err: any) {
+            setError(err);
+            toast.error(err.message);
+            throw err;
         } finally {
-            dispatch(setLoading(false));
+            setIsLoading(false);
         }
-    }
+    };
 
     return {
         mutateData,
         isLoading,
         data,
         error
-    }
-}
+    };
+};
