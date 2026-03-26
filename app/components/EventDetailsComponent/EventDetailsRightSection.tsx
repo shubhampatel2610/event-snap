@@ -24,11 +24,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    console.log("eventData >>>>>> ", eventData)
-
-    const { data: userData } = useConvexQuery(api.users.getCurrentUserData) as {
-        data: any;
-    };;
+    const { data: userData } = useConvexQuery(api.users.getCurrentUserData) as any;
 
     const { data: registrationData } = useConvexQuery(
         api.registrationService.checkForUserRegistration,

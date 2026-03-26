@@ -7,8 +7,8 @@ export interface EventCardComponentProps {
   event: any;
   variant: "grid" | "list";
   onClick?: () => void;
-  onDelete?: () => void;
-  showActions?: boolean;
+  onDelete?: (id?: any) => void;
+  showActions?: "event" | "booking" | "";
 }
 
 const EventCardComponent = (props: EventCardComponentProps) => {
@@ -18,7 +18,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
     variant = "grid",
     onClick,
     onDelete,
-    showActions = false
+    showActions
   } = props;
 
   return (variant === "list") ?

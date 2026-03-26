@@ -43,7 +43,7 @@ export const registerForEvent = mutation({
         });
 
         await ctx.db.patch(args.eventId, {
-            attendeesCount: eventData.registrationCount + 1
+            registrationCount: eventData.registrationCount + 1
         });
 
         return registerationId;
