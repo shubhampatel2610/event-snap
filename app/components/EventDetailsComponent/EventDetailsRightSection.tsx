@@ -1,5 +1,3 @@
-"use client";
-
 import { AppConstants } from "@/app/constants/AppConstants";
 import { setShowRegistrationPopup } from "@/app/store/eventSlice";
 import { useAppDispatch } from "@/app/store/store";
@@ -14,25 +12,32 @@ import { Calendar, CheckCircle, Clock, Share2, Ticket, Users } from "lucide-reac
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import InputButton from "../common/ButtonComponent/InputButton";
+import { useUser } from "@clerk/nextjs";
+import { Doc } from "@/convex/_generated/dataModel";
 
 interface ComponentProps {
     eventData: any,
-    userData: any
 }
 
 const EventDetailsRightSection = (props: ComponentProps) => {
-    const { eventData, userData } = props;
+    const { eventData } = props;
     const router = useRouter();
     const dispatch = useAppDispatch();
 
+    console.log("eventData >>>>>> ", eventData)
+
+    const { data: userData } = useConvexQuery(api.users.getCurrentUserData) as {
+        data: any;
+    };;
+
     const { data: registrationData } = useConvexQuery(
         api.registrationService.checkForUserRegistration,
-        eventData?._id ? { eventId: eventData._id } : "skip"
+        eventData?._id ? { eventId: eventData?._id } : "skip"
     );
 
-    const isEventFull = eventData.registrationCount >= eventData.capacity;
-    const isEventEnded = eventData.endDate < Date.now();
-    const isOrganizer = userData?.id === eventData.organizerId;
+    const isEventFull = eventData?.registrationCount >= eventData?.capacity;
+    const isEventEnded = eventData?.endDate < Date.now();
+    const isOrganizer = userData?._id === eventData?.organizerId;
 
     const handleRegister = () => {
         if (!userData) {
@@ -65,8 +70,8 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                 <Card
                     className={`overflow-hidden py-0`}
                     style={{
-                        backgroundColor: eventData.themeColor
-                            ? darkenColor(eventData.themeColor, 0.04)
+                        backgroundColor: eventData?.themeColor
+                            ? darkenColor(eventData?.themeColor, 0.04)
                             : AppConstants.DEFAULT_COLOR,
                     }}
                 >
@@ -74,11 +79,11 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                         <div>
                             <p className="text-sm text-white mb-1">{AppConstants.PRICE_TITLE}</p>
                             <p className="text-[#c0c0c0] text-3xl font-bold">
-                                {eventData.isFree
+                                {eventData?.isFree
                                     ? AppConstants.FREE_LABEL
-                                    : `₹${eventData.ticketPrice}`}
+                                    : `₹${eventData?.ticketPrice && eventData?.ticketPrice}`}
                             </p>
-                            {!eventData.isFree && (
+                            {!eventData?.isFree && (
                                 <p className="text-[#c0c0c0] text-xs mt-1">
                                     {AppConstants.PAY_AT_VENUE_TEXT}
                                 </p>
@@ -94,11 +99,11 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                                     <span className="text-sm">{AppConstants.ATTENDEES_TITLE}</span>
                                 </div>
                                 <p className="font-semibold text-[#c0c0c0]">
-                                    {eventData.registrationCount} / {eventData.capacity}
+                                    {eventData?.registrationCount} / {eventData?.capacity}
                                 </p>
                             </div>
 
-                            {eventData.startDate && <div className="flex items-center justify-between">
+                            {eventData?.startDate && <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-white">
                                     <Calendar className="w-4 h-4" />
                                     <span className="text-sm">{AppConstants.DATE_TITLE}</span>
@@ -108,7 +113,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                                 </p>
                             </div>}
 
-                            {eventData.startDate && <div className="flex items-center justify-between">
+                            {eventData?.startDate && <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2 text-white">
                                     <Clock className="w-4 h-4" />
                                     <span className="text-sm">{AppConstants.TIME_TITLE}</span>
@@ -147,7 +152,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                         ) : isOrganizer ? (
                             <InputButton
                                 className="w-full"
-                                onClick={() => router.push(`${AppConstants.EVENTS_ROUTE}/${eventData.slug}${AppConstants.MANAGE_ROUTE}`)}
+                                onClick={() => router.push(`${AppConstants.EVENTS_ROUTE}/${eventData?.slug}${AppConstants.MANAGE_ROUTE}`)}
                                 label={AppConstants.MANAGE_EVENT_LABEL}
                             />
                         ) : (

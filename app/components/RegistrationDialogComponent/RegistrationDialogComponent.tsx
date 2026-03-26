@@ -56,8 +56,8 @@ const RegistrationDialogComponent = (props: DialogProps) => {
         try {
             await registerForEvent({
                 eventId: eventData?._id,
-                attendeeName: name,
-                attendeeEmail: email,
+                name: name,
+                email: email,
             });
 
             setIsSuccess(true);
@@ -79,7 +79,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
     if (isSuccess) {
         return (
             <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-                <DialogContent className="sm:max-w-md">
+                <DialogContent className="sm:max-w-md bg-[#020714]">
                     <div className="flex flex-col items-center text-center space-y-4 py-6">
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                             <CheckCircle className="w-8 h-8 text-green-600" />
@@ -99,7 +99,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
                                 label={AppConstants.VIEW_TICKET_LABEL}
                             />
                             <InputButton
-                                variant="outline"
+                                variant="secondary"
                                 className="w-full"
                                 onClick={onClose}
                                 label={AppConstants.CANCEL_LABEL}
@@ -113,7 +113,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
 
     return (
         <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-[#020714]">
                 <DialogHeader>
                     <DialogTitle>{AppConstants.REGISTRATION_TITLE}</DialogTitle>
                     <DialogDescription>
@@ -122,7 +122,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="bg-muted p-4 rounded-lg space-y-2">
+                    <div className="bg-[#000c2c] p-4 rounded-lg space-y-2">
                         <p className="font-semibold">{eventData?.title}</p>
                         <p className="text-sm text-muted-foreground">
                             {eventData?.isFree ? (
@@ -163,7 +163,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
                     <div className="flex gap-2 pt-2">
                         <InputButton
                             type="button"
-                            variant="outline"
+                            variant="secondary"
                             onClick={onClose}
                             className="flex-1"
                             disabled={isLoading}
