@@ -275,4 +275,10 @@ export class AppConstants {
     static MY_TICKET_HEADER = "My Ticket";
     static TICKET_ID_LABEL = "Ticket ID";
     static MY_TICKET_FOOTER_NOTE = "Show This Ticket Details at Venue for Entry";
+
+    // My Events Constants
+    static MY_EVENTS_HEADER = "My Events";
+    static MY_EVENTS_SUBHEADER = "View and Manage your Events";
+    static DELETE_EVENT_SUCCESS = "Event Deleted Successfully.";
+    static DELETE_EVENT_ERROR = "Failed to Delete Event!";
 }
