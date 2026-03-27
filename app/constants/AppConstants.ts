@@ -51,6 +51,7 @@ export class AppConstants {
     static NAME_LABEL = "Name";
     static EMAIL_LABEL = "Email";
     static BROWSE_EVENTS_LABEL = "Browse Events";
+    static DONE_LABEL = "Done";
 
     // Categories
     static CATEGORIES = [
@@ -270,4 +271,7 @@ export class AppConstants {
     static PAST_EVENTS_HEADER = "Past Events";
     static CANCEL_REGISTRATION_SUCCESS = "Registration Cancelled Successfully.";
     static CANCEL_REGISTRATION_ERROR = "Failed to Cancel Registration!";
+    static MY_TICKET_HEADER = "My Ticket";
+    static TICKET_ID_LABEL = "Ticket ID";
+    static MY_TICKET_FOOTER_NOTE = "Show This Ticket Details at Venue for Entry";
 }
