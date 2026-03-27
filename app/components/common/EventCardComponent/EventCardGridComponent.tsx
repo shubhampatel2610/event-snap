@@ -21,7 +21,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     const renderActions = (event: any, onClick: any, onDelete?: any) => {
         return (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-auto">
                 <InputButton
                     className="bg-transparent text-white flex-1 hover:text-black hover:bg-gray-200"
                     variant="outline"
@@ -53,7 +53,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={!restrictCardClick ? onClick : undefined}>
+            <Card className={`pt-0 overflow-hidden h-full group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={!restrictCardClick ? onClick : undefined}>
                 <div className="relative h-40 overflow-hidden">
                     {event.bannerImageUrl ?
                         <Image
@@ -77,7 +77,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
                     </div>
                 </div>
 
-                <CardContent className="px-2 flex gap-2.5">
+                <CardContent className="px-2 flex flex-col">
                     <div className="flex flex-col gap-1 min-w-0 text-start w-full">
                         <Badge variant={"outline"} className="text-white">
                             {getCategoryIcon(event.category)} {getCategoryLabel(event.category)}
