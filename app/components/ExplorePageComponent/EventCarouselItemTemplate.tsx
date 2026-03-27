@@ -5,13 +5,14 @@ import { Calendar, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import moment from "moment";
+import { AppConstants } from "@/app/constants/AppConstants";
 
 const EventCarouselItemTemplate = (item: any) => {
     const router = useRouter();
 
     const handleItemClick = (item: any) => {
         if (item.slug) {
-            router.push(`/events/${item.slug}`);
+            router.push(`${AppConstants.EVENTS_ROUTE}/${item.slug}`);
         }
         return;
     }

@@ -5,7 +5,7 @@ export class AppConstants {
 
     // App Routes
     static HOME_ROUTE = "/";
-    static EVENTS_ROUTE = "/events"
+    static EVENTS_ROUTE = "/my-events"
     static CREATE_EVENT_ROUTE = "/create-event"
     static EXPLORE_ROUTE = "/explore";
     static MY_BOOKINGS_ROUTE = "/my-bookings";
