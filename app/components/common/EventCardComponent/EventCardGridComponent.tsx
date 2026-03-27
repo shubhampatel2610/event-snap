@@ -15,7 +15,8 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
         event,
         onClick,
         onDelete,
-        showActions
+        showActions,
+        restrictCardClick
     } = props;
 
     const renderActions = (event: any, onClick: any, onDelete?: any) => {
@@ -52,7 +53,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={onClick}>
+            <Card className={`pt-0 overflow-hidden group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={!restrictCardClick ? onClick : undefined}>
                 <div className="relative h-40 overflow-hidden">
                     {event.bannerImageUrl ?
                         <Image

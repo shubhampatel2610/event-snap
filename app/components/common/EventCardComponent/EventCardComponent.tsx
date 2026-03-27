@@ -9,6 +9,7 @@ export interface EventCardComponentProps {
   onClick?: () => void;
   onDelete?: (id?: any) => void;
   showActions?: "event" | "booking" | "";
+  restrictCardClick?: boolean
 }
 
 const EventCardComponent = (props: EventCardComponentProps) => {
@@ -18,7 +19,8 @@ const EventCardComponent = (props: EventCardComponentProps) => {
     variant = "grid",
     onClick,
     onDelete,
-    showActions
+    showActions,
+    restrictCardClick
   } = props;
 
   return (variant === "list") ?
@@ -28,6 +30,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
       onClick={onClick}
       onDelete={onDelete}
       showActions={showActions}
+      restrictCardClick={restrictCardClick}
     /> :
     <EventCardGridComponent
       className={className}
@@ -35,6 +38,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
       onClick={onClick}
       onDelete={onDelete}
       showActions={showActions}
+      restrictCardClick={restrictCardClick}
     />
 }
 
