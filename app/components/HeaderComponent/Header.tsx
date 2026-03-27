@@ -80,7 +80,7 @@ const Header = () => {
                   />
                   <UserButton.Link
                     label={AppConstants.EVENTS_LABEL}
-                    href={AppConstants.EVENTS_ROUTE}
+                    href={AppConstants.MY_EVENTS_ROUTE}
                     labelIcon={<Building size={16} />}
                   />
                   <UserButton.Action label="manageAccount" />

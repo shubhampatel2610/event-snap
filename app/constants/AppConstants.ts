@@ -5,8 +5,9 @@ export class AppConstants {
 
     // App Routes
     static HOME_ROUTE = "/";
-    static EVENTS_ROUTE = "/events"
-    static CREATE_EVENT_ROUTE = "/create-event"
+    static EVENTS_ROUTE = "/events";
+    static MY_EVENTS_ROUTE = "/my-events";
+    static CREATE_EVENT_ROUTE = "/create-event";
     static EXPLORE_ROUTE = "/explore";
     static MY_BOOKINGS_ROUTE = "/my-bookings";
     static LOCATION_ROUTE = "/location";
@@ -51,6 +52,7 @@ export class AppConstants {
     static NAME_LABEL = "Name";
     static EMAIL_LABEL = "Email";
     static BROWSE_EVENTS_LABEL = "Browse Events";
+    static DONE_LABEL = "Done";
 
     // Categories
     static CATEGORIES = [
@@ -270,4 +272,13 @@ export class AppConstants {
     static PAST_EVENTS_HEADER = "Past Events";
     static CANCEL_REGISTRATION_SUCCESS = "Registration Cancelled Successfully.";
     static CANCEL_REGISTRATION_ERROR = "Failed to Cancel Registration!";
+    static MY_TICKET_HEADER = "My Ticket";
+    static TICKET_ID_LABEL = "Ticket ID";
+    static MY_TICKET_FOOTER_NOTE = "Show This Ticket Details at Venue for Entry";
+
+    // My Events Constants
+    static MY_EVENTS_HEADER = "My Events";
+    static MY_EVENTS_SUBHEADER = "View and Manage your Events";
+    static DELETE_EVENT_SUCCESS = "Event Deleted Successfully.";
+    static DELETE_EVENT_ERROR = "Failed to Delete Event!";
 }

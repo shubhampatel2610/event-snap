@@ -197,12 +197,13 @@ export const getEventBySlug = query({
 });
 
 // get events by organizer details
-export const getEventByOrganizerDetails = query({
-    args: { organizerId: v.id("users") },
+export const getMyEventsDetails = query({
     handler: async (ctx, args) => {
-        const eventData = await ctx.db
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+
+        const eventData: any = await ctx.db
             .query("eventsData")
-            .withIndex("by_organizerId", (q) => q.eq("organizerId", args.organizerId))
+            .withIndex("by_organizerId", (q) => q.eq("organizerId", user?._id))
             .order("desc")
             .collect();
 

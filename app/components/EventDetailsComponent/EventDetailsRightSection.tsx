@@ -148,7 +148,7 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                         ) : isOrganizer ? (
                             <InputButton
                                 className="w-full"
-                                onClick={() => router.push(`${AppConstants.EVENTS_ROUTE}/${eventData?.slug}${AppConstants.MANAGE_ROUTE}`)}
+                                onClick={() => router.push(`${AppConstants.EVENTS_ROUTE}/${eventData?.slug}/${AppConstants.MANAGE_ROUTE}`)}
                                 label={AppConstants.MANAGE_EVENT_LABEL}
                             />
                         ) : (

@@ -14,7 +14,9 @@ interface EventState {
   selectedLocation: any,
   showImagePicker: boolean,
   showAIEventCreator: boolean,
-  showRegistrationPopup: boolean
+  showRegistrationPopup: boolean,
+  showMyTicketPopup: boolean,
+  showTicketData: any
 }
 
 const initialState: EventState = {
@@ -31,7 +33,9 @@ const initialState: EventState = {
   },
   showImagePicker: false,
   showAIEventCreator: false,
-  showRegistrationPopup: false
+  showRegistrationPopup: false,
+  showMyTicketPopup: false,
+  showTicketData: {}
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -150,6 +154,12 @@ const eventSlice = createSlice({
     setShowRegistrationPopup(state, action: PayloadAction<any>) {
       state.showRegistrationPopup = action.payload;
     },
+    setShowMyTicketPopup(state, action: PayloadAction<any>) {
+      state.showMyTicketPopup = action.payload;
+    },
+    setShowTicketData(state, action: PayloadAction<any>) {
+      state.showTicketData = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -182,7 +192,9 @@ export const {
   setSelectedLocation,
   setShowImagePicker,
   setShowAIEventCreator,
-  setShowRegistrationPopup
+  setShowRegistrationPopup,
+  setShowMyTicketPopup,
+  setShowTicketData
 } = eventSlice.actions;
 
 export default eventSlice.reducer;
