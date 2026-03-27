@@ -127,7 +127,7 @@ const CreateEventComponent = () => {
             await createEventData(payLoad);
 
             toast.success(AppConstants.CREATE_EVENT_SUCCESS);
-            router.push(AppConstants.EVENTS_ROUTE);
+            router.push(AppConstants.MY_EVENTS_ROUTE);
         } catch (error: any) {
             toast.error(error.message || AppConstants.CREATE_EVENT_ERROR);
         }
