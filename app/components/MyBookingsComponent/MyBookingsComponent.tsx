@@ -24,11 +24,13 @@ const MyBookingsComponent = () => {
     const currentDate = Date.now();
 
     const upcomingEvents = registrationData?.filter((regData: any) =>
-        regData.eventData && regData.eventData.startDate >= currentDate && regData.status === "confirmed"
+        regData.eventData &&
+        (regData.eventData.startDate >= currentDate || (regData.eventData.startDate <= currentDate && regData.eventData.endDate >= currentDate)) &&
+        regData.status === "confirmed"
     );
 
     const pastEvents = registrationData?.filter((regData: any) =>
-        regData.eventData && (regData.eventData.startDate < currentDate || regData.status === "cancelled")
+        regData.eventData && (regData.eventData.endDate < currentDate || regData.status === "cancelled")
     );
 
     const deleteRegistration = async (registrationId: any) => {
