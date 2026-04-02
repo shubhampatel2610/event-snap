@@ -249,3 +249,68 @@ export const deleteEvent = mutation({
         return { success: true };
     }
 })
+
+// get event by id
+export const getEventById = query({
+    args: { eventId: v.id("eventsData") },
+    handler: async (ctx, args) => {
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+
+        if (!user) {
+            throw new Error(AppConstants.USER_NOT_FOUND);
+        }
+
+        const eventData = await ctx.db.get(args.eventId);
+        if (!eventData) {
+            throw new Error(AppConstants.EVENT_NOT_FOUND);
+        }
+
+        if (eventData.organizerId !== user._id) {
+            throw new Error(AppConstants.UNAUTHORIZED_ACCESS);
+        }
+
+        const eventRegistrations = await ctx.db
+            .query("registrationData")
+            .withIndex("by_eventId", (q) => q.eq("eventId", args.eventId))
+            .collect();
+
+        const totalRegistrations = eventRegistrations.filter(
+            (reg) => reg.status === "confirmed"
+        ).length;
+
+        const totalCheckins = eventRegistrations.filter(
+            (reg) => reg.checkedIn && reg.status === "confirmed"
+        ).length;
+
+        const pendingCheckins = totalRegistrations - totalCheckins;
+
+        const totalRevenue = eventData?.isFree ? 0 : totalRegistrations * (eventData?.ticketPrice || 0);
+
+        const checkinRate = totalRegistrations > 0 ? (totalCheckins / totalRegistrations) * 100 : 0;
+
+        const now = Date.now();
+        const remainingTime = eventData.startDate - now;
+        const remainingHours = Math.max(0, Math.floor(remainingTime / (1000 * 60 * 60)));
+
+        const today = new Date().setHours(0, 0, 0, 0);
+        const startDate = new Date(eventData.startDate).setHours(0, 0, 0, 0);
+        const endDate = new Date(eventData.endDate).setHours(0, 0, 0, 0);
+        const isStartingToday = today >= startDate && today <= endDate;
+        const isPastEvent = eventData.endDate < now;
+
+        return {
+            eventData,
+            statistics: {
+                totalRegistrations,
+                totalCheckins,
+                pendingCheckins,
+                totalRevenue,
+                checkinRate,
+                remainingHours,
+                isStartingToday,
+                isPastEvent,
+                capacity: eventData.capacity
+            }
+        };
+    }
+});

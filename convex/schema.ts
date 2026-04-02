@@ -90,5 +90,6 @@ export default defineSchema({
     })
         .index("by_eventId", ["eventId"])
         .index("by_userId", ["userId"])
-        .index("by_eventId_userId", ["eventId", "userId"]),
+        .index("by_eventId_userId", ["eventId", "userId"])
+        .index("by_uniqueId", ["uniqueId"]),
 });

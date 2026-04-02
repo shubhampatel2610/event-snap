@@ -118,3 +118,81 @@ export const cancelUserRegistration = mutation({
         return { success: true };
     }
 })
+
+// Get registrations for an event (for organizers)
+export const getEventRegistrations = query({
+    args: { eventId: v.id("eventsData") },
+    handler: async (ctx, args) => {
+        const user = await ctx.runQuery(api.users.getCurrentUserData);
+        if (!user) {
+            throw new Error(AppConstants.USER_NOT_FOUND);
+        }
+
+        const event = await ctx.db.get(args.eventId);
+        if (!event) {
+            throw new Error(AppConstants.EVENT_NOT_FOUND);
+        }
+
+        // Check if user is the organizer
+        if (event.organizerId !== user._id) {
+            throw new Error(AppConstants.UNAUTHORIZED_ACCESS);
+        }
+
+        const registrations = await ctx.db
+            .query("registrationData")
+            .withIndex("by_eventId", (q) => q.eq("eventId", args.eventId))
+            .collect();
+
+        return registrations;
+    },
+});
+
+export const checkInAttendee = mutation({
+    args: {
+        uniqueId: v.string()
+    },
+    handler: async (ctx, args) => {
+        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+
+        if (!user) {
+            throw new Error(AppConstants.USER_NOT_FOUND);
+        }
+
+        const registrationData = await ctx.db
+            .query("registrationData")
+            .withIndex("by_uniqueId", (q: any) => q.eq("uniqueId", args.uniqueId))
+            .unique();
+
+        if (!registrationData) {
+            throw new Error(AppConstants.REGISTRATION_NOT_FOUND);
+        }
+
+        const event = await ctx.db.get(registrationData.eventId);
+        if (!event) {
+            throw new Error(AppConstants.EVENT_NOT_FOUND);
+        }
+
+        if (event.organizerId !== user._id) {
+            throw new Error(AppConstants.UNAUTHORIZED_ACCESS);
+        }
+
+        if (registrationData.checkedIn) {
+            return {
+                success: false,
+                message: AppConstants.ALREADY_CHECKED_IN_TEXT,
+                registrationData
+            }
+        }
+
+        await ctx.db.patch(registrationData._id, {
+            checkedIn: true,
+            checkedInAt: Date.now()
+        });
+
+        return {
+            success: true,
+            message: AppConstants.CHECKIN_SUCCESS_TEXT,
+            registrationData: { ...registrationData, checkedIn: true, checkedInAt: Date.now() }
+        }
+    }
+});

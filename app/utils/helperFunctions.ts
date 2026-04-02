@@ -125,3 +125,15 @@ export const darkenColor = (color: any, amount: any) => {
     const b = Math.max(0, (num & 0x0000ff) - amount * 255);
     return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
 }
+
+export const formatRevenue = (revenue: number): string => {
+    if (revenue < 1000) {
+        return revenue.toString();
+    } else if (revenue < 100000) {
+        return (revenue / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    } else if (revenue < 10000000) {
+        return (revenue / 100000).toFixed(1).replace(/\.0$/, '') + 'L';
+    } else {
+        return (revenue / 10000000).toFixed(1).replace(/\.0$/, '') + 'Cr';
+    }
+}

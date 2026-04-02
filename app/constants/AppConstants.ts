@@ -25,6 +25,7 @@ export class AppConstants {
     ];
     static HIGHLIGHT_INDEXES = [1, 4];
     static LANDING_PAGE_DESCRIPTION = "Whether you are looking for concerts, sports, or community gatherings, EventSnap has got you covered. Join us and never miss out on the fun!";
+    static USER_NOT_FOUND = "User Not Found!";
 
     // Button Labels
     static GET_STARTED_BTN_LABEL = "Get Started";
@@ -53,6 +54,9 @@ export class AppConstants {
     static EMAIL_LABEL = "Email";
     static BROWSE_EVENTS_LABEL = "Browse Events";
     static DONE_LABEL = "Done";
+    static VERIFY_TICKET_LABEL = "Verify Ticket";
+    static EXPORT_CSV_LABEL = "Export CSV";
+    static CHECK_IN_LABEL = "Check In";
 
     // Categories
     static CATEGORIES = [
@@ -281,4 +285,20 @@ export class AppConstants {
     static MY_EVENTS_SUBHEADER = "View and Manage your Events";
     static DELETE_EVENT_SUCCESS = "Event Deleted Successfully.";
     static DELETE_EVENT_ERROR = "Failed to Delete Event!";
+    static ALREADY_CHECKED_IN_TEXT = "You have already checked in!";
+    static CHECKIN_SUCCESS_TEXT = "Check-in successful!";
+    static CAPACITY_LABEL = "Capacity";
+    static CHECKED_IN_LABEL = "Checked In";
+    static REVENUE_LABEL = "Revenue";
+    static CHECK_IN_RATE_LABEL = "Check In Rate";
+    static ENDED_POSTFIX = "Ended";
+    static EVENT_OVER_TEXT = "Event Over";
+    static TIME_LEFT_TEXT = "Time Left";
+    static ALL_TABS_LABEL = "All";
+    static CHECKED_IN_TAB_LABEL = "Checked In";
+    static NOT_CHECKED_IN_TAB_LABEL = "Pending";
+    static SEARCH_PLACEHOLDER = "Search by name, email, or unique ID...";
+    static ATTENDEE_NOT_FOUND = "No Attendees Found!";
+    static CHECK_IN_SUCCESS = "Attendee checked in successfully";
+    static CHECK_IN_ERROR = "Failed to check in attendee!";
 }
