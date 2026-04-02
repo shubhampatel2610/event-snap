@@ -50,7 +50,7 @@ export const eventPayload = z.object({
         .string()
         .min(1, AppConstants.CITY_REQ_ERROR),
     ticketPrice: z
-        .number()
+        .coerce.number()
         .min(1, AppConstants.PRICE_REQ_ERROR)
         .nullable(),
 }).passthrough();

@@ -16,7 +16,10 @@ interface EventState {
   showAIEventCreator: boolean,
   showRegistrationPopup: boolean,
   showMyTicketPopup: boolean,
-  showTicketData: any
+  showTicketData: any,
+  currentTab: "all" | "checkedIn" | "notCheckedIn",
+  searchQuery: string,
+  checkTicketVerification: boolean,
 }
 
 const initialState: EventState = {
@@ -35,7 +38,10 @@ const initialState: EventState = {
   showAIEventCreator: false,
   showRegistrationPopup: false,
   showMyTicketPopup: false,
-  showTicketData: {}
+  showTicketData: {},
+  currentTab: "all",
+  searchQuery: "",
+  checkTicketVerification: false,
 };
 
 export const fetchFeaturedEvents = createAsyncThunk(
@@ -160,6 +166,15 @@ const eventSlice = createSlice({
     setShowTicketData(state, action: PayloadAction<any>) {
       state.showTicketData = action.payload;
     },
+    setCurrentTab(state, action: PayloadAction<"all" | "checkedIn" | "notCheckedIn">) {
+      state.currentTab = action.payload;
+    },
+    setSearchQuery(state, action: PayloadAction<string>) {
+      state.searchQuery = action.payload;
+    },
+    setCheckTicketVerification(state, action: PayloadAction<boolean>) {
+      state.checkTicketVerification = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -194,7 +209,10 @@ export const {
   setShowAIEventCreator,
   setShowRegistrationPopup,
   setShowMyTicketPopup,
-  setShowTicketData
+  setShowTicketData,
+  setCurrentTab,
+  setSearchQuery,
+  setCheckTicketVerification
 } = eventSlice.actions;
 
 export default eventSlice.reducer;

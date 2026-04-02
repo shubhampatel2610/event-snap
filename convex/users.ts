@@ -2,6 +2,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { api, internal } from "./_generated/api";
+import { AppConstants } from "@/app/constants/AppConstants";
 
 export const store = mutation({
     args: {},
@@ -55,7 +56,7 @@ export const getCurrentUserData = query({
             )
             .unique();
         if (!user) {
-            throw new Error("User not found");
+            throw new Error(AppConstants.USER_NOT_FOUND);
         }
         return user;
     }
