@@ -3,11 +3,12 @@ import { api } from "@/convex/_generated/api";
 import ExplorePageComponent from "@/app/components/ExplorePageComponent/ExplorePageComponent";
 
 export default async function ExplorePage() {
-  const [preloadedFeatured, preloadedPopular, preloadedCategoryCounts] =
+  const [preloadedFeatured, preloadedPopular, preloadedCategoryCounts, preloadedExpired] =
     await Promise.all([
       preloadQuery(api.eventService.getFeaturingEvents, { limit: 3 }),
       preloadQuery(api.eventService.getPopularEvents, {}),
       preloadQuery(api.eventService.getEventCountsByCategory, {}),
+      preloadQuery(api.eventService.getExpiredEvents, { limit: 6 }),
     ]);
 
   return (
@@ -15,6 +16,7 @@ export default async function ExplorePage() {
       preloadedFeatured={preloadedFeatured}
       preloadedPopular={preloadedPopular}
       preloadedCategoryCounts={preloadedCategoryCounts}
+      preloadedExpired={preloadedExpired}
     />
   );
 }

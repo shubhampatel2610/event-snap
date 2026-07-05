@@ -12,19 +12,22 @@ import EventByCategoryComponent from "./EventByCategoryComponent";
 import _ from "lodash";
 import PopularEventsComponent from "./PopularEventsComponent";
 import NoEventComponent from "./NoEventComponent";
+import ExpiredEventsComponent from "./ExpiredEventsComponent";
 
 interface ExplorePageComponentProps {
     preloadedFeatured: Preloaded<typeof api.eventService.getFeaturingEvents>;
     preloadedPopular: Preloaded<typeof api.eventService.getPopularEvents>;
     preloadedCategoryCounts: Preloaded<typeof api.eventService.getEventCountsByCategory>;
+    preloadedExpired: Preloaded<typeof api.eventService.getExpiredEvents>;
 }
 
 const ExplorePageComponent = (props: ExplorePageComponentProps) => {
-    const { preloadedFeatured, preloadedPopular, preloadedCategoryCounts } = props;
+    const { preloadedFeatured, preloadedPopular, preloadedCategoryCounts, preloadedExpired } = props;
 
     const featuredEvents = usePreloadedQuery(preloadedFeatured) as any[];
     const popularEvents = usePreloadedQuery(preloadedPopular) as any[];
     const eventsCountByCategory = usePreloadedQuery(preloadedCategoryCounts) as any;
+    const expiredEvents = usePreloadedQuery(preloadedExpired) as any[];
 
     const { data: currentUserData } = useConvexQuery(api.users.getCurrentUserData) as any;
 
@@ -70,10 +73,18 @@ const ExplorePageComponent = (props: ExplorePageComponentProps) => {
                 <PopularEventsComponent popularEvents={popularEvents} />
             )}
 
+            {(!featuredEvents || featuredEvents.length === 0) &&
+                (!eventsByLocation || eventsByLocation.length === 0) &&
+                (!popularEvents || popularEvents.length === 0) &&
+                expiredEvents && expiredEvents.length > 0 && (
+                    <ExpiredEventsComponent expiredEvents={expiredEvents} />
+                )}
+
             <NoEventComponent
                 featuredEvents={featuredEvents}
                 eventsByLocation={eventsByLocation}
                 popularEvents={popularEvents}
+                expiredEvents={expiredEvents}
             />
         </div>
 

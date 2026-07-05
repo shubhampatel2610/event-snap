@@ -156,6 +156,13 @@ export class AppConstants {
     static BE_FIRST_TO_CREATE_LABEL = "Be the first to create one...";
     static FOUND_LABEL = "Found";
     static NO_EVENT_FOR_CATEGORY_LABEL = "No Events Found for this Category.";
+    static EXPIRED_EVENTS_HEADER = "Past Events";
+    static EXPIRED_EVENTS_SUBHEADER = "No upcoming events right now — here's what recently happened.";
+    static EXPIRED_LABEL = "Expired";
+    static ALL_EVENTS_HEADER = "All Events";
+    static ALL_EVENTS_SUBHEADER = "Browse every upcoming event on EventSnap.";
+    static NO_UPCOMING_EVENTS_LABEL = "No Upcoming Events";
+    static CHECK_BACK_LATER_LABEL = "Check back later, or be the first to create one...";
     static CATEGORY_SLUG_KEY = "category";
     static LOCATION_SLUG_KEY = "location";
 

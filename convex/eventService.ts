@@ -27,6 +27,44 @@ export const getFeaturingEvents = query({
     }
 });
 
+// Get all upcoming events sorted soonest-first (used for the main /events listing page)
+export const getAllUpcomingEvents = query({
+    args: {
+        limit: v.optional(v.number()),
+    },
+    handler: async (ctx, args) => {
+        const currentDate = Date.now();
+
+        const events = await ctx.db
+            .query("eventsData")
+            .withIndex("by_startDate")
+            .filter((q) => q.gte(q.field("startDate"), currentDate))
+            .order("asc")
+            .take(args.limit ?? 50);
+
+        return events;
+    }
+});
+
+// Get expired events (past events sorted by most recently ended)
+export const getExpiredEvents = query({
+    args: {
+        limit: v.optional(v.number()),
+    },
+    handler: async (ctx, args) => {
+        const currentDate = Date.now();
+
+        const events = await ctx.db
+            .query("eventsData")
+            .withIndex("by_startDate")
+            .filter((q) => q.lt(q.field("startDate"), currentDate))
+            .order("desc")
+            .collect();
+
+        return events.slice(0, args.limit ?? 6);
+    }
+});
+
 // Get events by location (upcoming events filtered by city/state/country and sorted by popularity)
 export const getEventsByLocation = query({
     args: {

@@ -7,15 +7,17 @@ interface NoEventComponentProps {
     featuredEvents?: unknown[];
     eventsByLocation?: unknown[];
     popularEvents?: unknown[];
+    expiredEvents?: unknown[];
 }
 
 const NoEventComponent = (props: NoEventComponentProps) => {
-    const { featuredEvents, eventsByLocation, popularEvents } = props;
+    const { featuredEvents, eventsByLocation, popularEvents, expiredEvents } = props;
 
     const hasNoEvents =
         (!featuredEvents || featuredEvents.length === 0) &&
         (!eventsByLocation || eventsByLocation.length === 0) &&
-        (!popularEvents || popularEvents.length === 0);
+        (!popularEvents || popularEvents.length === 0) &&
+        (!expiredEvents || expiredEvents.length === 0);
 
     if (!hasNoEvents) {
         return null;
