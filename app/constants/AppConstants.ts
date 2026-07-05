@@ -12,6 +12,8 @@ export class AppConstants {
     static MY_BOOKINGS_ROUTE = "/my-bookings";
     static LOCATION_ROUTE = "/location";
     static MANAGE_ROUTE = "/manage"
+    static SIGN_UP_ROUTE = "/sign-up";
+    static SIGN_IN_ROUTE = "/sign-in";
 
     // Landing Page Constants
     static LANDING_PAGE_HEADER = "Welcome to EventSnap!";

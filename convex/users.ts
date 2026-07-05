@@ -55,9 +55,6 @@ export const getCurrentUserData = query({
                 q.eq("tokenIdentifier", identity.tokenIdentifier),
             )
             .unique();
-        if (!user) {
-            throw new Error(AppConstants.USER_NOT_FOUND);
-        }
         return user;
     }
 })
@@ -73,6 +70,9 @@ export const userOnBoarding = mutation({
     },
     handler: async (ctx, args) => {
         const userData: any = await ctx.runQuery(api.users.getCurrentUserData);
+        if (!userData) {
+            throw new Error(AppConstants.USER_NOT_FOUND);
+        }
         await ctx.db.patch(userData._id, {
             location: args.location,
             interests: args.interests,
