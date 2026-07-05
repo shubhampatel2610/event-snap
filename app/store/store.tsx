@@ -1,14 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import dashboardSlice from "./dashboardSlice";
-import userSlice from "./userSlice";
 import eventSlice from "./eventSlice";
 
 export default function configureAppStore() {
   const store = configureStore({
     reducer: {
       dashboard: dashboardSlice,
-      user: userSlice,
       event: eventSlice,
     },
   });

@@ -1,25 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
+import { Preloaded, usePreloadedQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { AppConstants } from "@/app/constants/AppConstants";
 import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/app/store/store";
 import { MapPin } from "lucide-react";
 
 interface EventBySlugProps {
-    slugType: "category" | "location",
-    slugTypeDetails: any
+    slugType: "category" | "location";
+    slugTypeDetails: any;
+    preloaded:
+        | Preloaded<typeof api.eventService.getEventsByCategory>
+        | Preloaded<typeof api.eventService.getEventsByLocation>;
 }
 
 const EventsBySlugComponent = (props: EventBySlugProps) => {
-    const { slugType, slugTypeDetails } = props;
-    const router = useRouter();
-    const eventsByCategory = useAppSelector((state) => state.event.eventsByCategory);
-    const eventsByLocation = useAppSelector((state) => state.event.eventsByLocation);
-    const eventData = (slugType === AppConstants.CATEGORY_SLUG_KEY) ? eventsByCategory : eventsByLocation;
-
-    const handleEventClick = (eventSlug: string) => {
-        router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
-    }
+    const { slugType, slugTypeDetails, preloaded } = props;
+    const eventData = usePreloadedQuery(preloaded as Preloaded<typeof api.eventService.getEventsByCategory>) as any[];
 
     return (
         <div className="mt-2.5 flex flex-col gap-3">
@@ -45,9 +43,9 @@ const EventsBySlugComponent = (props: EventBySlugProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {eventData.map((event: any) => (
                             <EventCardComponent
-                                key={event.id}
+                                key={event._id}
                                 event={event}
-                                onClick={() => handleEventClick(event.slug)}
+                                href={`${AppConstants.EVENTS_ROUTE}/${event.slug}`}
                                 variant={"grid"}
                             />
                         ))}

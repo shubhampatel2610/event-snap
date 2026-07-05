@@ -1,8 +1,8 @@
 import { mutation, query } from "@/convex/_generated/server";
 import { v } from "convex/values";
-import { api, internal } from "./_generated/api";
 import { generateSlugByTitle } from '@/app/utils/helperFunctions';
 import { AppConstants } from '@/app/constants/AppConstants';
+import { getCurrentUserOrThrow } from "./users";
 
 // Get featuring events (upcoming events sorted by start date)
 export const getFeaturingEvents = query({
@@ -151,7 +151,7 @@ export const createNewEvent = mutation({
     },
     handler: async (ctx, args): Promise<any> => {
         try {
-            const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+            const user = await getCurrentUserOrThrow(ctx);
             const { hasPro, ...eventData } = args;
             
             if (!hasPro && user.freeEventsCount > 1) {
@@ -198,12 +198,12 @@ export const getEventBySlug = query({
 
 // get events by organizer details
 export const getMyEventsDetails = query({
-    handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+    handler: async (ctx) => {
+        const user = await getCurrentUserOrThrow(ctx);
 
         const eventData: any = await ctx.db
             .query("eventsData")
-            .withIndex("by_organizerId", (q) => q.eq("organizerId", user?._id))
+            .withIndex("by_organizerId", (q) => q.eq("organizerId", user._id))
             .order("desc")
             .collect();
 
@@ -215,7 +215,7 @@ export const getMyEventsDetails = query({
 export const deleteEvent = mutation({
     args: { eventId: v.id("eventsData") },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+        const user = await getCurrentUserOrThrow(ctx);
 
         const eventFound = await ctx.db.get(args.eventId);
         if (!eventFound) {
@@ -254,11 +254,7 @@ export const deleteEvent = mutation({
 export const getEventById = query({
     args: { eventId: v.id("eventsData") },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
-
-        if (!user) {
-            throw new Error(AppConstants.USER_NOT_FOUND);
-        }
+        const user = await getCurrentUserOrThrow(ctx);
 
         const eventData = await ctx.db.get(args.eventId);
         if (!eventData) {

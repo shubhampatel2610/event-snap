@@ -1,8 +1,8 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { api } from "./_generated/api";
 import { AppConstants } from "@/app/constants/AppConstants";
 import { generateEventId } from "@/app/utils/helperFunctions";
+import { getCurrentUserOrThrow } from "./users";
 
 export const registerForEvent = mutation({
     args: {
@@ -11,7 +11,7 @@ export const registerForEvent = mutation({
         email: v.string()
     },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+        const user = await getCurrentUserOrThrow(ctx);
 
         const eventData = await ctx.db.get(args.eventId);
         if (!eventData) {
@@ -24,7 +24,7 @@ export const registerForEvent = mutation({
 
         const userRegistered = await ctx.db
             .query("registrationData")
-            .withIndex("by_eventId_userId", (q: any) => q.eq("eventId", args.eventId).eq("userId", user?._id)).unique();
+            .withIndex("by_eventId_userId", (q: any) => q.eq("eventId", args.eventId).eq("userId", user._id)).unique();
 
         if (userRegistered) {
             throw new Error(AppConstants.REGISTRATION_LIMIT_ERROR);
@@ -55,21 +55,35 @@ export const checkForUserRegistration = query({
         eventId: v.id("eventsData")
     },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+        // publicly viewable event pages call this for anonymous visitors too,
+        // so this stays a graceful null instead of throwing like getCurrentUserOrThrow
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) {
+            return null;
+        }
+
+        const user = await ctx.db
+            .query("users")
+            .withIndex("by_token", (q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
+            .unique();
+
+        if (!user) {
+            return null;
+        }
 
         const registration = await ctx.db.query("registrationData")
-            .withIndex("by_eventId_userId", (q: any) => q.eq("eventId", args.eventId).eq("userId", user?._id)).unique();
+            .withIndex("by_eventId_userId", (q: any) => q.eq("eventId", args.eventId).eq("userId", user._id)).unique();
 
         return registration;
     }
 });
 
 export const getUserRegistrations = query({
-    handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+    handler: async (ctx) => {
+        const user = await getCurrentUserOrThrow(ctx);
 
         const registrationData = await ctx.db.query("registrationData")
-            .withIndex("by_userId", (q: any) => q.eq("userId", user?._id))
+            .withIndex("by_userId", (q: any) => q.eq("userId", user._id))
             .order("desc")
             .collect();
 
@@ -89,14 +103,14 @@ export const cancelUserRegistration = mutation({
         registrationId: v.id("registrationData")
     },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
+        const user = await getCurrentUserOrThrow(ctx);
 
         const registrationData = await ctx.db.get(args.registrationId);
         if (!registrationData) {
             throw new Error(AppConstants.REGISTRATION_NOT_FOUND);
         }
 
-        if (registrationData.userId !== user?._id) {
+        if (registrationData.userId !== user._id) {
             throw new Error(AppConstants.UNAUTHORIZED_ACCESS); // can delete only own
         }
 
@@ -123,10 +137,7 @@ export const cancelUserRegistration = mutation({
 export const getEventRegistrations = query({
     args: { eventId: v.id("eventsData") },
     handler: async (ctx, args) => {
-        const user = await ctx.runQuery(api.users.getCurrentUserData);
-        if (!user) {
-            throw new Error(AppConstants.USER_NOT_FOUND);
-        }
+        const user = await getCurrentUserOrThrow(ctx);
 
         const event = await ctx.db.get(args.eventId);
         if (!event) {
@@ -152,11 +163,7 @@ export const checkInAttendee = mutation({
         uniqueId: v.string()
     },
     handler: async (ctx, args) => {
-        const user: any = await ctx.runQuery(api.users.getCurrentUserData);
-
-        if (!user) {
-            throw new Error(AppConstants.USER_NOT_FOUND);
-        }
+        const user = await getCurrentUserOrThrow(ctx);
 
         const registrationData = await ctx.db
             .query("registrationData")

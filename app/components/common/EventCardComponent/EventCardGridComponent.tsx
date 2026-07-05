@@ -2,8 +2,9 @@
 import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Eye, MapPin, Ticket, Trash, Users } from "lucide-react";
-import moment from "moment";
+import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { EventCardComponentProps } from "./EventCardComponent";
 import { Badge } from "@/components/ui/badge";
 import InputButton from "../ButtonComponent/InputButton";
@@ -13,20 +14,23 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
     const {
         className,
         event,
+        href,
         onClick,
         onDelete,
         showActions,
         restrictCardClick
     } = props;
 
-    const renderActions = (event: any, onClick: any, onDelete?: any) => {
+    const renderActions = (event: any, href: string | undefined, onClick: any, onDelete?: any) => {
         return (
-            <div className="flex items-center gap-2 mt-auto">
+            <div className="relative z-10 flex items-center gap-2 mt-auto">
                 <InputButton
-                    className="bg-transparent text-white flex-1 hover:text-black hover:bg-gray-200"
+                    className="bg-transparent text-foreground flex-1 hover:bg-secondary"
                     variant="outline"
                     size="lg"
-                    onClick={(e: any) => {
+                    navigateTo={href}
+                    asChild={!!href}
+                    onClick={href ? undefined : (e: any) => {
                         e.stopPropagation();
                         onClick(e);
                     }}
@@ -53,7 +57,11 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card className={`pt-0 overflow-hidden h-full group bg-transparent ${onClick ? "hover:shadow-accent transition-all hover:border-[#06B6D4]" : ""} ${className}`} onClick={!restrictCardClick ? onClick : undefined}>
+            <Card className={`relative pt-0 overflow-hidden h-full group bg-transparent ${(href || onClick) ? "hover:shadow-accent transition-all hover:border-primary" : ""} ${className}`} onClick={!restrictCardClick ? onClick : undefined}>
+                {href && !restrictCardClick && (
+                    <Link href={href} className="absolute inset-0 z-0" aria-label={event.title} />
+                )}
+
                 <div className="relative h-40 overflow-hidden">
                     {event.bannerImageUrl ?
                         <Image
@@ -79,17 +87,17 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
 
                 <CardContent className="px-2 flex flex-col">
                     <div className="flex flex-col gap-1 min-w-0 text-start w-full">
-                        <Badge variant={"outline"} className="text-white">
+                        <Badge variant={"outline"} className="text-foreground">
                             {getCategoryIcon(event.category)} {getCategoryLabel(event.category)}
                         </Badge>
 
-                        <h3 className="text-lg font-semibold group-hover:text-[#8B5CF6] transition-colors line-clamp-2 text-white">
+                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2 text-foreground">
                             {event.title}
                         </h3>
 
                         <span className="flex items-center gap-1 text-xs text-muted-foreground">
                             <Calendar className="w-3 h-3" />
-                            {moment(event.startDate).format("MMM D, YYYY")} - {moment(event.startDate).format("h:mm A")}
+                            {event.startDate && `${format(new Date(event.startDate), "MMM d, yyyy")} - ${format(new Date(event.startDate), "h:mm a")}`}
                         </span>
 
                         <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -108,7 +116,7 @@ const EventCardGridComponent = (props: Omit<EventCardComponentProps, "variant">)
                             </span>
                         </div>
 
-                        {showActions && renderActions(event, onClick, onDelete)}
+                        {showActions && renderActions(event, href, onClick, onDelete)}
                     </div>
                 </CardContent>
             </Card>

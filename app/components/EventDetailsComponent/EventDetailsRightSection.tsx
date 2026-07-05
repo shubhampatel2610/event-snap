@@ -9,7 +9,6 @@ import { api } from "@/convex/_generated/api";
 import { useConvexQuery } from "@/hooks/use-convex-query";
 import { format } from "date-fns";
 import { Calendar, CheckCircle, Clock, Share2, Ticket, Users } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { useUser } from "@clerk/nextjs";
@@ -21,7 +20,6 @@ interface ComponentProps {
 
 const EventDetailsRightSection = (props: ComponentProps) => {
     const { eventData } = props;
-    const router = useRouter();
     const dispatch = useAppDispatch();
 
     const { data: userData } = useConvexQuery(api.users.getCurrentUserData) as any;
@@ -132,7 +130,8 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                                 </div>
                                 <InputButton
                                     className="w-full gap-2"
-                                    onClick={() => router.push(AppConstants.MY_BOOKINGS_ROUTE)}
+                                    navigateTo={AppConstants.MY_BOOKINGS_ROUTE}
+                                    asChild
                                     icon={<Ticket className="w-4 h-4" />}
                                     label={AppConstants.VIEW_LABEL}
                                 />
@@ -148,7 +147,8 @@ const EventDetailsRightSection = (props: ComponentProps) => {
                         ) : isOrganizer ? (
                             <InputButton
                                 className="w-full"
-                                onClick={() => router.push(`${AppConstants.MY_EVENTS_ROUTE}/${eventData?._id}`)}
+                                navigateTo={`${AppConstants.MY_EVENTS_ROUTE}/${eventData?._id}`}
+                                asChild
                                 label={AppConstants.MANAGE_EVENT_LABEL}
                             />
                         ) : (

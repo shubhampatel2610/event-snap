@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { useConvexAuth, useQuery } from "convex/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { Id } from "../convex/_generated/dataModel";
@@ -55,8 +55,8 @@ export function useStoreUser() {
     }, [isAuthenticated, userId, currentUserData, pathname, router]);
 
     // Combine the local state with the state from context
-    return {
+    return useMemo(() => ({
         isLoading: isLoading || (isAuthenticated && userId === null),
         isAuthenticated: isAuthenticated && userId !== null,
-    };
+    }), [isLoading, isAuthenticated, userId]);
 }

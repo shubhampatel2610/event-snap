@@ -2,8 +2,8 @@
 "use client";
 
 import { AppConstants } from "@/app/constants/AppConstants";
-import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { fetchCurrentUser } from "@/app/store/userSlice";
+import { api } from "@/convex/_generated/api";
+import { useConvexQuery } from "@/hooks/use-convex-query";
 import _ from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,15 +15,10 @@ const URLS = [
 ];
 
 const useInterests = () => {
-    const dispatch = useAppDispatch();
     const router = useRouter();
     const path = usePathname();
     const [showInterests, setShowInterests] = useState<boolean>(false);
-    const currentUserData = useAppSelector((state) => state.user.currentUserData);
-
-    useEffect(() => {
-        dispatch(fetchCurrentUser());
-    }, [dispatch]);
+    const { data: currentUserData } = useConvexQuery(api.users.getCurrentUserData) as any;
 
     useEffect(() => {
         if (!currentUserData || _.isEmpty(currentUserData)) {

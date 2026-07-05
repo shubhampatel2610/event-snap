@@ -8,7 +8,7 @@ import TextareaComponent from "../common/TextareaComponent/TextareaComponent";
 import { useState } from "react";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { toast } from "sonner";
-import { setLoading } from "@/app/store/dashboardSlice";
+import { Loader2 } from "lucide-react";
 
 interface DialogProps {
     setAIGeneratedData: (val?: any) => void;
@@ -19,6 +19,7 @@ const AIEventDataGeneratorComponent = (props: DialogProps) => {
     const dispatch = useAppDispatch();
     const showAIEventCreator = useAppSelector((state) => state.event.showAIEventCreator);
     const [promptVal, setPromptVal] = useState("");
+    const [isGenerating, setIsGenerating] = useState(false);
 
     const onClose = () => {
         dispatch(setShowAIEventCreator(false));
@@ -30,7 +31,7 @@ const AIEventDataGeneratorComponent = (props: DialogProps) => {
             return;
         }
 
-        dispatch(setLoading(true));
+        setIsGenerating(true);
         try {
             const response: any = await dispatch(generateDataWithAI(promptVal));
             if (response.error) {
@@ -44,13 +45,13 @@ const AIEventDataGeneratorComponent = (props: DialogProps) => {
         } catch (error: any) {
             console.error(`${AppConstants.GENERATE_EVENT_ERROR}: `, error.message);
         } finally {
-            dispatch(setLoading(false));
+            setIsGenerating(false);
         }
     }
 
     return (
         <Dialog open={showAIEventCreator} onOpenChange={onClose}>
-            <DialogContent className={"flex flex-col overflow-hidden max-w-3xl! w-full max-h-[80vh] bg-[#020714]"}>
+            <DialogContent className={"flex flex-col overflow-hidden max-w-3xl! w-full max-h-[80vh]"}>
                 <DialogHeader>
                     <DialogTitle className="flex gap-2.5 items-center text-2xl">
                         {AppConstants.GENERATE_EVENT_TITLE}
@@ -74,12 +75,15 @@ const AIEventDataGeneratorComponent = (props: DialogProps) => {
                         label={AppConstants.GENERATE_LABEL}
                         variant={"secondary"}
                         onClick={handleSubmitClick}
+                        disabled={isGenerating}
+                        icon={isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : undefined}
                     />
                     <InputButton
                         className="bg-transparent"
                         label={AppConstants.CANCEL_LABEL}
                         variant={"outline"}
                         onClick={onClose}
+                        disabled={isGenerating}
                     />
                 </DialogFooter>
             </DialogContent>

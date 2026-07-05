@@ -11,8 +11,8 @@ const AppLogo = () => {
       >
         <defs>
           <linearGradient id="snapGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#8B5CF6" />
-            <stop offset="100%" stopColor="#06B6D4" />
+            <stop offset="0%" stopColor="var(--primary)" />
+            <stop offset="100%" stopColor="var(--accent)" />
           </linearGradient>
 
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -49,7 +49,7 @@ const AppLogo = () => {
           fontFamily="Poppins, Arial, sans-serif"
           fontSize="48"
           fontWeight="600"
-          fill="#E5E7EB"
+          fill="var(--foreground)"
           className="hidden sm:block"
         >
           {AppConstants.EVENT_WORD}

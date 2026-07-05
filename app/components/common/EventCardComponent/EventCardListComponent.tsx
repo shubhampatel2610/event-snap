@@ -1,8 +1,9 @@
 import { getCategoryIcon } from "@/app/utils/helperFunctions";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Users } from "lucide-react";
-import moment from "moment";
+import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { EventCardComponentProps } from "./EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
 
@@ -10,6 +11,7 @@ const EventCardListComponent = (props: Omit<EventCardComponentProps, "variant">)
     const {
         className,
         event,
+        href,
         onClick,
         onDelete,
         showActions = false
@@ -17,7 +19,11 @@ const EventCardListComponent = (props: Omit<EventCardComponentProps, "variant">)
 
     return (
         <div>
-            <Card className={`py-0 group cursor-pointer hover:shadow-accent transition-all hover:border-[#06B6D4] bg-transparent ${className}`} onClick={onClick}>
+            <Card className={`relative py-0 group cursor-pointer hover:shadow-accent transition-all hover:border-primary bg-transparent ${className}`} onClick={onClick}>
+                {href && (
+                    <Link href={href} className="absolute inset-0 z-0" aria-label={event.title} />
+                )}
+
                 <CardContent className="p-3 flex gap-2.5">
                     <div className="w-24 h-24 relative rounded-md overflow-hidden shrink-0">
                         {event.bannerImageUrl ?
@@ -37,12 +43,12 @@ const EventCardListComponent = (props: Omit<EventCardComponentProps, "variant">)
                     </div>
 
                     <div className="flex-1 min-w-0 text-start flex flex-col gap-1">
-                        <h3 className="text-sm font-semibold group-hover:text-[#8B5CF6] transition-colors line-clamp-2 text-white">
+                        <h3 className="text-sm font-semibold group-hover:text-primary transition-colors line-clamp-2 text-foreground">
                             {event.title}
                         </h3>
 
                         <span className="text-xs text-muted-foreground">
-                            {moment(event.startDate).format("MMM D, YYYY")} at {moment(event.startDate).format("h:mm A")}
+                            {event.startDate && `${format(new Date(event.startDate), "MMM d, yyyy")} at ${format(new Date(event.startDate), "h:mm a")}`}
                         </span>
 
                         <div className="flex items-center gap-1 text-xs text-muted-foreground">

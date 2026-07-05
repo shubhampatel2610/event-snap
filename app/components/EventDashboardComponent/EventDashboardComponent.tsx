@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { setCheckTicketVerification } from "@/app/store/eventSlice";
 import { api } from "@/convex/_generated/api";
 import { useConvexQuery } from "@/hooks/use-convex-query";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { ArrowLeft, Calendar, Clock, Eye, MapPin, Ticket } from "lucide-react";
 import { AppConstants } from "@/app/constants/AppConstants";
@@ -12,12 +12,12 @@ import Image from "next/image";
 import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 import DashboardStatsComponent from "./DashboardStatsComponent";
 import AttendeeManagementComponent from "./AttendeeManagementComponent";
 
 const EventDashboardComponent = () => {
     const params = useParams();
-    const router = useRouter();
     const { eventId } = params;
     const dispatch = useAppDispatch();
 
@@ -29,13 +29,26 @@ const EventDashboardComponent = () => {
 
     const { eventData, statistics } = selectedEventData || {};
 
+    if (isLoading) {
+        return (
+            <div className="min-h-screen pb-10 px-3">
+                <div className="max-w-7xl mx-auto px-5 space-y-4">
+                    <Skeleton className="h-8 w-24" />
+                    <Skeleton className="h-60 md:h-70 w-full rounded-2xl" />
+                    <Skeleton className="h-10 w-2/3" />
+                    <Skeleton className="h-40 w-full rounded-xl" />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen pb-10 px-3">
             <div className="max-w-7xl mx-auto px-5 space-y-4">
                 <div>
                     <InputButton
                         label="Back"
-                        className="text-white px-0 my-2"
+                        className="text-foreground px-0 my-2"
                         icon={<ArrowLeft />}
                         variant={"link"}
                         navigateTo={AppConstants.MY_EVENTS_ROUTE}
@@ -92,7 +105,8 @@ const EventDashboardComponent = () => {
 
                         <InputButton
                             variant="secondary"
-                            onClick={() => router.push(AppConstants.EVENTS_ROUTE + `/${eventData?.slug}`)}
+                            navigateTo={`${AppConstants.EVENTS_ROUTE}/${eventData?.slug}`}
+                            asChild
                             icon={<Eye className="w-4 h-4" />}
                             label={AppConstants.VIEW_LABEL}
                         />
@@ -102,7 +116,6 @@ const EventDashboardComponent = () => {
                 {(statistics?.isStartingToday && !statistics?.isPastEvent) && (
                     <InputButton
                         variant="outline"
-                        className="text-black"
                         onClick={() => dispatch(setCheckTicketVerification(true))}
                         icon={<Ticket className="w-4 h-4" />}
                         label={AppConstants.VERIFY_TICKET_LABEL}

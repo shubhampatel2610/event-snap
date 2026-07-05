@@ -14,16 +14,16 @@ const LandingPageLeftSection = () => {
             <div className="flex flex-col gap-7">
                 <div>
                     {AppConstants.LANDING_PAGE_TITLE.map((line, index) => (
-                        <span key={index} className={`text-3xl sm:text-3xl md:text-4xl font-semibold 
+                        <span key={index} className={`text-3xl sm:text-3xl md:text-4xl font-semibold
               ${AppConstants.HIGHLIGHT_INDEXES.includes(index)
-                                ? "bg-gradient-to-r from-[#8B5CF6] via-[#06B6D4] to-purple-400 bg-clip-text text-transparent"
-                                : "text-[#ececec]"}`}
+                                ? "bg-linear-to-r from-primary to-accent bg-clip-text text-transparent"
+                                : "text-foreground"}`}
                         >
                             {line}{" "}
                         </span>
                     ))}
                 </div>
-                <span className="text-1xl text-[#acacac]">
+                <span className="text-1xl text-muted-foreground">
                     {AppConstants.LANDING_PAGE_DESCRIPTION}
                 </span>
                 <div>

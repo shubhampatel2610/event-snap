@@ -6,6 +6,7 @@ export interface EventCardComponentProps {
   className?: string;
   event: any;
   variant: "grid" | "list";
+  href?: string;
   onClick?: () => void;
   onDelete?: (id?: any) => void;
   showActions?: "event" | "booking" | "";
@@ -17,6 +18,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
     className,
     event,
     variant = "grid",
+    href,
     onClick,
     onDelete,
     showActions,
@@ -27,6 +29,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
     <EventCardListComponent
       className={className}
       event={event}
+      href={href}
       onClick={onClick}
       onDelete={onDelete}
       showActions={showActions}
@@ -35,6 +38,7 @@ const EventCardComponent = (props: EventCardComponentProps) => {
     <EventCardGridComponent
       className={className}
       event={event}
+      href={href}
       onClick={onClick}
       onDelete={onDelete}
       showActions={showActions}

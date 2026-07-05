@@ -36,7 +36,7 @@ const PricingPlanDialogComponent = (props: PricingProps) => {
 
     return (
         <Dialog open={showPricingPlans} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-2xl bg-[#121212] border-[#2e2e2e] max-h-[90vh] overflow-y-auto">
+            <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <div className="flex items-center gap-2 mb-2">
                         <Sparkles className="w-6 h-6 text-yellow-500" />

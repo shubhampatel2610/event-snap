@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/store/store";
 import { api } from "@/convex/_generated/api";
 import { useConvexMutations, useConvexQuery } from "@/hooks/use-convex-query";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import InputComponent from "../common/InputComponent/InputComponent";
 import { Loader2, Search } from "lucide-react";
@@ -12,7 +12,6 @@ import { AppConstants } from "@/app/constants/AppConstants";
 import { debounce } from "lodash";
 
 const SearchBarComponent = () => {
-    const router = useRouter();
     const dispatch = useAppDispatch();
     const searchRef = useRef<any>(null);
 
@@ -42,10 +41,9 @@ const SearchBarComponent = () => {
         dispatch(setShowSearchedResults(value.length > 2));
     }
 
-    const handleEventClick = (eventSlug: string) => {
+    const handleEventClick = () => {
         dispatch(setShowSearchedResults(false));
         dispatch(setSearchQuery(""));
-        router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
     }
 
     useEffect(() => {
@@ -88,20 +86,18 @@ const SearchBarComponent = () => {
                                             {AppConstants.SEARCH_RESULT_TITLE}
                                         </p>
                                         {searchedResults.map((event: any) => (
-                                            <button
+                                            <Link
                                                 key={event._id}
-                                                className="w-full px-4 py-2 hover:bg-muted/50 text-left transition-colors bg-transparent"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleEventClick(event.slug);
-                                                }}
+                                                href={`${AppConstants.EVENTS_ROUTE}/${event.slug}`}
+                                                className="block w-full px-4 py-2 hover:bg-muted/50 text-left transition-colors bg-transparent"
+                                                onClick={handleEventClick}
                                             >
                                                 <div className="flex-1 min-w-0 hover:cursor-pointer">
-                                                    <p className="font-medium mb-1 line-clamp-1 text-black">
+                                                    <p className="font-medium mb-1 line-clamp-1 text-foreground">
                                                         {event.title}
                                                     </p>
                                                 </div>
-                                            </button>
+                                            </Link>
                                         ))}
                                     </div>
                                 </> :

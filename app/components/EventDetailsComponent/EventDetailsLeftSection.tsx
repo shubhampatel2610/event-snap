@@ -54,7 +54,7 @@ const EventDetailsLeftSection = (props: ComponentProps) => {
                             </p>
                         )}
                         {eventData?.venueName && (
-                            <Button variant="outline" asChild className="gap-2 text-black">
+                            <Button variant="outline" asChild className="gap-2 text-white">
                                 <a
                                     href={eventData?.venueName}
                                     target="_blank"
@@ -80,7 +80,7 @@ const EventDetailsLeftSection = (props: ComponentProps) => {
                 <CardContent className="pt-6">
                     <h2 className="text-white text-2xl font-bold mb-4">{AppConstants.ORGANIZER_TITLE}</h2>
                     <div className="text-[#c0c0c0] flex items-center gap-3">
-                        <Avatar className="w-12 h-12 text-black">
+                        <Avatar className="w-12 h-12">
                             <AvatarImage src="" />
                             <AvatarFallback>
                                 {eventData?.organizerName?.charAt(0)?.toUpperCase()}
