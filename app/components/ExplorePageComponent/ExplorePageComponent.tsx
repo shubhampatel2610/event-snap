@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { fetchEventByCategoryCount, fetchEventsByLocation, fetchFeaturedEvents, fetchPopularEvents } from "@/app/store/eventSlice";
-import { fetchCurrentUser } from "@/app/store/userSlice";
+import { Preloaded, usePreloadedQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useConvexQuery } from "@/hooks/use-convex-query";
 import { AppConstants } from "@/app/constants/AppConstants";
 import CarouselComponent from "../common/CarouselComponent/CarouselComponent";
 import EventCarouselItemTemplate from "./EventCarouselItemTemplate";
@@ -11,38 +11,32 @@ import EventByLocationComponent from "./EventByLocationComponent";
 import EventByCategoryComponent from "./EventByCategoryComponent";
 import _ from "lodash";
 import PopularEventsComponent from "./PopularEventsComponent";
-import { useRouter } from "next/navigation";
 import NoEventComponent from "./NoEventComponent";
+import ExpiredEventsComponent from "./ExpiredEventsComponent";
 
-const ExplorePageComponent = () => {
-    const dispatch = useAppDispatch();
-    const router = useRouter();
+interface ExplorePageComponentProps {
+    preloadedFeatured: Preloaded<typeof api.eventService.getFeaturingEvents>;
+    preloadedPopular: Preloaded<typeof api.eventService.getPopularEvents>;
+    preloadedCategoryCounts: Preloaded<typeof api.eventService.getEventCountsByCategory>;
+    preloadedExpired: Preloaded<typeof api.eventService.getExpiredEvents>;
+}
 
-    const currentUserData = useAppSelector((state) => state.user.currentUserData);
-    const featuredEvents = useAppSelector((state) => state.event.featuredEvents);
-    const eventsByLocation = useAppSelector((state) => state.event.eventsByLocation);
-    const eventsCountByCategory = useAppSelector((state) => state.event.eventsCountByCategory);
-    const popularEvents = useAppSelector((state) => state.event.popularEvents);
+const ExplorePageComponent = (props: ExplorePageComponentProps) => {
+    const { preloadedFeatured, preloadedPopular, preloadedCategoryCounts, preloadedExpired } = props;
 
-    useEffect(() => {
-        dispatch(fetchCurrentUser());
-        dispatch(fetchFeaturedEvents(3));
-        dispatch(fetchEventByCategoryCount());
-        dispatch(fetchPopularEvents());
-    }, [dispatch]);
+    const featuredEvents = usePreloadedQuery(preloadedFeatured) as any[];
+    const popularEvents = usePreloadedQuery(preloadedPopular) as any[];
+    const eventsCountByCategory = usePreloadedQuery(preloadedCategoryCounts) as any;
+    const expiredEvents = usePreloadedQuery(preloadedExpired) as any[];
 
-    useEffect(() => {
-        dispatch(fetchEventsByLocation({
-            city: currentUserData?.location?.city || "Ahmedabad",
-            state: currentUserData?.location?.state || "Gujarat",
-            country: currentUserData?.location?.country || "India",
-            limit: 5
-        }));
-    }, [currentUserData, dispatch]);
+    const { data: currentUserData } = useConvexQuery(api.users.getCurrentUserData) as any;
 
-    const handleEventClick = (eventSlug: string) => {
-        router.push(`${AppConstants.EVENTS_ROUTE}/${eventSlug}`);
-    }
+    const { data: eventsByLocation } = useConvexQuery(api.eventService.getEventsByLocation, {
+        city: currentUserData?.location?.city || "Ahmedabad",
+        state: currentUserData?.location?.state || "Gujarat",
+        country: currentUserData?.location?.country || "India",
+        limit: 5,
+    }) as any;
 
     return (
         <div className="text-center py-5 flex flex-col gap-5">
@@ -50,7 +44,7 @@ const ExplorePageComponent = () => {
                 <h1 className="text-4xl sm:text-5xl md:text-5xl font-bold">
                     {AppConstants.EXPLORE_PAGE_HEADER}
                 </h1>
-                <span className="text-1xl text-[#acacac]">
+                <span className="text-1xl text-muted-foreground">
                     {AppConstants.EXPLORE_PAGE_SUBHEADER}
                 </span>
             </div>
@@ -65,29 +59,33 @@ const ExplorePageComponent = () => {
             )}
 
             {eventsByLocation && eventsByLocation.length > 0 && (
-                <>
-                    <EventByLocationComponent
-                        eventList={eventsByLocation}
-                        handleEventClick={handleEventClick}
-                    />
-                </>
+                <EventByLocationComponent
+                    eventList={eventsByLocation}
+                    userData={currentUserData}
+                />
             )}
 
             {eventsCountByCategory && !_.isEmpty(eventsCountByCategory) && (
-                <>
-                    <EventByCategoryComponent />
-                </>
+                <EventByCategoryComponent eventsCountByCategory={eventsCountByCategory} />
             )}
 
             {popularEvents && popularEvents.length > 0 && (
-                <>
-                    <PopularEventsComponent
-                        handleEventClick={handleEventClick}
-                    />
-                </>
+                <PopularEventsComponent popularEvents={popularEvents} />
             )}
 
-            <NoEventComponent />
+            {(!featuredEvents || featuredEvents.length === 0) &&
+                (!eventsByLocation || eventsByLocation.length === 0) &&
+                (!popularEvents || popularEvents.length === 0) &&
+                expiredEvents && expiredEvents.length > 0 && (
+                    <ExpiredEventsComponent expiredEvents={expiredEvents} />
+                )}
+
+            <NoEventComponent
+                featuredEvents={featuredEvents}
+                eventsByLocation={eventsByLocation}
+                popularEvents={popularEvents}
+                expiredEvents={expiredEvents}
+            />
         </div>
 
     );

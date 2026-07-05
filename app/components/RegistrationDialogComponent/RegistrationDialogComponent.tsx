@@ -79,7 +79,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
     if (isSuccess) {
         return (
             <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-                <DialogContent className="sm:max-w-md bg-[#020714]">
+                <DialogContent className="sm:max-w-md">
                     <div className="flex flex-col items-center text-center space-y-4 py-6">
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
                             <CheckCircle className="w-8 h-8 text-green-600" />
@@ -113,7 +113,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
 
     return (
         <Dialog open={showRegistrationPopup} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md bg-[#020714]">
+            <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>{AppConstants.REGISTRATION_TITLE}</DialogTitle>
                     <DialogDescription>
@@ -122,7 +122,7 @@ const RegistrationDialogComponent = (props: DialogProps) => {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="bg-[#000c2c] p-4 rounded-lg space-y-2">
+                    <div className="bg-muted p-4 rounded-lg space-y-2">
                         <p className="font-semibold">{eventData?.title}</p>
                         <p className="text-sm text-muted-foreground">
                             {eventData?.isFree ? (

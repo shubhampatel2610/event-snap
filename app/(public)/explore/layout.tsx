@@ -15,7 +15,7 @@ const ExplorePagelayout = ({ children }: { children: React.ReactNode }) => {
                 {!isMainExplorePage && (
                     <InputButton
                         label="Back"
-                        className="text-white px-0 my-2"
+                        className="text-foreground px-0 my-2"
                         icon={<ArrowLeft />}
                         variant={"link"}
                         navigateTo={AppConstants.EXPLORE_ROUTE}

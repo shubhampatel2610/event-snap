@@ -3,19 +3,15 @@ import InputButton from "../common/ButtonComponent/InputButton";
 import { createLocationSlug } from "@/app/utils/helperFunctions";
 import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
-import { useAppDispatch, useAppSelector } from "@/app/store/store";
-import { setEventsByLocation } from "@/app/store/eventSlice";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface EventByLocationComponentProps {
     eventList: any[];
-    handleEventClick: (slug: string) => void;
+    userData: any;
 }
 
 const EventByLocationComponent = (props: EventByLocationComponentProps) => {
-    const dispatch = useAppDispatch();
-    const { eventList, handleEventClick } = props;
-    const userData = useAppSelector((state) => state.user.currentUserData);
+    const { eventList, userData } = props;
 
     const createViewAllLink = (userData: any) => {
         const city = userData?.location?.city || "Ahmedabad";
@@ -32,7 +28,7 @@ const EventByLocationComponent = (props: EventByLocationComponentProps) => {
                 key={event._id}
                 event={event}
                 variant={"grid"}
-                onClick={() => handleEventClick(event.slug)}
+                href={`${AppConstants.EVENTS_ROUTE}/${event.slug}`}
             />
         )
     }
@@ -50,14 +46,12 @@ const EventByLocationComponent = (props: EventByLocationComponentProps) => {
                 </div>
                 <div>
                     <InputButton
-                        className="text-black"
                         label={AppConstants.VIEW_ALL_LABEL}
                         icon={<ArrowRight className="w-4 h-4" />}
                         variant={"outline"}
                         asChild
                         size={"sm"}
                         navigateTo={createViewAllLink(userData)}
-                        onClick={() => dispatch(setEventsByLocation([]))}
                     />
                 </div>
             </div>

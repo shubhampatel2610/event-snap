@@ -3,26 +3,17 @@ import { Badge } from "@/components/ui/badge";
 import { CarouselItem } from "@/components/ui/carousel";
 import { Calendar, MapPin, Users } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import moment from "moment";
+import Link from "next/link";
+import { format } from "date-fns";
 import { AppConstants } from "@/app/constants/AppConstants";
 
 const EventCarouselItemTemplate = (item: any) => {
-    const router = useRouter();
-
-    const handleItemClick = (item: any) => {
-        if (item.slug) {
-            router.push(`${AppConstants.EVENTS_ROUTE}/${item.slug}`);
-        }
-        return;
-    }
-
     return (
-        <CarouselItem
-            key={item.index}
-            onClick={() => handleItemClick(item)}
-        >
-            <div className="relative h-[400px] rounded-xl overflow-hidden cursor-pointer">
+        <CarouselItem key={item.index}>
+            <Link
+                href={item.slug ? `${AppConstants.EVENTS_ROUTE}/${item.slug}` : "#"}
+                className="relative h-[400px] rounded-xl overflow-hidden cursor-pointer block"
+            >
                 {
                     item.bannerImageUrl ?
                         <Image
@@ -54,7 +45,7 @@ const EventCarouselItemTemplate = (item: any) => {
                     <div className="flex items-center gap-4 text-white/80">
                         <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
-                            {moment(item.startDate).format("DD MMMM, YYYY")}
+                            {item.startDate && format(new Date(item.startDate), "dd MMMM, yyyy")}
                         </div>
                         <div className="flex items-center gap-2">
                             <Users className="w-4 h-4" />
@@ -62,7 +53,7 @@ const EventCarouselItemTemplate = (item: any) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         </CarouselItem>
     )
 }

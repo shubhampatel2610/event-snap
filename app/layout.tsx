@@ -1,15 +1,26 @@
-"use client";
-
 import "./globals.css";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
-import Footer from "./components/FooterComponent/Footer";
-import Header from "./components/HeaderComponent/Header";
-import { ConvexClientProvider } from "./utils/ConvexClientProvider";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
-import GlobalLoaderProvider from "./utils/GlobalLoaderProvider/GlobalLoaderProvider";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
+import Providers from "./providers";
+import Header from "./components/HeaderComponent/Header";
+import Footer from "./components/FooterComponent/Footer";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "EventSnap",
+  description:
+    "Whether you are looking for concerts, sports, or community gatherings, EventSnap has got you covered. Join us and never miss out on the fun!",
+};
 
 export default function RootLayout({
   children,
@@ -18,25 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-linear-to-br from-gray-800 via-zinc-900 to-stone-900 text-white">
-        <ClerkProvider
-          appearance={{
-            theme: dark,
-          }}
-        >
-          <ConvexClientProvider>
-            <Provider store={store}>
-              <GlobalLoaderProvider>
-                <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
-                  <Toaster position="top-right" richColors />
-                  <Header />
-                  <Provider store={store}>{children}</Provider>
-                  <Footer />
-                </main>
-              </GlobalLoaderProvider>
-            </Provider>
-          </ConvexClientProvider>
-        </ClerkProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground`}
+      >
+        <Providers>
+          <main className="container relative min-h-screen pt-26 md:pt-22 min-w-full">
+            <Toaster position="top-right" richColors />
+            <Header />
+            {children}
+            <Footer />
+          </main>
+        </Providers>
       </body>
     </html>
   );

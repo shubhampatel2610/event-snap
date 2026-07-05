@@ -12,10 +12,9 @@ import { eventPayload } from "@/app/utils/validations/validationSchema";
 import { defaultEventData } from "@/app/utils/validations/defaultSchema";
 import { City, State } from "country-state-city";
 import { useMemo } from "react";
-import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPlanDialogComponent";
+import dynamic from "next/dynamic";
 import { setShowAIEventCreator, setShowImagePicker } from "@/app/store/eventSlice";
 import Image from "next/image";
-import ImagePickerDialogComponent from "../ImagePickerDialogComponent/ImagePickerDialogComponent";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Send, Sparkles } from "lucide-react";
@@ -27,7 +26,19 @@ import RadioGroupComponent from "../common/RadioGroupComponent/RadioGroupCompone
 import { combineDateTime, createEventPayload } from "@/app/utils/helperFunctions";
 import { toast } from "sonner";
 import CalendarComponent from "../common/CalendarComponent/CalendarComponent";
-import AIEventDataGeneratorComponent from "../AIEventDataGeneratorComponent/AIEventDataGeneratorComponent";
+
+const PricingPlanDialogComponent = dynamic(
+    () => import("../PricingPlanDialogComponent/PricingPlanDialogComponent"),
+    { ssr: false }
+);
+const ImagePickerDialogComponent = dynamic(
+    () => import("../ImagePickerDialogComponent/ImagePickerDialogComponent"),
+    { ssr: false }
+);
+const AIEventDataGeneratorComponent = dynamic(
+    () => import("../AIEventDataGeneratorComponent/AIEventDataGeneratorComponent"),
+    { ssr: false }
+);
 
 const CreateEventComponent = () => {
     const router = useRouter();
@@ -209,7 +220,7 @@ const CreateEventComponent = () => {
                                 ))}
                                 {!proPlan &&
                                     <button
-                                        className={"w-8 h-8 rounded-md border transition-all  flex items-center justify-center border-dashed border-[#06B6D4] hover:border-[#8B5CF6] text-[#06B6D4] hover:text-[#8B5CF6]"}
+                                        className={"w-8 h-8 rounded-md border transition-all  flex items-center justify-center border-dashed border-accent hover:border-primary text-accent hover:text-primary"}
                                         title={AppConstants.PRO_COLOR_BTN_TITLE}
                                         type="button"
                                         onClick={handleProClick}

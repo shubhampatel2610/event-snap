@@ -1,29 +1,28 @@
 "use client";
 
 import { AppConstants } from "@/app/constants/AppConstants";
-import { useAppSelector } from "@/app/store/store";
 import { getCategoryIcon, getCategoryLabel } from "@/app/utils/helperFunctions";
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/convex/_generated/api";
-import { useConvexQuery } from "@/hooks/use-convex-query";
+import { Preloaded, usePreloadedQuery } from "convex/react";
 import { format } from "date-fns";
 import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import EventDetailsLeftSection from "./EventDetailsLeftSection";
 import EventDetailsRightSection from "./EventDetailsRightSection";
-import RegistrationDialogComponent from "../RegistrationDialogComponent/RegistrationDialogComponent";
 
-const EventDetailsComponent = () => {
-    const params = useParams();
-    const router = useRouter();
+const RegistrationDialogComponent = dynamic(
+    () => import("../RegistrationDialogComponent/RegistrationDialogComponent"),
+    { ssr: false }
+);
 
-    const { data: eventData, isLoading } = useConvexQuery(
-        api.eventService.getEventBySlug,
-        {
-            slug: params.slug
-        }
-    ) as any;
+interface EventDetailsComponentProps {
+    preloaded: Preloaded<typeof api.eventService.getEventBySlug>;
+}
+
+const EventDetailsComponent = ({ preloaded }: EventDetailsComponentProps) => {
+    const eventData = usePreloadedQuery(preloaded) as any;
 
     return (
         <div

@@ -64,8 +64,8 @@ const InterestsDialogComponent = (props: DialogProps) => {
                 key={category.id}
                 onClick={() => selectCategories(category.id)}
                 className={`p-3 rounded-lg border-1 transition-all hover:scale-105 ${selectedInterests.includes(category.id)
-                    ? "border-[#8B5CF6] bg-[#8B5CF6/10] bg-opacity-10 shadow-md shadow-[#8B5CF6/50]"
-                    : "border-border hover:border-[#06B6D4]"}`}
+                    ? "border-primary bg-primary/10 shadow-md shadow-primary/50"
+                    : "border-border hover:border-accent"}`}
             >
                 <div className="text-xl mb-1">{category.icon}</div>
                 <div className="text-sm font-medium">{category.label}</div>
@@ -112,7 +112,7 @@ const InterestsDialogComponent = (props: DialogProps) => {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-2xl bg-[#121212] border-[#2e2e2e]">
+            <DialogContent className="sm:max-w-2xl">
                 <DialogHeader>
                     <DialogTitle className="flex gap-2.5 items-center text-2xl">
                         {(step === 1) ?

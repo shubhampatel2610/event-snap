@@ -1,8 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
-import { api, internal } from "./_generated/api";
+import { mutation, query, QueryCtx, MutationCtx } from "./_generated/server";
 import { AppConstants } from "@/app/constants/AppConstants";
+
+// shared helper: fetch the calling user's row directly via ctx.db,
+// avoiding the overhead of an internal ctx.runQuery(api.users.getCurrentUserData) round-trip
+export async function getCurrentUserOrThrow(ctx: QueryCtx | MutationCtx) {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+        throw new Error(AppConstants.USER_NOT_FOUND);
+    }
+
+    const user = await ctx.db
+        .query("users")
+        .withIndex("by_token", (q) =>
+            q.eq("tokenIdentifier", identity.tokenIdentifier),
+        )
+        .unique();
+
+    if (!user) {
+        throw new Error(AppConstants.USER_NOT_FOUND);
+    }
+
+    return user;
+}
 
 export const store = mutation({
     args: {},
@@ -55,9 +76,6 @@ export const getCurrentUserData = query({
                 q.eq("tokenIdentifier", identity.tokenIdentifier),
             )
             .unique();
-        if (!user) {
-            throw new Error(AppConstants.USER_NOT_FOUND);
-        }
         return user;
     }
 })
@@ -72,7 +90,7 @@ export const userOnBoarding = mutation({
         interests: v.array(v.string())
     },
     handler: async (ctx, args) => {
-        const userData: any = await ctx.runQuery(api.users.getCurrentUserData);
+        const userData = await getCurrentUserOrThrow(ctx);
         await ctx.db.patch(userData._id, {
             location: args.location,
             interests: args.interests,

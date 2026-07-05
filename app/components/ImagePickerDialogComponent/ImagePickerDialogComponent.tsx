@@ -61,7 +61,7 @@ const ImagePickerDialogComponent = (props: DialogProps) => {
 
     return (
         <Dialog open={showImagePicker} onOpenChange={onClose}>
-            <DialogContent className={"flex flex-col overflow-hidden max-w-4xl! w-full max-h-[80vh] bg-[#020714]"}>
+            <DialogContent className={"flex flex-col overflow-hidden max-w-4xl! w-full max-h-[80vh]"}>
                 <DialogHeader>
                     <DialogTitle className="flex gap-2.5 items-center text-2xl">
                         {AppConstants.IMG_PICKER_HEADER}

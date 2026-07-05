@@ -3,19 +3,28 @@
 import AppLogo from "@/public/AppLogo";
 import { SignInButton, useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from "react-spinners";
 import { useStoreUser } from "@/hooks/use-store-user";
 import { Building, Crown, Plus, Ticket } from "lucide-react";
 import { AppConstants } from "@/app/constants/AppConstants";
-import InterestsDialogComponent from "../InterestsDialogComponent/InterestsDialogComponent";
 import useInterests from "@/hooks/use-interests";
 import SearchBarComponent from "./SearchBarComponent";
+import ThemeToggle from "./ThemeToggle";
 import { Badge } from "@/components/ui/badge";
-import PricingPlanDialogComponent from "../PricingPlanDialogComponent/PricingPlanDialogComponent";
 import { setShowPricingPlans } from "@/app/store/dashboardSlice";
 import { useAppDispatch } from "@/app/store/store";
+
+const InterestsDialogComponent = dynamic(
+  () => import("../InterestsDialogComponent/InterestsDialogComponent"),
+  { ssr: false }
+);
+const PricingPlanDialogComponent = dynamic(
+  () => import("../PricingPlanDialogComponent/PricingPlanDialogComponent"),
+  { ssr: false }
+);
 
 const Header = () => {
   const { isLoading } = useStoreUser();
@@ -95,12 +104,13 @@ const Header = () => {
                 />
               </SignInButton>
             </Unauthenticated>
+            <ThemeToggle />
           </div>
 
           {isLoading && <div className="absolute bottom-0 left-0 w-full">
             <BarLoader
               width={"100%"}
-              color={"#8B5CF6"}
+              color={"var(--primary)"}
             />
           </div>}
         </div>

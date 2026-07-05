@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useAppSelector } from "@/app/store/store";
 import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import { AppConstants } from "@/app/constants/AppConstants";
 
 interface PopularEventsProps {
-    handleEventClick: (slug: string) => void;
+    popularEvents: any[];
 }
 
 const PopularEventsComponent = (props: PopularEventsProps) => {
-    const { handleEventClick } = props;
-
-    const popularEvents = useAppSelector((state) => state.event.popularEvents);
+    const { popularEvents } = props;
 
     const popularEventsRenderer = (event: any) => {
         return (
-            <>
-                <EventCardComponent
-                    key={event.id}
-                    event={event}
-                    variant={"list"}
-                    onClick={() => handleEventClick(event.slug)}
-                />
-            </>
+            <EventCardComponent
+                key={event._id}
+                event={event}
+                variant={"list"}
+                href={`${AppConstants.EVENTS_ROUTE}/${event.slug}`}
+            />
         );
     }
 

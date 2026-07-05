@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import InputButton from "../common/ButtonComponent/InputButton";
 import { Calendar, MapPin } from "lucide-react";
-import moment from "moment";
+import { format } from "date-fns";
 
 const MyTicketDialogComponent = () => {
     const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ const MyTicketDialogComponent = () => {
 
     return (
         <Dialog open={showMyTicketPopup} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-xl bg-[#121212] border-[#2e2e2e]">
+            <DialogContent className="sm:max-w-xl">
                 <DialogHeader>
                     <DialogTitle className="flex gap-2.5 items-center text-2xl">
                         {AppConstants.MY_TICKET_HEADER}
@@ -54,10 +54,14 @@ const MyTicketDialogComponent = () => {
                         </p>
                     </div>
 
-                    <div className="bg-accent-foreground p-3 space-y-2 rounded-lg">
+                    <div className="bg-muted p-3 space-y-2 rounded-lg">
                         <span className="flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
-                            {moment(showTicketData?.eventData?.startDate).format("MMM D, YYYY")} - {moment(showTicketData?.eventData?.startDate).format("h:mm A")}
+                            {showTicketData?.eventData?.startDate && (
+                                <>
+                                    {format(new Date(showTicketData.eventData.startDate), "MMM d, yyyy")} - {format(new Date(showTicketData.eventData.startDate), "h:mm a")}
+                                </>
+                            )}
                         </span>
                         <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3" />

@@ -3,14 +3,12 @@
 import { AppConstants } from "@/app/constants/AppConstants";
 import { api } from "@/convex/_generated/api";
 import { useConvexMutations, useConvexQuery } from "@/hooks/use-convex-query";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import EventCardComponent from "../common/EventCardComponent/EventCardComponent";
 import NoEventComponent from "../ExplorePageComponent/NoEventComponent";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const MyEventsComponent = () => {
-    const router = useRouter();
-
     const { data: myEventsData, isLoading } = useConvexQuery(api.eventService.getMyEventsDetails) as any;
     const { mutateData: deleteEvent } = useConvexMutations(api.eventService.deleteEvent);
 
@@ -23,8 +21,20 @@ const MyEventsComponent = () => {
         }
     }
 
-    const handleEventClick = (eventId: any) => {
-        router.push(`${AppConstants.MY_EVENTS_ROUTE}/${eventId}`);
+    if (isLoading) {
+        return (
+            <div className="min-h-screen pb-10 px-3">
+                <div className="max-w-7xl mx-auto flex flex-col gap-3">
+                    <Skeleton className="h-8 w-56" />
+                    <Skeleton className="h-5 w-72" />
+                    <div className="grid md:grid-cols-3 sm:cols-2 gap-3 mt-5">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <Skeleton key={i} className="h-56 w-full rounded-xl" />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -40,10 +50,11 @@ const MyEventsComponent = () => {
                 {(myEventsData?.length > 0) ? <div className="grid md:grid-cols-3 sm:cols-2 gap-3">
                     {myEventsData.map((event: any) =>
                         <EventCardComponent
+                            key={event._id}
                             event={event}
                             variant="grid"
                             showActions={"event"}
-                            onClick={() => handleEventClick(event?._id)}
+                            href={`${AppConstants.MY_EVENTS_ROUTE}/${event?._id}`}
                             onDelete={() => deleteMyEvent?.(event?._id)}
                         />
                     )}
